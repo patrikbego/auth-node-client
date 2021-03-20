@@ -1,0 +1,4 @@
+//needed for Jest test execution
+{
+  "presets": ["next/babel"]
+}

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { StateProvider } from '../src/utils/reducers/StateProvider';
-import reducer, { initialState } from '../src/utils/reducers/reducer';
+import { StateProvider } from '../utils/reducers/StateProvider';
+import reducer, { initialState } from '../utils/reducers/reducer';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

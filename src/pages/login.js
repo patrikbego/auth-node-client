@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from '../src/components/Login';
+import Login from '../components/Login';
 
 export default function LoginP() {
   return (

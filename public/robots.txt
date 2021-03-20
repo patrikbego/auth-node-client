@@ -1,0 +1,8 @@
+user-agent: *
+disallow: /admin/
+
+user-agent: *
+disallow: /posts/[id]
+
+user-agent: *
+disallow: /blogger/upload/

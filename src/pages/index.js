@@ -6,11 +6,11 @@ import {
   lightBlue,
   orange, red,
 } from '@material-ui/core/colors';
-import controllers from '../src/api/controller';
-import MainLayout from '../src/components/MainLayout';
+import controllers from '../api/controller';
+import MainLayout from '../components/MainLayout';
 import {
   useStateValue,
-} from '../src/utils/reducers/StateProvider';
+} from '../utils/reducers/StateProvider';
 
 export default function Home({ items, appUser }) {
   const [{ user, token, theme }, dispatch] = useStateValue();

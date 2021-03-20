@@ -1,6 +1,6 @@
 import React from 'react';
-import SignUp from '../src/components/SignUp';
-import Header from '../src/components/Header';
+import SignUp from '../components/SignUp';
+import Header from '../components/Header';
 
 export default function SignUpP() {
   return (

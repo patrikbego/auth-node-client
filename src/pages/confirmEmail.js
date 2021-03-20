@@ -5,9 +5,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 import { FormHelperText } from '@material-ui/core';
-import Link from '../src/components/Link';
-import Copyright from '../src/components/Copyright';
-import controllers from '../src/api/controller';
+import Link from '../components/Link';
+import Copyright from '../components/Copyright';
+import controllers from '../api/controller';
 
 export default function ConfirmEmail() {
   const [fetchErrorMsg, setFetchErrorMsg] = useState();
@@ -72,7 +72,7 @@ export default function ConfirmEmail() {
           color="primary"
           component={Link}
           naked
-          href="/signup"
+          href="/"
         >
           Go to the main page
         </Button>
@@ -82,7 +82,7 @@ export default function ConfirmEmail() {
           color="primary"
           component={Link}
           naked
-          href="/signup"
+          href="/resend"
         >
           Resend Email
         </Button>
