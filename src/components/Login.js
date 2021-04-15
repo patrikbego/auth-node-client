@@ -19,7 +19,7 @@ import googleService from '../utils/googleService';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 
-export default function Login() {
+export default function Login({ URL }) {
   const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -89,7 +89,7 @@ export default function Login() {
 
     const phoneElement = event.target.phone;
     const passwordElement = event.target.password;
-
+    controllers.URL = URL;
     controllers.signIn(
       {
         phone: phoneElement.value,

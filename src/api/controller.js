@@ -1,19 +1,23 @@
-// const URL = 'https://bego.tips:3010';
 import facebookService from '../utils/facebookService';
 import googleService from '../utils/googleService';
 
 // const URL = 'https://bego.tips:3010/api/v1';
-const URL = 'http://localhost:3005/api/v1';
+// const URL = 'http://localhost:3005/api/v1';
 
 const controllers = {
+  URL: `${process.env.NEXT_PUBLIC_REST_API}/api/v1`,
   signUp(body) {
-    return fetch(`${URL}/auth/signup`, {
+    return fetch(`${controllers.URL}/auth/signup`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
       },
     });
+  },
+
+  url() {
+    return controllers.URL;
   },
 
   logout() {
@@ -57,7 +61,7 @@ const controllers = {
 
   async loginWithFbReq(options) {
     // login with facebook then authenticate with the API to get a JWT auth token
-    return fetch(`${URL}/auth/fb`, options);
+    return fetch(`${controllers.URL}/auth/fb`, options);
     // get return url from location state or default to home page
     // const {from} = history.location.state || {from: {pathname: "/"}};
     // history.push(from);
@@ -65,7 +69,7 @@ const controllers = {
 
   loginWithGooglReq(options) {
     // login with facebook then authenticate with the API to get a JWT auth token
-    return fetch(`${URL}/auth/googl`, options);
+    return fetch(`${controllers.URL}/auth/googl`, options);
     // get return url from location state or default to home page
     // const {from} = history.location.state || {from: {pathname: "/"}};
     // history.push(from);
@@ -105,7 +109,7 @@ const controllers = {
     //   //   headersJwt,
     //   // });
     // }
-    return fetch(`${URL}/auth/signin`, {
+    return fetch(`${controllers.URL}/auth/signin`, {
       method: 'POST',
       credentials: 'include',
       headers,
@@ -113,7 +117,7 @@ const controllers = {
   },
 
   confirmEmail(body) {
-    return fetch(`${URL}/auth/confirmEmail`, {
+    return fetch(`${controllers.URL}/auth/confirmEmail`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -125,7 +129,7 @@ const controllers = {
   async getItems() {
     let data;
     try {
-      const res = await fetch(`${URL}/getItems`, {
+      const res = await fetch(`${controllers.URL}/getItems`, {
         method: 'GET',
         mode: 'cors',
         cache: 'default',
@@ -142,7 +146,7 @@ const controllers = {
   },
 
   async getUser(body) {
-    const res = await fetch(`${URL}/user/getUser`, {
+    const res = await fetch(`${controllers.URL}/user/getUser`, {
       method: 'GET',
       credentials: 'include',
       mode: 'cors',
@@ -160,7 +164,7 @@ const controllers = {
   },
 
   makePayment(body) {
-    return fetch(`${URL}/makePayment`, {
+    return fetch(`${controllers.URL}/makePayment`, {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(body),

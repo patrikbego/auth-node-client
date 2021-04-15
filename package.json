@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "test": "jest --coverage --runInBand --passWithNoTests .",
+    "test": "jest --coverage --runInBand --passWithNoTests --forceExit .",
     "sonar": "node sonar-scanner.js"
   },
   "jest": {

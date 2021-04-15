@@ -75,6 +75,17 @@ export default function Home({ items, appUser }) {
 }
 
 export async function getServerSideProps() {
+
+  console.log('controllers.url()', controllers.url());
+  console.log('URL', URL);
+  console.log('controllers.url', controllers.URL);
+  console.log('process.env.NEXT_PUBLIC_REST_API', process.env.NEXT_PUBLIC_REST_API);
+  console.log('process.env.NEXT_PUBLIC_REST_API1', process.env.NEXT_PUBLIC_REST_API);
+  console.log('process.env.envNameEnv', process.env.envNameEnv);
+  console.log('process.env.restApiEnv', process.env.restApiEnv);
+  console.log('process.env.NEXT_PUBLIC_ENV_NAME', process.env.NEXT_PUBLIC_ENV_NAME);
+  console.log('process.env.NEXT_PUBLIC_ENV_NAME1', process.env.NEXT_PUBLIC_ENV_NAME);
+
   const items = await controllers.getItems();
   // Here we are getting user from server (just as an example of prerendering).
   // Actually we should get user from token

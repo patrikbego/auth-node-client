@@ -1,7 +1,5 @@
 const sonarqubeScanner = require('sonarqube-scanner');
 
-const config = require('./config.local');
-
 sonarqubeScanner(
   {
     serverUrl: 'http://localhost:9000',
@@ -13,7 +11,7 @@ sonarqubeScanner(
       'sonar.javascript.lcov.reportPaths': 'coverage/lcov.info',
       // 'sonar.testExecutionReportPaths': 'coverage/test-reporter.xml',
       'sonar.projectKey': 'auth-node-client',
-      'sonar.login': config.sonar.clientID,
+      'sonar.login': process.env.SONAR_CLIENT_ID,
     },
   }, () => {},
 );
