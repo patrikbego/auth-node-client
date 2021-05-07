@@ -36,7 +36,6 @@ export default function Phone(props) {
   return (
     <TextField
       variant="outlined"
-      margin="normal"
       required
       fullWidth
       id="phone"

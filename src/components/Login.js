@@ -13,7 +13,7 @@ import Link from 'next/link';
 import Copyright from './Copyright';
 import controllers from '../api/controller';
 import Password from './formFields/Password';
-import Phone from './formFields/Phone';
+import Email from './formFields/Email';
 import facebookService from '../utils/facebookService';
 import googleService from '../utils/googleService';
 import { useStateValue } from '../utils/reducers/StateProvider';
@@ -42,7 +42,7 @@ export default function Login({ URL }) {
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: `${theme.palette.secondary.main}`,
     },
     link: {
       // margin: theme.spacing(1, 1.5),
@@ -87,12 +87,12 @@ export default function Login({ URL }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const phoneElement = event.target.phone;
+    const emailElement = event.target.email;
     const passwordElement = event.target.password;
     controllers.URL = URL;
     controllers.signIn(
       {
-        phone: phoneElement.value,
+        email: emailElement.value,
         password: passwordElement.value,
       },
     ).then(
@@ -155,7 +155,6 @@ export default function Login({ URL }) {
         <div className={classes.paper}>
           <Link
             variant="button"
-            color="textPrimary"
             href="/"
             className={classes.link}
           >
@@ -168,8 +167,14 @@ export default function Login({ URL }) {
           </Typography>
 
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
-            <Phone disableCallback={disableCallback} />
-            <Password disableCallback={disableCallback} />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Email disableCallback={disableCallback} />
+              </Grid>
+              <Grid item xs={12}>
+                <Password disableCallback={disableCallback} />
+              </Grid>
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -199,7 +204,7 @@ export default function Login({ URL }) {
               Sign In with Google
             </Button>
             {fetchErrorMsg
-              && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
+                && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
             <Grid container>
               <Grid item xs>
                 <Link href="/forgotPassword" variant="body2">

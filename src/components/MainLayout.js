@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import Container from '@material-ui/core/Container';
-import Header from './Header';
-import Footer from './Footer';
-import controller from '../api/controller';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import clsx from 'clsx';
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import { Tooltip } from '@material-ui/core';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import {
+  Create,
+} from '@material-ui/icons';
 import { useStateValue } from '../utils/reducers/StateProvider';
+import controller from '../api/controller';
+import Header from './Header';
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -15,70 +30,98 @@ const useStyles = makeStyles((theme) => ({
       listStyle: 'none',
     },
   },
+  root: {
+    display: 'flex',
+  },
   appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(6) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(7) + 1,
+    },
+    background: `${theme.palette.primary.main}`,
   },
   toolbar: {
-    flexWrap: 'wrap',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
   },
-  toolbarTitle: {
+  content: {
     flexGrow: 1,
+    padding: theme.spacing(3),
+    width: '50%',
   },
-  link: {
-    margin: theme.spacing(1, 1.5),
+  listButton: {
+    marginLeft: 1,
   },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
-  footer: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing(6),
-      paddingBottom: theme.spacing(6),
-    },
+  iconText: {
+    display: 'flex',
+    textDecoration: 'none',
+    flexDirection: 'column',
+    // marginTop: theme.spacing(1),
+    // color: `${theme.palette.text.secondary}CC`,
+    // transition: theme.transitions.create(['opacity', 'color']),
+    // fontSize: 0.5,
+    // display: 'flex',
+    // justifyContent: 'flex-end',
   },
 }));
 
-const footers = [
-  {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
-    description: [
-      'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one'],
-  },
-  {
-    title: 'Resources',
-    description: [
-      'Resource',
-      'Resource name',
-      'Another resource',
-      'Final resource'],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
-  },
-];
-
 export default function MainLayout({
-  items = [],
-  children,
+  children, appUser,
 }) {
-  const elements = [];
-  const [{ basket, user, token }, dispatch] = useStateValue();
+  const [{ user, token }, dispatch] = useStateValue();
+  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-  const [fetchErrorMsg, setFetchErrorMsg] = useState('');
   const router = useRouter();
+  const theme = useTheme();
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  async function addArticle() {
+    // TODO check if logged in
+    await router.push('/blog');
+  }
   const logout = async () => {
     try {
       await controller.logout();
@@ -162,73 +205,62 @@ export default function MainLayout({
 
   const { loading } = useFetchUser();
   return (
-    <>
-      <Header loading={loading} title="Bego.tips" />
-      <div className="container">{children}</div>
-
-      <Container
-        maxWidth="sm"
-        component="main"
-        className={classes.heroContent}
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
       >
-        <div>
-          <h1>Next.js, Auth Example</h1>
+        <Header loading={false} />
+      </AppBar>
 
-          {loading && <p>Loading login info...</p>}
-
-          {!loading && !user && (
-          <>
-            {fetchErrorMsg
-                && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
-            <p>
-              You are not logged in!
-            </p>
-            <p>
-              Once you have logged in you should be able to click in
-              {' '}
-              <i>Profile</i>
-              {' '}
-              and
-              <i>Logout</i>
-            </p>
-          </>
-          )}
-
-          {!loading && user && (
-          <>
-            <h4>Rendered user info with nextjs</h4>
-            <p>
-              First Name:
-              {user.firstName}
-            </p>
-            <p>
-              Last Name:
-              {user.lastName}
-            </p>
-            <p>
-              Phone:
-              {user.phone}
-            </p>
-            <p>
-              Email:
-              {user.email}
-            </p>
-            <p>
-              Pass:
-              {user.password}
-            </p>
-          </>
-          )}
-        </div>
-      </Container>
+      {token && user ? (
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl'
+                ? <ChevronRightIcon />
+                : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <Divider />
+          <List>
+            {/*  Button bar */}
+            <ListItem
+              button
+              onClick={() => {
+                addArticle();
+                console.log('clicked');
+              }}
+            >
+              <Tooltip title="Create New Article" placement="right">
+                <ListItemIcon>
+                  <Create />
+                </ListItemIcon>
+              </Tooltip>
+            </ListItem>
+          </List>
+        </Drawer>
+      ) : (<></>)}
       <main>
         <div className="container">{children}</div>
-        <div>
-          {elements}
-        </div>
       </main>
 
-      <Footer title="Footer" description="Something here to give the footer a purpose!" />
-    </>
+    </div>
   );
 }

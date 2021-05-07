@@ -39,7 +39,6 @@ export default function Password(props) {
   return (
     <TextField
       variant="outlined"
-      margin="normal"
       required
       fullWidth
       name="password"

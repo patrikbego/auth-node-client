@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +16,8 @@ import Copyright from './Copyright';
 import Phone from './formFields/Phone';
 import Password from './formFields/Password';
 import Link from './Link';
+import Email from './formFields/Email';
+import TextFieldRequired from './formFields/TextFieldRequired';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,12 +43,6 @@ export default function SignUp() {
   const firstRender = useRef(true);
 
   const [disable, setDisabled] = useState(true);
-  const [nameError, setNameError] = useState(null);
-  const [nameValue, setNameValue] = useState('');
-  const [lastNameError, setLastNameError] = useState(null);
-  const [lastNameValue, setLastNameValue] = useState('');
-  const [emailError, setEmailError] = useState(null);
-  const [emailValue, setEmailValue] = useState('');
   const [tosError, setTosError] = useState(null);
   const [tosValue, setTosValue] = useState(false);
   const [fetchErrorMsg, setFetchErrorMsg] = useState();
@@ -55,6 +50,9 @@ export default function SignUp() {
   const disableCallback = (childData) => {
     setDisabled(childData);
   };
+
+  const fieldPropsLN = { requiredText: 'Last name field is required', label: 'Last Name', field: 'lname' };
+  const fieldPropsFN = { requiredText: 'First name field is required', label: 'First Name', field: 'fname' };
 
   // it sets the value of fields (in our case on change)
   useEffect(() => {
@@ -64,50 +62,21 @@ export default function SignUp() {
     }
     setDisabled(formValidation().disabled);
   }, [
-    nameValue,
-    emailValue,
-    tosValue,
-    lastNameValue]);
+    tosValue]);
 
   const formValidation = (obj) => {
     console.log('formValidation');
-    setEmailError(null);
-    setNameError(null);
-    setLastNameError(null);
     setTosError(null);
 
     let valid = true;
-    if (!emailValue.match(
-      '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
-    )) {
-      setEmailError(
-        'Email pattern is not accepted!',
-      );
-      valid = false;
-    }
     if (!tosValue) {
       setTosError(
         'T&C must be accepted!',
       );
       valid = false;
     }
-    if (!nameValue) {
-      setNameError('First name field is required');
-      valid = false;
-    }
-    if (!lastNameValue) {
-      setLastNameError('Last name field is required');
-      valid = false;
-    }
-    if (!emailValue) {
-      setEmailError('Email field is required');
-      valid = false;
-    }
 
     if (valid) {
-      setEmailError(null);
-      setNameError(null);
-      setLastNameError(null);
       setTosError(null);
       return { disabled: false };
     }
@@ -123,8 +92,8 @@ export default function SignUp() {
     // formValidation(true);
 
     const emailElement = event.target.email;
-    const firstNameElement = event.target.firstName;
-    const lastNameElement = event.target.lastName;
+    const firstNameElement = event.target.fname;
+    const lastNameElement = event.target.lname;
     const phoneElement = event.target.phone;
     const passwordElement = event.target.password;
     const tAndCElement = event.target.tosAgreement;
@@ -163,7 +132,6 @@ export default function SignUp() {
       },
     );
   }
-
   return (
     <Container onSubmit={handleSubmit} component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -176,49 +144,19 @@ export default function SignUp() {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                onChange={(e) => setNameValue(e.target.value)}
-                error={!!nameError}
-                helperText={nameError}
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
+              <TextFieldRequired
+                disableCallback={disableCallback}
+                fieldProps={fieldPropsFN}
               />
-              {/* <TextFieldRequired disableCallback={disableCallback} */}
-              {/*                   fieldProps={firstNameFieldProps}/> */}
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                required
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange={(e) => setLastNameValue(e.target.value)}
-                error={!!lastNameError}
-                helperText={lastNameError}
+              <TextFieldRequired
+                disableCallback={disableCallback}
+                fieldProps={fieldPropsLN}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={(e) => setEmailValue(e.target.value)}
-                error={!!emailError}
-                helperText={emailError}
-              />
+              <Email disableCallback={disableCallback} />
             </Grid>
             <Grid item xs={12}>
               <Phone disableCallback={disableCallback} />

@@ -4,6 +4,9 @@ export const initialState = {
   user: null,
   token: null,
   theme: false,
+  alertMessage: null,
+  alertType: 'none',
+  alertOpen: false,
 };
 
 const reducer = (state, action) => {
@@ -13,6 +16,21 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: action.user,
+      };
+    case 'SET_ALERT_MESSAGE':
+      return {
+        ...state,
+        alertMessage: action.alertMessage,
+      };
+    case 'SET_ALERT_TYPE':
+      return {
+        ...state,
+        alertType: action.alertType,
+      };
+    case 'SET_ALERT_OPEN':
+      return {
+        ...state,
+        alertOpen: action.alertOpen,
       };
     case 'SET_TOKEN':
       // setter

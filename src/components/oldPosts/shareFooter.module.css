@@ -1,0 +1,18 @@
+.shareMainContainer {
+  text-align: center;
+}
+
+.shareContainer {
+  vertical-align: top;
+  display: inline-block;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.shareContainerButton {
+  cursor: pointer;
+}
+
+.shareContainerButton:hover:not(:active) {
+  opacity: 0.75;
+}

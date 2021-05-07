@@ -59,7 +59,7 @@ export default function Footer(props) {
         <Grid container spacing={4} justify="space-evenly">
           {footers.map((footer) => (
             <Grid item xs={6} sm={3} key={footer.title}>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
+              <Typography variant="h6" gutterBottom>
                 {footer.title}
               </Typography>
               <ul>

@@ -1,11 +1,14 @@
-import Button from '@material-ui/core/Button';
 import React from 'react';
 import { useRouter } from 'next/router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrightnessMedium } from '@material-ui/icons';
+import {
+  BrightnessMedium, ExitToApp, Info, VpnKey,
+} from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import { Avatar, Tooltip } from '@material-ui/core';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import controller from '../api/controller';
 import Link from './Link';
@@ -29,9 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     margin: theme.spacing(1, 1.5),
+    color: `${theme.palette.secondary.main}`,
   },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
+  },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
 }));
 
@@ -66,12 +74,15 @@ function Header({ loading }) {
   };
 
   const linkText = loading && user ? `Welcome ${user.firstName}` : '';
+
+  async function goToProfile() {
+    await router.push('/profile');
+  }
+
   return (
     <>
       <AppBar
-        theme="dark"
         position="static"
-        color="default"
         elevation={0}
         className={classes.appBar}
       >
@@ -84,8 +95,7 @@ function Header({ loading }) {
               className={classes.toolbarTitle}
             >
               <Link
-                variant="button"
-                color="textPrimary"
+                variant="h5"
                 href="/"
                 className={classes.link}
               >
@@ -94,48 +104,33 @@ function Header({ loading }) {
             </Typography>
 
             <nav>
-
-              <Link
-                variant="button"
-                color="textPrimary"
-                href="/profile"
-                className={classes.link}
-              >
-                {linkText}
-              </Link>
-
-              <Link
-                variant="button"
-                color="textPrimary"
-                href="/history"
-                className={classes.link}
-              >
-                {user ? user.firstName : 'Not logged in'}
-              </Link>
+              <Tooltip title="Change Color" aria-label="Change Color">
+                <IconButton
+                  aria-label="Change Color"
+                  onClick={goToProfile}
+                >
+                  <Avatar onClick={goToProfile} className={classes.small}>{user ? user.firstName : 'Not logged in'}</Avatar>
+                </IconButton>
+              </Tooltip>
             </nav>
             <nav>
-              <div onClick={changeTheme}>
-                <BrightnessMedium />
-              </div>
+              <Tooltip title="Change Color" aria-label="Change Color">
+                <IconButton
+                  aria-label="Change Color"
+                  onClick={changeTheme}
+                >
+                  <BrightnessMedium />
+                </IconButton>
+              </Tooltip>
             </nav>
-            <nav>
-              <Link
-                variant="button"
-                color="textPrimary"
-                href="/about"
-                className={classes.link}
+            <Tooltip title="Logout" aria-label="Logout">
+              <IconButton
+                aria-label="Logout"
+                onClick={logout}
               >
-                About
-              </Link>
-            </nav>
-            <Button
-              color="primary"
-              variant="outlined"
-              className={classes.link}
-              onClick={logout}
-            >
-              Logout
-            </Button>
+                <ExitToApp />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         ) : (
           <Toolbar className={classes.toolbar}>
@@ -147,46 +142,41 @@ function Header({ loading }) {
             >
               <Link
                 variant="h5"
-                color="textPrimary"
                 href="/"
                 className={classes.link}
               >
                 bego.tips
               </Link>
             </Typography>
+            {/* TODO extract into component TooltipIcon */}
             <nav>
-              <div onClick={changeTheme}>
-                <BrightnessMedium />
-              </div>
+              <Tooltip title="Change Color" aria-label="Change Color">
+                <IconButton
+                  aria-label="Change Color"
+                  onClick={changeTheme}
+                >
+                  <BrightnessMedium />
+                </IconButton>
+              </Tooltip>
             </nav>
             <nav>
-              <Link
-                variant="button"
-                color="textPrimary"
-                href="/about"
-                className={classes.link}
+              <Tooltip title="Info" aria-label="Info">
+                <IconButton
+                  aria-label="Info"
+                  href="/about"
+                >
+                  <Info />
+                </IconButton>
+              </Tooltip>
+            </nav>
+            <Tooltip title="Login" aria-label="Login">
+              <IconButton
+                aria-label="Login"
+                href="/login"
               >
-                About
-              </Link>
-              {/* <Link */}
-              {/*  variant="button" */}
-              {/*  color="textPrimary" */}
-              {/*  href="/about" */}
-              {/*  className={classes.link} */}
-              {/* > */}
-              {/*  About */}
-              {/* </Link> */}
-            </nav>
-            <Button
-              color="primary"
-              variant="outlined"
-              className={classes.link}
-              component={Link}
-              naked
-              href="/login"
-            >
-              Login
-            </Button>
+                <VpnKey />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         ))}
       </AppBar>

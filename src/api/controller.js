@@ -6,6 +6,10 @@ import googleService from '../utils/googleService';
 
 const controllers = {
   URL: `${process.env.NEXT_PUBLIC_REST_API}/api/v1`,
+  url() {
+    return controllers.URL;
+  },
+
   signUp(body) {
     return fetch(`${controllers.URL}/auth/signup`, {
       method: 'POST',
@@ -14,10 +18,6 @@ const controllers = {
         'Content-Type': 'application/json',
       },
     });
-  },
-
-  url() {
-    return controllers.URL;
   },
 
   logout() {
@@ -78,37 +78,7 @@ const controllers = {
   signIn(body) {
     const headers = new Headers();
     headers.append('Authorization',
-      `Basic ${btoa(`${body.phone}:${body.password}`)}`);
-    // headers.append('Content-Type', 'application/json');
-
-    // if (strategy === 'facebook') {
-    //   const { authResponse } = await new Promise(window.FB.login);
-    //   if (!authResponse) return;
-    //
-    //   const tokenBlob = new Blob(
-    //     [JSON.stringify({ access_token: authResponse.accessToken }, null, 2)],
-    //     { type: 'application/json' },
-    //   );
-    //   const options = {
-    //     method: 'POST',
-    //     body: tokenBlob,
-    //     mode: 'cors',
-    //     cache: 'default',
-    //   };
-    //   fetch(`${URL}/auth/fb`, options).then((r) => {
-    //     const token = r.headers.get('x-auth-token');
-    //     r.json().then((user) => {
-    //       if (token) {
-    //         this.setState({ isAuthenticated: true, user, token });
-    //       }
-    //     });
-    //   });
-    //
-    //   // return fetch(`${URL}/auth/fb`, {
-    //   //   method: 'POST',
-    //   //   headersJwt,
-    //   // });
-    // }
+      `Bearer ${btoa(`${body.email}:${body.password}`)}`);
     return fetch(`${controllers.URL}/auth/signin`, {
       method: 'POST',
       credentials: 'include',
@@ -119,6 +89,19 @@ const controllers = {
   confirmEmail(body) {
     return fetch(`${controllers.URL}/auth/confirmEmail`, {
       method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+
+  createBlog(body) {
+    return fetch(`${controllers.URL}/blog/createBlog`, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      cache: 'default',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
@@ -138,6 +121,45 @@ const controllers = {
           'Content-Type': 'application/json',
         },
       });
+      data = await res.json();
+    } catch (e) {
+      console.log(e);
+    }
+    return data;
+  },
+
+  async getBlogs() {
+    let data;
+    try {
+      const res = await fetch(`${controllers.URL}/blog/getAllBlogs`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'default',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.status === 401) return { error: 'Please Login!' };
+      data = await res.json();
+    } catch (e) {
+      console.log(e);
+    }
+    return data;
+  },
+
+  async getBlog(id) {
+    let data;
+    try {
+      const res = await fetch(`${controllers.URL}/blog/getBlog/${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'default',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.status === 401) return { error: 'Please Login!' };
       data = await res.json();
     } catch (e) {
       console.log(e);

@@ -3,7 +3,7 @@ import Document, {
   Html, Head, Main, NextScript,
 } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import theme from '../components/theme';
+import theme from '../utils/theme';
 
 export default class MyDocument extends Document {
   render() {
@@ -14,7 +14,8 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            // href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Libre+Barcode+39+Extended+Text&family=Open+Sans&family=Roboto&family=Roboto+Slab&display=swap"
           />
         </Head>
         <body>
