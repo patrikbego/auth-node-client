@@ -1,9 +1,6 @@
 import facebookService from '../utils/facebookService';
 import googleService from '../utils/googleService';
 
-// const URL = 'https://bego.tips:3010/api/v1';
-// const URL = 'http://localhost:3005/api/v1';
-
 const controllers = {
   URL: `${process.env.NEXT_PUBLIC_REST_API}/api/v1`,
   url() {
@@ -20,18 +17,22 @@ const controllers = {
     });
   },
 
-  logout() {
-    try {
-      facebookService.logout();
-      console.log('logged out from facebook');
-    } catch (e) {
-      console.log('not logged in with FB', e);
+  async logout(fs, gs) {
+    if (fs) {
+      try {
+        facebookService.logout();
+        console.log('logged out from facebook');
+      } catch (e) {
+        console.log('not logged in with FB', e);
+      }
     }
-    try {
-      googleService.logout();
-      console.log('logged out from google');
-    } catch (e) {
-      console.log('not logged in with google', e);
+    if (gs) {
+      try {
+        await googleService.logout();
+        console.log('logged out from google');
+      } catch (e) {
+        console.log('not logged in with google', e);
+      }
     }
     try {
       // TODO test this functionality
@@ -50,13 +51,6 @@ const controllers = {
     } catch (e) {
       console.log('failed to clear the auth data');
     }
-    // return fetch(`${URL}/auth/logout`, {
-    //   method: 'POST',
-    //   credentials: 'include',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
   },
 
   async loginWithFbReq(options) {
@@ -99,6 +93,32 @@ const controllers = {
   createBlog(body) {
     return fetch(`${controllers.URL}/blog/createBlog`, {
       method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      cache: 'default',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+
+  updateBlog(body) {
+    return fetch(`${controllers.URL}/blog/updateBlog`, {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      cache: 'default',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+
+  deleteBlog(body) {
+    return fetch(`${controllers.URL}/blog/deleteBlog`, {
+      method: 'DELETE',
       credentials: 'include',
       mode: 'cors',
       cache: 'default',

@@ -1,113 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { StrictMode, useEffect } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 import { CssBaseline } from '@material-ui/core';
-import BlogAdd from '../components/BlogAdd';
-import { useStateValue } from '../utils/reducers/StateProvider';
-import controllers from '../api/controller';
-import AlertBar from '../components/AlertBar';
+import BlogAddEdit from '../../components/BlogAddEdit';
+import { useStateValue } from '../../utils/reducers/StateProvider';
+import controllers from '../../api/controller';
+import AlertBar from '../../components/AlertBar';
+import muiSetter from '../../utils/theme';
+import { tokenSetter } from '../../utils/tokenUtils';
 
-export default function Blog({ content, appUser }) {
-  const [{ user, token, theme }, dispatch] = useStateValue();
+export default function blog({ content, appUser }) {
+  const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
+  const [{ token }, dispatch] = useStateValue();
+  // tokenSetter(token, dispatch, useEffect);
 
-  const palletType = theme ? 'dark' : 'light';
-  const mainPrimaryColor = theme ? '#272c34' : '#fff';
-  const mainSecondaryColor = theme ? '#fff' : '#272c34';
-  const darkLightTheme = createMuiTheme({
-    ...theme,
-    palette: {
-      type: palletType,
-      // text: {
-      //   primary: mainPrimaryColor,
-      //   secondary: mainSecondaryColor,
-      // },
-      primary: {
-        main: mainPrimaryColor,
-        contrastText: 'red',
-      },
-      secondary: {
-        main: mainSecondaryColor,
-      },
-      error: {
-        main: red.A400,
-      },
-      background: {
-        default: mainPrimaryColor,
-      },
-    },
-    typography: {
-      fontFamily: ['"Libre Barcode 39 Text"', 'Roboto'].join(','),
-    },
-    overrides: {
-      MuiSvgIcon: {
-        root: {
-          '@media (max-width:600px)': {
-            // fontSize: '1.0rem',
-            fontSize: '1.0rem',
-          },
-          '@media (min-width:600px)': {
-            // fontSize: '0.5rem',
-            fontSize: '1.5rem',
-          },
-          color: mainSecondaryColor,
-        },
-      },
-      // MuiAppBar: {
-      //   root: {
-      //     color: 'red',
-      //     backgroundColor: 'red',
-      //     background: {
-      //       color: 'red',
-      //       default: theme ? '#303030' : '#fff',
-      //     },
-      //   },
-      // },
-    },
-  });
-
-  function validateJwt(jwt) {
-    if (!jwt) return null;
-    const base64Url = jwt.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('')
-      .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`).join(''));
-    const pjwt = JSON.parse(jsonPayload);
-    if (pjwt.exp < Math.floor(Date.now() / 1000)) {
-      localStorage.removeItem('token');
-    }
-    return jwt;
-  }
-
-  useEffect(() => {
-    if (typeof localStorage !== 'undefined') {
-      if (!token && localStorage.getItem('token')) {
-        dispatch({
-          type: 'SET_USER',
-          user: appUser,
-        });
-        dispatch({
-          type: 'SET_TOKEN',
-          token: validateJwt(localStorage.getItem('token')),
-        });
-        console.log(token);
-      }
-    }
-  });
   return (
     <>
-      <ThemeProvider theme={darkLightTheme}>
-        <CssBaseline />
-        <AlertBar />
-        <BlogAdd content={content} />
-      </ThemeProvider>
+      <StrictMode>
+        <ThemeProvider theme={darkLightTheme}>
+          <CssBaseline />
+          <AlertBar />
+          <BlogAddEdit content={content} />
+        </ThemeProvider>
+      </StrictMode>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ params, req }) {
   // TODO get user from JWT on server side ?!?
   const appUser = await controllers.getUser();
-  const content = '\n'
+  let content = {};
+  content.body = '\n'
       + '\n'
       + '# Heading level 1\n'
       + '\n'
@@ -243,6 +166,12 @@ export async function getServerSideProps() {
       + '```\n';
   // Here we are getting user from server (just as an example of prerendering).
   // Actually we should get user from token
+  console.log('we are inside', params, params.id !== '0');
+  if (params && params.id && params.id !== '0') {
+    const postData = await controllers.getBlog(params.id);
+    content = postData;
+    // const blogger = await getUserData('patrik.bego'); // TODO hard coded for now
+  }
   console.log(content);
   return {
     props: {

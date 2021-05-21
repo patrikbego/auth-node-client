@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import DynamicHead from './dynamicHead';
+import DynamicHead from './DynamicHead';
 
 it('renders Dynamic component correctly', () => {
   const mockData = {

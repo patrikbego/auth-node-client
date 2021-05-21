@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -18,6 +18,7 @@ import facebookService from '../utils/facebookService';
 import googleService from '../utils/googleService';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
+import {tokenSetter} from '../utils/tokenUtils';
 
 export default function Login({ URL }) {
   const useStyles = makeStyles((theme) => ({
@@ -109,6 +110,7 @@ export default function Login({ URL }) {
             await router.push('/');
           }
         } catch (e) {
+          console.log(e);
           setFetchErrorMsg('User login failed!');
         }
       },

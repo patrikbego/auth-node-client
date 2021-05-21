@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ShareFooter from './shareFooter';
+import ShareFooter from './ShareFooter';
 
 it('renders mainList component correctly', () => {
   const mockData = {

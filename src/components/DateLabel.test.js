@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import DateC from './dateLabel';
 
 it('renders date component correctly', () => {
@@ -16,15 +16,17 @@ it('checks the date string is in right format', () => {
     } else {
       throw e;
     }
-
     expect(e.message).toBe('Invalid time value');
   }
 });
 
-// it('checks empty date', () => {
-//   const tree = render(<DateC />);
-//   expect(tree).toContain('2021');
-// });
+it('checks full date', () => {
+  const tree = render(<DateC dateString="2021-05-06 01:35:34.242+00" />);
+  expect(tree).toMatchSnapshot();
+  expect(
+    screen.getByText('Wed May 05 2021'),
+  ).toBeInTheDocument();
+});
 //
 // it('checks the date string is in right format 1', () => {
 //   expect(() => {

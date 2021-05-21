@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Head from 'next/head';
 
 export default function DynamicHead({ children, meta }) {
   return (
     <Head>
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/alien.svg" />
 
-      // Primary Meta Tags
+      {/*// Primary Meta Tags*/}
       <meta name="title" content={meta.title} />
       <meta name="description" content={meta.description} />
       <meta name="keywords" content={meta.keywords} />

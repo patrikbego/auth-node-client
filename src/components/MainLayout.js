@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import { Tooltip } from '@material-ui/core';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import {
-  Create,
-} from '@material-ui/icons';
 import { useStateValue } from '../utils/reducers/StateProvider';
-import controller from '../api/controller';
 import Header from './Header';
+import MainLayoutDrawer from './MainLayoutDrawer';
+import {parseJwt, tokenSetter, validateJwt} from '../utils/tokenUtils';
 
 const drawerWidth = 240;
 
@@ -105,79 +93,60 @@ const useStyles = makeStyles((theme) => ({
     // display: 'flex',
     // justifyContent: 'flex-end',
   },
+
+  mainLayoutContainer: {
+    maxWidth: '80%',
+    padding: '0 1rem',
+    margin: '6rem auto 6rem',
+    textAlign: 'center',
+  },
+
+  mainLayoutHeader: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  mainLayout: {
+    width: '6rem',
+    height: '6rem',
+  },
+
+  mainHeaderHomeImage: {
+    width: '8rem',
+    height: '8rem',
+  },
+
+  backToHome: {
+    margin: '3rem 0 0',
+  },
+
 }));
 
 export default function MainLayout({
-  children, appUser,
+  children, appUser, mainPage, itemId,
 }) {
+  console.log('MainLayout', itemId);
   const [{ user, token }, dispatch] = useStateValue();
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-  const router = useRouter();
   const theme = useTheme();
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  async function addArticle() {
-    // TODO check if logged in
-    await router.push('/blog');
-  }
-  const logout = async () => {
-    try {
-      await controller.logout();
-      dispatch({
-        type: 'SET_USER',
-        user: null,
-      });
-      dispatch({
-        type: 'SET_TOKEN',
-        token: null,
-      });
-      await router.push('/about');
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-  function parseJwt(jwt) {
-    if (!jwt) return null;
-    const base64Url = jwt.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('')
-      .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`).join(''));
-    const pjwt = JSON.parse(jsonPayload);
-    if (pjwt.exp < Math.floor(Date.now() / 1000)) {
-      localStorage.removeItem('token');
-    }
-    return pjwt;
-  }
-
-  function validateJwt(jwt) {
-    if (!jwt) return null;
-    const base64Url = jwt.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('')
-      .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`).join(''));
-    const pjwt = JSON.parse(jsonPayload);
-    if (pjwt.exp < Math.floor(Date.now() / 1000)) {
-      localStorage.removeItem('token');
-    }
-    return jwt;
-  }
-  useEffect(() => {
-    if (typeof localStorage !== 'undefined') {
-      if (!token && localStorage.getItem('token')) {
-        dispatch({
-          type: 'SET_USER',
-          user: parseJwt(localStorage.getItem('token')).user,
-        });
-        dispatch({
-          type: 'SET_TOKEN',
-          token: validateJwt(localStorage.getItem('token')),
-        });
-        console.log(token);
-      }
-    }
-  });
+  tokenSetter(token, dispatch, useEffect);
+  // useEffect(() => {
+  //   if (typeof localStorage !== 'undefined') {
+  //     if (!token && localStorage.getItem('token')) {
+  //       dispatch({
+  //         type: 'SET_USER',
+  //         user: parseJwt(localStorage.getItem('token')).user,
+  //       });
+  //       dispatch({
+  //         type: 'SET_TOKEN',
+  //         token: validateJwt(localStorage.getItem('token')),
+  //       });
+  //       console.log('MainLayout token', token);
+  //     }
+  //   }
+  // });
   function useFetchUser() {
     const [loading, setLoading] = useState(() => !user);
 
@@ -187,15 +156,11 @@ export default function MainLayout({
           return;
         }
         setLoading(true);
-        // let isMounted = true;
         console.log(loading, 'before call');
 
         console.log(user);
         setLoading(false);
         console.log(loading, 'after call');
-        // return () => {
-        //   isMounted = false;
-        // };
       },
       [],
     );
@@ -205,62 +170,29 @@ export default function MainLayout({
 
   const { loading } = useFetchUser();
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Header loading={false} />
-      </AppBar>
-
-      {token && user ? (
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
+    <>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
           })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
         >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl'
-                ? <ChevronRightIcon />
-                : <ChevronLeftIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <Divider />
-          <List>
-            {/*  Button bar */}
-            <ListItem
-              button
-              onClick={() => {
-                addArticle();
-                console.log('clicked');
-              }}
-            >
-              <Tooltip title="Create New Article" placement="right">
-                <ListItemIcon>
-                  <Create />
-                </ListItemIcon>
-              </Tooltip>
-            </ListItem>
-          </List>
-        </Drawer>
-      ) : (<></>)}
-      <main>
-        <div className="container">{children}</div>
-      </main>
+          <Header loading={false} />
+        </AppBar>
 
-    </div>
+        {token && user ? (
+          <MainLayoutDrawer
+            classes={classes}
+            open={open}
+            theme={theme}
+            mainPage={mainPage}
+            itemId={itemId}
+          />
+        ) : (<></>)}
+        <div className={classes.mainLayoutContainer}>{children}</div>
+      </div>
+    </>
   );
 }

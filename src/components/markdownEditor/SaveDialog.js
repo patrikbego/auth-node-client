@@ -13,9 +13,10 @@ import { Save } from '@material-ui/icons';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import { TextField } from '@material-ui/core';
-import controllers from '../../api/controller';
 import { openAlertBar } from '../../utils/alertBarUtils';
 import { useStateValue } from '../../utils/reducers/StateProvider';
+import { handleAddUpdate } from '../../api/posts';
+import {parseTitle} from '../../utils/metaUtils';
 
 const styles = (theme) => ({
   root: {
@@ -85,23 +86,15 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function SaveDialog({ content }) {
+export default function SaveDialog({ content, itemId, originalTags }) {
+  console.log('originalTags', originalTags);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [tags, setTags] = React.useState(false);
+  const [tags, setTags] = React.useState(originalTags);
 
   const [{ alertOpen, alertMessage, alertType }, dispatch] = useStateValue();
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleSave = (publish) => {
-    if (!content) {
-      setOpen(false);
-      console.log('content is required');
-      openAlertBar(dispatch, 'Content is required!', 'error');
-      return;
-    }
     const articleTitle = content.split('\n')[0];
     if (articleTitle && !articleTitle.includes('#')) {
       setOpen(false);
@@ -109,28 +102,13 @@ export default function SaveDialog({ content }) {
       openAlertBar(dispatch, 'Title is required!', 'error');
       return;
     }
-    const blog = {
-      // userId: , parsed from cookie on the server
-      language: 'EN',
-      original: 'EN',
-      title: articleTitle,
-      body: content,
-      tags,
-      published: !!publish,
-      status: publish ? 'PUBLISHED' : 'DRAFT',
-      created_date: new Date(),
-      // updated_date: new Date(),
-    };
-
-    controllers.createBlog({ blog, tags })
-      .then((res) => {
-        setOpen(false);
-        if (res.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
-          openAlertBar(dispatch, res.statusText, 'error');
-        } else {
-          openAlertBar(dispatch, 'Article has been created!', 'success');
-        }
-      });
+    setOpen(true);
+  };
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+  const handleSave = (publish) => {
+    handleAddUpdate(content, setOpen, dispatch, tags, publish, itemId);
   };
 
   function handleTags(event) {
@@ -156,7 +134,7 @@ export default function SaveDialog({ content }) {
         open={open}
         maxWidth="lg"
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleSave}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClickClose}>
           Editor Helper
         </DialogTitle>
         <Divider />
@@ -177,13 +155,14 @@ export default function SaveDialog({ content }) {
             label="#Tags"
             onChange={handleTags}
             fullWidth
+            defaultValue={tags}
           />
           {/* </main> */}
           {/* <main className={styles.mdContent}> */}
           {/*  /!* <div className={classes.toolbar} /> *!/ */}
           {/*  <Typography */}
           {/*    paragraph */}
-          {/*    dangerouslySetInnerHTML={{ __html: parsedContent }} */}
+          {/*    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parsedContent) }} */}
           {/*  /> */}
           {/* </main> */}
         </DialogContent>

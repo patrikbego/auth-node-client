@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { StrictMode, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -54,41 +54,43 @@ export default function ConfirmEmail() {
       );
   }
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          {fetchErrorMsg
+    <StrictMode>
+      <Container maxWidth="sm">
+        <Box my={4}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {fetchErrorMsg
             && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
-          {!fetchErrorMsg
+            {!fetchErrorMsg
             && (
             <FormHelperText>
               Email has been sent. Please Confirm
               Email.
             </FormHelperText>
             )}
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          naked
-          href="/"
-        >
-          Go to the main page
-        </Button>
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            naked
+            href="/"
+          >
+            Go to the main page
+          </Button>
         &nbsp;
-        <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          naked
-          href="/resend"
-        >
-          Resend Email
-        </Button>
-        {/* <ProTip/> */}
-        <Copyright />
-      </Box>
-    </Container>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            naked
+            href="/resend"
+          >
+            Resend Email
+          </Button>
+          {/* <ProTip/> */}
+          <Copyright />
+        </Box>
+      </Container>
+    </StrictMode>
   );
 }

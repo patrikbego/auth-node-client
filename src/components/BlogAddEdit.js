@@ -1,7 +1,7 @@
 import React from 'react';
-import MarkdownEditor from './MarkdownEditor/EditorPage';
+import MarkdownEditor from './markdownEditor/EditorPage';
 
-export default function BlogAdd({ content }) {
+export default function BlogAddEdit({ content }) {
   // const [value, setValue] = React.useState('**Hello world!!!**');
   return (
     <div>

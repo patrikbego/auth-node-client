@@ -1,5 +1,6 @@
 import React from 'react';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import DOMPurify from 'dompurify';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -9,11 +10,10 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import {Help} from '@material-ui/icons';
+import { Help } from '@material-ui/icons';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import mdToHtml from '../../utils/mdUtils';
-import {ListItemText} from '@material-ui/core';
 
 const content = '\n'
     + '\n'
@@ -150,6 +150,9 @@ const content = '\n'
     + '<every character> is allowed here\n'
     + '```\n';
 
+let sanitizer = (a) => a;
+if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
+
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -283,6 +286,7 @@ export default function HelpDialog() {
             {/* <div className={classes.toolbar} /> */}
             <Typography
               paragraph
+              // dangerouslySetInnerHTML={{ __html: sanitizer(parsedContent) }}
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           </main>

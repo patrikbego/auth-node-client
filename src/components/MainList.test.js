@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MainList from './mainList';
+import MainList from './MainList';
 
 it('renders empty mainList component correctly', () => {
   const tree = render(<MainList list />);

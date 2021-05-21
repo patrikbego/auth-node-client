@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useRouter } from 'next/router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,6 +12,7 @@ import { Avatar, Tooltip } from '@material-ui/core';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import controller from '../api/controller';
 import Link from './Link';
+import {parseJwt, validateJwt} from '../utils/tokenUtils';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -86,7 +87,7 @@ function Header({ loading }) {
         elevation={0}
         className={classes.appBar}
       >
-        {!loading && (user ? (
+        {token && user ? (
           <Toolbar className={classes.toolbar}>
             <Typography
               variant="h6"
@@ -178,7 +179,7 @@ function Header({ loading }) {
               </IconButton>
             </Tooltip>
           </Toolbar>
-        ))}
+        )}
       </AppBar>
     </>
   );

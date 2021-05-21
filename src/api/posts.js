@@ -1,6 +1,9 @@
 import matter from 'gray-matter';
 import remark from 'remark';
 import html from 'remark-html';
+import { openAlertBar } from '../utils/alertBarUtils';
+import controllers from './controller';
+import { parseTitle } from '../utils/metaUtils';
 
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_REST_API}/api/v1/blog`;
 
@@ -77,4 +80,62 @@ export async function getPostData(id) {
     contentHtml,
     ...matterResult.data,
   };
+}
+
+export function handleAddUpdate(content, setOpen, dispatch, tags, publish, itemId) {
+  if (!content) {
+    setOpen(false);
+    console.log('content is required');
+    openAlertBar(dispatch, 'Content is required!', 'error');
+    return;
+  }
+  const articleTitle = content.split('\n')[0];
+  if (articleTitle && !articleTitle.includes('#')) {
+    setOpen(false);
+    console.log('Title is required');
+    openAlertBar(dispatch, 'Title is required!', 'error');
+    return;
+  }
+  const blog = {
+    // userId: , parsed from cookie on the server
+    language: 'EN',
+    original: 'EN',
+    title: articleTitle,
+    body: content,
+    tags,
+    published: !!publish,
+    status: publish ? 'PUBLISHED' : 'DRAFT',
+  };
+  if (!itemId) {
+    blog.createdDate = new Date();
+    controllers.createBlog(blog).then((res) => {
+      setOpen(false);
+      if (res.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
+        openAlertBar(dispatch, res.statusText, 'error');
+      } else {
+        openAlertBar(dispatch, 'Article has been created!', 'success');
+      }
+    });
+  } else {
+    blog.updatedDate = new Date();
+    blog.id = itemId;
+    controllers.updateBlog(blog).then((res) => {
+      setOpen(false);
+      if (res.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
+        openAlertBar(dispatch, res.statusText, 'error');
+      } else {
+        openAlertBar(dispatch, 'Article has been updated!', 'success');
+      }
+    });
+  }
+}
+
+export function handleDelete(postId, dispatch) {
+  controllers.deleteBlog({ id: postId.itemId }).then((res) => {
+    if (res.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
+      openAlertBar(dispatch, res.statusText, 'error');
+    } else {
+      openAlertBar(dispatch, 'Article has been Deleted!', 'success');
+    }
+  });
 }
