@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import DateC from './dateLabel';
+import DateC from './DateLabel';
 
 it('renders date component correctly', () => {
   const tree = render(<DateC dateString="2020-01-01" />);
@@ -24,7 +24,15 @@ it('checks full date', () => {
   const tree = render(<DateC dateString="2021-05-06 01:35:34.242+00" />);
   expect(tree).toMatchSnapshot();
   expect(
-    screen.getByText('Wed May 05 2021'),
+    screen.getByText('Thu May 06 2021'),
+  ).toBeInTheDocument();
+});
+
+it('checks full date', () => {
+  const tree = render(<DateC dateString="2020-01-02" />);
+  expect(tree).toMatchSnapshot();
+  expect(
+    screen.getByText('Thu Jan 02 2020'),
   ).toBeInTheDocument();
 });
 //

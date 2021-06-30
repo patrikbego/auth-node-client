@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-  act, render, screen, waitFor,
-} from '@testing-library/react';
-import AddPanel from './EditorPanel';
+import ReactDom from 'react-dom';
+import { act } from '@testing-library/react';
+import EditorPage from './EditorPage';
 import { StateProvider } from '../../utils/reducers/StateProvider';
 import reducer, { initialState } from '../../utils/reducers/reducer';
-import ReactDom from 'react-dom';
 
 // https://github.com/mrdulin/react-act-examples/blob/master/sync.md
 jest.mock('next/router', () => ({
@@ -21,18 +18,22 @@ jest.mock('next/router', () => ({
 }));
 it('renders editor panel correctly', async () => {
   const mockData = {
-    mddata: '---\n'
+    mddata: {
+      id: 1,
+      tags: 'test',
+      body: '---\n'
         + '1. First item\n'
         + '1. Second item\n'
         + '1. Third item\n'
         + '1. Fourth item\n',
+    },
   };
 
   const el = document.createElement('div');
   act(() => {
     ReactDom.render(
       <StateProvider initialState={initialState} reducer={reducer}>
-        <AddPanel content={mockData.mddata} />
+        <EditorPage content={mockData.mddata} />
       </StateProvider>, el,
     );
   });

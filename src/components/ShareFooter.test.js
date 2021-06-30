@@ -2,16 +2,17 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ShareFooter from './ShareFooter';
 
+const mockData = {
+  mddata: 'test',
+  meta: {
+    title: 'fileName',
+    description: 'test description',
+    keywords: 'NI at the moment',
+    image: '/images/profile.jpg',
+  },
+};
+
 it('renders mainList component correctly', () => {
-  const mockData = {
-    mddata: 'test',
-    meta: {
-      title: 'fileName',
-      description: 'test description',
-      keywords: 'NI at the moment',
-      image: '/images/profile.jpg',
-    },
-  };
   const tree = render(<ShareFooter postData={mockData} />);
   expect(tree).toMatchSnapshot();
 
@@ -23,5 +24,5 @@ it('renders mainList component correctly', () => {
 it('renders mainList component in-correctly', () => {
   expect(() => {
     render(<ShareFooter />);
-  }).toThrow("Cannot read property 'meta' of undefined");
+  }).toThrow("Cannot read property 'title' of undefined");
 });

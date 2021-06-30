@@ -28,7 +28,7 @@ describe('App', () => {
       </StateProvider>,
     );
     expect(
-      screen.getByText('You are not logged in!'),
+      screen.getByText('Loading ...'),
     ).toBeInTheDocument();
   });
 });

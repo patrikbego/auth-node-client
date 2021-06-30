@@ -12,11 +12,11 @@ it('renders empty mainList component correctly', () => {
 });
 
 it('renders mainList component correctly', () => {
-  const list1 = [{ id: 'test.md', date: '2020-01-02', title: 'test' }];
+  const list1 = [{ id: 'test.md', createdDate: '2021-05-06', title: 'test' }];
   const tree = render(<MainList postsData={list1} />);
   expect(tree).toMatchSnapshot();
 
   expect(
-    screen.getByText('Wed Jan 01 2020'),
+    screen.getByText('Thu May 06 2021'),
   ).toBeInTheDocument();
 });

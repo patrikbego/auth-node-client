@@ -14,7 +14,6 @@ export default function Home({ items, appUser, postsData }) {
   const [{ token }, dispatch] = useStateValue();
   const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
 
-  console.log(appUser.errors);
   if ((items && items.errors) || (appUser && appUser.errors) || (postsData && postsData.errors)) {
     // openAlertBar(dispatch, 'appUser.errors', 'error');
   }
@@ -34,7 +33,7 @@ export default function Home({ items, appUser, postsData }) {
         <DynamicHead meta={meta} />
         <ThemeProvider theme={darkLightTheme}>
           <MainLayout items={items} user={appUser} mainPage>
-            {appUser.errors ? (
+            {appUser && appUser.errors ? (
               <AlertBar
                 alertOpen
                 alertMessage={appUser.errors}

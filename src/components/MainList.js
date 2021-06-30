@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import DOMPurify from 'dompurify';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import utilStyles from '../styles/utils.module.css';
 import DateLabel from './DateLabel';
 import ReactMd from './markdownEditor/ReactMd';
