@@ -1,29 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useRouter } from 'next/router';
 import { FormHelperText } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import controllers from '../api/controller';
 import Copyright from './Copyright';
 import Phone from './formFields/Phone';
-import Password from './formFields/Password';
 import Link from './Link';
 import Email from './formFields/Email';
 import TextFieldRequired from './formFields/TextFieldRequired';
+import { useStateValue } from '../utils/reducers/StateProvider';
+import { openAlertBar } from '../utils/alertBarUtils';
 
-export default function SignUp({ appUser }) {
+export default function EditProfile({ appUser }) {
+  const [{ theme, user, token }, dispatch] = useStateValue();
+
   const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
     },
     image: {
       backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -68,17 +71,17 @@ export default function SignUp({ appUser }) {
 
   const fieldPropsLN = {
     requiredText: 'Last name field is required',
-    label: 'Last Name',
+    label: user ? user.lastName : 'Last Name',
     field: 'lname',
   };
   const fieldPropsFN = {
     requiredText: 'First name field is required',
-    label: 'First Name',
+    label: user ? user.firstName : 'First Name',
     field: 'fname',
   };
   const fieldPropsUN = {
     requiredText: 'User name field is required',
-    label: 'User Name',
+    label: user ? user.userName : 'User Name',
     field: 'uname',
   };
 
@@ -119,23 +122,23 @@ export default function SignUp({ appUser }) {
     event.preventDefault();
     // formValidation(true);
 
-    const emailElement = event.target.email;
+    // const emailElement = event.target.email;
     const firstNameElement = event.target.fname;
     const lastNameElement = event.target.lname;
     const userNameElement = event.target.uname;
-    const phoneElement = event.target.phone;
-    const passwordElement = event.target.password;
-    const tAndCElement = event.target.tosAgreement;
+    // const phoneElement = event.target.phone;
+    // const passwordElement = event.target.password;
+    // const tAndCElement = event.target.tosAgreement;
 
-    controllers.signUp(
+    controllers.updateProfile(
       {
-        email: emailElement.value,
-        phone: phoneElement.value,
-        firstName: firstNameElement.value,
-        lastName: lastNameElement.value,
-        userName: userNameElement.value,
-        password: passwordElement.value,
-        tosAgreement: tAndCElement.checked,
+        // email: emailElement.value,
+        // phone: phoneElement.value,
+        firstName: firstNameElement.value ? firstNameElement.value : user.firstName,
+        lastName: lastNameElement.value ? lastNameElement.value : user.lastName,
+        userName: userNameElement.value ? userNameElement.value : user.userName,
+        // password: passwordElement.value,
+        // tosAgreement: tAndCElement.checked,
       },
     ).then(
       async (response) => {
@@ -144,10 +147,11 @@ export default function SignUp({ appUser }) {
           if (response.status !== 200) {
             setFetchErrorMsg(res);
           } else {
-            await router.push('/confirmEmail');
+            await router.push('/');
+            openAlertBar(dispatch, 'User has been updated', 'success');
           }
         } catch (e) {
-          setFetchErrorMsg('User creation failed!');
+          openAlertBar(dispatch, 'User update failed', 'error');
         }
       },
     ).catch(
@@ -162,18 +166,23 @@ export default function SignUp({ appUser }) {
       },
     );
   }
+
   return (
     <>
       <div className={classes.root}>
         <CssBaseline />
         <Container onSubmit={handleSubmit} component="main" maxWidth="xs">
           <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
+            <>
+              <Avatar className={classes.large}>
+                {user
+                  ? user.firstName
+                  : 'Not logged in'}
+              </Avatar>
+              {/* <Typography component="h1" variant="h5"> */}
+              {/*  Edit Profile */}
+              {/* </Typography> */}
+            </>
             <form className={classes.form} noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -195,34 +204,10 @@ export default function SignUp({ appUser }) {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Email disableCallback={disableCallback} />
+                  <Email disableCallback={disableCallback} user={user} />
                 </Grid>
                 <Grid item xs={12}>
-                  <Phone disableCallback={disableCallback} />
-                </Grid>
-                <Grid item xs={12}>
-                  <Password disableCallback={disableCallback} />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={(
-                      <Checkbox
-                        color="primary"
-                        required
-                        id="tosAgreement"
-                        value={tosValue}
-                        name="tosAgreement"
-                        onChange={(e) => {
-                          setTosValue((tosValue) => !tosValue);
-                          console.log('changed to ',
-                            e.target.value);
-                        }}
-                      />
-                        )}
-                    label="I accept T&C"
-                  />
-                  {tosError
-                    && <FormHelperText error>{tosError}</FormHelperText>}
+                  <Phone disableCallback={disableCallback} user={user} />
                 </Grid>
               </Grid>
               <Button
@@ -233,7 +218,7 @@ export default function SignUp({ appUser }) {
                 className={classes.submit}
                 disabled={disable}
               >
-                Sign Up
+                Update
               </Button>
               {fetchErrorMsg
                 && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}

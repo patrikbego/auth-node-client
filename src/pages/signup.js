@@ -9,12 +9,12 @@ export default function SignUpP() {
   const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
   return (
     <>
-      <StrictMode>
+      {/*<StrictMode>*/}
         <ThemeProvider theme={darkLightTheme}>
           <Header loading={false} />
           <SignUp />
         </ThemeProvider>
-      </StrictMode>
+      {/*</StrictMode>*/}
     </>
   );
 }

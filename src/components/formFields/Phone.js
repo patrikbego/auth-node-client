@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function Phone(props) {
+export default function Phone({disableCallback, user}) {
   const firstRender = useRef(true);
 
   const [phoneValue, setPhoneValue] = useState('');
@@ -30,19 +30,20 @@ export default function Phone(props) {
       firstRender.current = false;
       return;
     }
-    props.disableCallback(phoneValidation().disabled);
+    disableCallback(phoneValidation().disabled);
   }, [
     phoneValue]);
+
+  let labelText = user ? user.phone : 'Phone Number';
   return (
     <TextField
       variant="outlined"
       required
       fullWidth
       id="phone"
-      label="Phone Number"
+      label={labelText}
       name="phone"
       autoComplete="phone"
-      autoFocus
       onChange={(e) => setPhoneValue(e.target.value)}
       error={!!phoneError}
       helperText={phoneError}

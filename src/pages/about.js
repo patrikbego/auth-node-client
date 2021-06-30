@@ -15,8 +15,8 @@ export default function About() {
 
   return (
     <>
-      <StrictMode>
-        <Header loading={false} title="Bego.tips" />
+      {/*<StrictMode>*/}
+        <Header loading={false} title="octoplasm.com" />
         <Container maxWidth="sm">
           <p>
             User:
@@ -42,7 +42,7 @@ export default function About() {
           </Box>
         </Container>
         <Footer title="Footer" description="Something here to give the footer a purpose!" />
-      </StrictMode>
+      {/*</StrictMode>*/}
     </>
   );
 }

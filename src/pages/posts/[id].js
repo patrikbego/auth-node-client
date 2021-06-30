@@ -9,7 +9,7 @@ import markdownStyle from './markdown.module.css';
 import controllers from '../../api/controller';
 import { useStateValue } from '../../utils/reducers/StateProvider';
 import MainLayout from '../../components/MainLayout';
-import AlertBar from '../../components/AlertBar';
+import GlobalAlertBar from '../../components/GlobalAlertBar';
 import muiSetter from '../../utils/theme';
 import mdToHtml from '../../utils/mdUtils';
 import DynamicHead from '../../components/DynamicHead';
@@ -75,11 +75,11 @@ export default function Post({ postData, shareUrl }) {
 
   return (
     <>
-      <StrictMode>
+      {/*<StrictMode>*/}
         <DynamicHead meta={parseMetaData(postData.body, shareUrl)} />
         <ThemeProvider theme={darkLightTheme}>
           <MainLayout items={null} user={user} itemId={postData.id}>
-            <AlertBar />
+            <GlobalAlertBar />
             <Head>
               <title>{parseTitle(postData.body)}</title>
             </Head>
@@ -100,7 +100,7 @@ export default function Post({ postData, shareUrl }) {
             <ShareFooter postData={parseMetaData(postData.body, shareUrl)} shareUrl={share} />
           </MainLayout>
         </ThemeProvider>
-      </StrictMode>
+      {/*</StrictMode>*/}
     </>
   );
 }

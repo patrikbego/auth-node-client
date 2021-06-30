@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,12 +7,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   BrightnessMedium, ExitToApp, Info, VpnKey,
 } from '@material-ui/icons';
+import Image from 'next/image';
 import IconButton from '@material-ui/core/IconButton';
 import { Avatar, Tooltip } from '@material-ui/core';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import controller from '../api/controller';
 import Link from './Link';
-import {parseJwt, validateJwt} from '../utils/tokenUtils';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   link: {
-    margin: theme.spacing(1, 1.5),
-    color: `${theme.palette.secondary.main}`,
+    // margin: theme.spacing(1, 1.5),
+    // color: `${theme.palette.secondary.main}`,
   },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
@@ -41,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
+  },
+  headerImg: {
+    '@media (max-width:600px)': {
+      width: 44,
+    },
+    '@media (min-width:600px)': {
+      width: 60,
+    },
+
   },
 }));
 
@@ -100,7 +109,17 @@ function Header({ loading }) {
                 href="/"
                 className={classes.link}
               >
-                bego.tips
+                <div className={classes.headerImg}>
+                  <Image
+                    alt="OctoPlasm"
+                    src="/images/octopus.svg"
+                    layout="responsive"
+                    objectFit="contain"
+                    href="/"
+                    width={60}
+                    height={60}
+                  />
+                </div>
               </Link>
             </Typography>
 
@@ -146,7 +165,17 @@ function Header({ loading }) {
                 href="/"
                 className={classes.link}
               >
-                bego.tips
+                <div className={classes.headerImg}>
+                  <Image
+                    alt="OctoPlasm"
+                    src="/images/octopus.svg"
+                    layout="responsive"
+                    objectFit="contain"
+                    href="/"
+                    width={60}
+                    height={60}
+                  />
+                </div>
               </Link>
             </Typography>
             {/* TODO extract into component TooltipIcon */}

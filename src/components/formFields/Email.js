@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function Email(props) {
+export default function Email({disableCallback, user}) {
   const firstRender = useRef(true);
 
   const [emailError, setEmailError] = useState(null);
@@ -32,15 +32,17 @@ export default function Email(props) {
       firstRender.current = false;
       return;
     }
-    props.disableCallback(emailValidation().disabled);
+    disableCallback(emailValidation().disabled);
   }, [emailValue]);
+
+  let labelText = user ? user.email : 'Email Address';
   return (
     <TextField
       variant="outlined"
       required
       fullWidth
       id="email"
-      label="Email Address"
+      label={labelText}
       name="email"
       autoComplete="email"
       onChange={(e) => setEmailValue(e.target.value)}

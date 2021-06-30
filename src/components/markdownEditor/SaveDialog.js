@@ -107,8 +107,12 @@ export default function SaveDialog({ content, itemId, originalTags }) {
   const handleClickClose = () => {
     setOpen(false);
   };
-  const handleSave = (publish) => {
-    handleAddUpdate(content, setOpen, dispatch, tags, publish, itemId);
+  const handleSave = () => {
+    handleAddUpdate(content, setOpen, dispatch, tags, true, itemId);
+  };
+
+  const handleSaveDraft = () => {
+    handleAddUpdate(content, setOpen, dispatch, tags, false, itemId);
   };
 
   function handleTags(event) {
@@ -167,7 +171,7 @@ export default function SaveDialog({ content, itemId, originalTags }) {
           {/* </main> */}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleSave}>
+          <Button autoFocus onClick={handleSaveDraft}>
             Save as Draft
           </Button>
           <Button autoFocus onClick={handleSave} className={classes.closeButton}>

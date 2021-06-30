@@ -17,6 +17,19 @@ const controllers = {
     });
   },
 
+  updateProfile(body) {
+    return fetch(`${controllers.URL}/user/updateUser`, {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      cache: 'default',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+
   async logout(fs, gs) {
     if (fs) {
       try {
@@ -148,7 +161,7 @@ const controllers = {
     return data;
   },
 
-  async getBlogs() {
+  async getAllBlogs() {
     let data;
     try {
       const res = await fetch(`${controllers.URL}/blog/getAllBlogs`, {
@@ -198,11 +211,8 @@ const controllers = {
         'Content-Type': 'application/json',
       },
     });
-    if (res.status !== 200) {
-      return null;
-    }
-    const json = await res.json();
-    return json;
+    const user = await res.json();
+    return user;
   },
 
   makePayment(body) {

@@ -45,7 +45,7 @@ import {
 } from 'react-share';
 import styles from './ShareFooter.module.css';
 
-export default function ShareFooter({ postData, shareUrl = 'https://bego.tips' }) {
+export default function ShareFooter({ postData, shareUrl = 'https://octoplasm.com' }) {
   return (
     <div className={`${styles.shareMainContainer}`}>
       <div className={`${styles.shareContainer}`}>

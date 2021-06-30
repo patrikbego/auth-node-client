@@ -4,7 +4,7 @@ import { CssBaseline } from '@material-ui/core';
 import BlogAddEdit from '../../components/BlogAddEdit';
 import { useStateValue } from '../../utils/reducers/StateProvider';
 import controllers from '../../api/controller';
-import AlertBar from '../../components/AlertBar';
+import GlobalAlertBar from '../../components/GlobalAlertBar';
 import muiSetter from '../../utils/theme';
 import { tokenSetter } from '../../utils/tokenUtils';
 
@@ -15,13 +15,13 @@ export default function blog({ content, appUser }) {
 
   return (
     <>
-      <StrictMode>
+      {/*<StrictMode>*/}
         <ThemeProvider theme={darkLightTheme}>
           <CssBaseline />
-          <AlertBar />
+          <GlobalAlertBar />
           <BlogAddEdit content={content} />
         </ThemeProvider>
-      </StrictMode>
+      {/*</StrictMode>*/}
     </>
   );
 }

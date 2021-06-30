@@ -51,3 +51,24 @@
 .lightText {
   color: #666;
 }
+
+/* unvisited link */
+.a:link {
+  /*color: #f26b5b;*/
+  color: rgb(242,107,91);
+}
+
+/* visited link */
+.a:visited {
+  color: tomato;
+}
+
+/* mouse over link */
+.a:hover {
+  color: tomato;
+}
+
+/* selected link */
+.a:active {
+  color: rgb(242,107,91);
+}

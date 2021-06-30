@@ -46,7 +46,6 @@ export default function TextFieldRequired(disableCallback, fieldProps) {
       label={label}
       name={field}
       autoComplete={field}
-      autoFocus
       onChange={(e) => setTextField(e.target.value)}
       error={!!textError}
       helperText={textError}

@@ -4,7 +4,7 @@ import Head from 'next/head';
 export default function DynamicHead({ children, meta }) {
   return (
     <Head>
-      <link rel="icon" href="/alien.svg" />
+      <link rel="icon" href="/images/octopus.svg" />
 
       {/*// Primary Meta Tags*/}
       <meta name="title" content={meta.title} />

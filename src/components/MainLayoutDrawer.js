@@ -76,7 +76,7 @@ export default function MainLayoutDrawer(props) {
           <Fade {...TransitionProps} timeout={350}>
             <Paper>
               <Typography className={classes.typography}>
-                <ShareFooter postData="bego.tips" shareUrl="123" />
+                <ShareFooter postData="octoplasm.com" shareUrl="https://octoplasm.com" />
               </Typography>
             </Paper>
           </Fade>
