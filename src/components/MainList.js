@@ -1,19 +1,20 @@
 import Link from 'next/link';
 import React from 'react';
 import DOMPurify from 'dompurify';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import utilStyles from '../styles/utils.module.css';
 import DateLabel from './DateLabel';
 import ReactMd from './markdownEditor/ReactMd';
 
 export default function MainList({ postsData }) {
-  // const useStyles = makeStyles((theme) => ({
-  //   a: {
-  //     color: 'hotpink',
-  //   },
-  //
-  // }));
-  // const classes = useStyles();
-  // const theme = useTheme();
+  const useStyles = makeStyles((theme) => ({
+    p: {
+      color: 'tomato',
+    },
+
+  }));
+  const classes = useStyles();
+  const theme = useTheme();
 
   if (postsData) {
     let sanitizer = (a) => a;
@@ -22,7 +23,9 @@ export default function MainList({ postsData }) {
 
     return (
       <ul className={utilStyles.list}>
-        {postsData.map(({ id, createdDate, title }) => (
+        {postsData.map(({
+          id, createdDate, title, status,
+        }) => (
           <li className={utilStyles.listItem} key={id}>
             <Link href="/posts/[id]" as={`/posts/${id}`}>
               {/* <a dangerouslySetInnerHTML={{ __html: sanitizer(htmlTitle) }} /> */}
@@ -30,6 +33,8 @@ export default function MainList({ postsData }) {
             </Link>
             <small className={utilStyles.lightText}>
               <DateLabel dateString={createdDate} />
+              {status === ' DRAFT' ? (
+                <p className={classes.p}>{status}</p>) : (<></>)}
             </small>
           </li>
         ))}

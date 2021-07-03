@@ -142,43 +142,39 @@ const controllers = {
     });
   },
 
-  async getItems() {
-    let data;
-    try {
-      const res = await fetch(`${controllers.URL}/getItems`, {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      data = await res.json();
-    } catch (e) {
-      console.log(e);
-    }
-    return data;
+  getAllBlogs() {
+    return fetch(`${controllers.URL}/blog/getAllBlogs`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   },
 
-  async getAllBlogs() {
-    let data;
-    try {
-      const res = await fetch(`${controllers.URL}/blog/getAllBlogs`, {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (res.status === 401) return { error: 'Please Login!' };
-      data = await res.json();
-    } catch (e) {
-      console.log(e);
-    }
-    return data;
+  getUserDraftBlogs(id, req) {
+    let headers = new Headers();
+    headers = req.headers;
+    return fetch(`${controllers.URL}/blog/getUserDraftBlogs/${id}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers,
+    });
+  },
+
+  getUserBlogs(id) {
+    return fetch(`${controllers.URL}/blog/getUserBlogs/${id}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   },
 
   async getBlog(id) {

@@ -1,15 +1,15 @@
 import React, { StrictMode } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import controllers from '../api/controller';
-import MainLayout from '../components/MainLayout';
-import { useStateValue } from '../utils/reducers/StateProvider';
-import MainList from '../components/MainList';
-import GlobalAlertBar from '../components/GlobalAlertBar';
-import muiSetter from '../utils/theme';
-import DynamicHead from '../components/DynamicHead';
-import { errorWrapper } from '../utils/errorUtils';
-import AlertBar from '../components/AlertBar';
-import { openAlertBar } from '../utils/alertBarUtils';
+import controllers from '../../api/controller';
+import MainLayout from '../../components/MainLayout';
+import { useStateValue } from '../../utils/reducers/StateProvider';
+import MainList from '../../components/MainList';
+import GlobalAlertBar from '../../components/GlobalAlertBar';
+import muiSetter from '../../utils/theme';
+import DynamicHead from '../../components/DynamicHead';
+import { errorWrapper } from '../../utils/errorUtils';
+import AlertBar from '../../components/AlertBar';
+import { openAlertBar } from '../../utils/alertBarUtils';
 
 export default function Home({ appUser, postsData }) {
   const [{ token }, dispatch] = useStateValue();
@@ -58,9 +58,7 @@ export default function Home({ appUser, postsData }) {
 
 export async function getServerSideProps({ params, req }) {
   let postsData = {};
-  // controllers.getUserDraftBlogs(params.id, req).then((res) => {
-  // controllers.getUserBlogs(params.id, req).then((res) => {
-  const allBlogsPromise = await controllers.getAllBlogs();
+  const allBlogsPromise = await controllers.getUserDraftBlogs(params.id, req);
   if (allBlogsPromise.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
     postsData.errors = allBlogsPromise.statusText;
   } else {

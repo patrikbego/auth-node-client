@@ -86,7 +86,7 @@ function Header({ loading }) {
   const linkText = loading && user ? `Welcome ${user.firstName}` : '';
 
   async function goToProfile() {
-    await router.push('/profile');
+    await router.push(`/blogger/${user.userName}`);
   }
 
   return (

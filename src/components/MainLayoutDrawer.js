@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {
-  Add, Create, Search, Share,
+  Add, Create, MenuBook, Search, Share,
 } from '@material-ui/icons';
 import React from 'react';
 import * as PropTypes from 'prop-types';
@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import DeleteDialog from './DeleteDialog';
 import ShareFooter from './ShareFooter';
+import {useStateValue} from '../utils/reducers/StateProvider';
 
 export default function MainLayoutDrawer(props) {
   const router = useRouter();
@@ -56,11 +57,17 @@ export default function MainLayoutDrawer(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
+  const [{ theme, user, token }, dispatch] = useStateValue();
 
   const handleSearchClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
+  };
+
+  const handleDraftClick = (newPlacement) => async (event) => {
+    console.log(`/drafts/${user.userName}`);
+    await router.push(`/drafts/${user.userName}`);
   };
 
   return (
@@ -118,6 +125,18 @@ export default function MainLayoutDrawer(props) {
                   </ListItemIcon>
                 </Tooltip>
               </ListItem>
+              {token && user ? (
+                  <ListItem
+                      button
+                      onClick={handleDraftClick()}
+                  >
+                    <Tooltip title="Get all drafts" placement="right">
+                      <ListItemIcon>
+                        <MenuBook />
+                      </ListItemIcon>
+                    </Tooltip>
+                  </ListItem>
+              ) : (<></>)}
               <ListItem
                 button
                 onClick={handleSearchClick('right')}
