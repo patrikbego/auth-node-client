@@ -2,7 +2,7 @@ user-agent: *
 disallow: /admin/
 
 user-agent: *
-disallow: /posts/[id]
+disallow: /draft/
 
 user-agent: *
 disallow: /blogger/upload/
