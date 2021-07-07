@@ -1,48 +1,97 @@
-import React, { StrictMode } from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import ProTip from '../components/ProTip';
-import Link from '../components/Link';
-import Copyright from '../components/Copyright';
+import React from 'react';
+import {
+  createMuiTheme,
+  makeStyles,
+  ThemeProvider,
+} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import clsx from 'clsx';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { useStateValue } from '../utils/reducers/StateProvider';
+import muiSetter from '../utils/theme';
+import DynamicHead from '../components/DynamicHead';
+import MainLayoutDrawer from '../components/MainLayoutDrawer';
 
 export default function About() {
   const [{ user, token, theme }, dispatch] = useStateValue();
+  const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
+  const [open, setOpen] = React.useState(false);
+  const useStyles = makeStyles(() => ({
+    h1: {
+      color: 'tomato',
+      textAlign: 'center',
+      fontSize: '6vw',
+      paddingTop: '6vh',
+    },
+    h2: {
+      color: 'tomato',
+      textAlign: 'center',
+      fontSize: '3vw',
+    },
+    h3: {
+      color: 'tomato',
+      textAlign: 'left',
+      fontSize: '2vw',
+      paddingLeft: '6vw',
 
+    },
+
+  }));
+  console.log('about theme ========= ', theme);
+  console.log('about darklite ========= ', darkLightTheme);
+  const classes = useStyles(theme);
+
+  const meta = {
+    shareUrl: 'https://octoplasm.com',
+    keywords: 'put your thoughts on online',
+    description: 'Easiest way to put your thoughts  ;)',
+    title: 'OctoPlasm',
+  };
   return (
     <>
-      {/*<StrictMode>*/}
-        <Header loading={false} title="octoplasm.com" />
-        <Container maxWidth="sm">
-          <p>
-            User:
-            {user ? user.firstName : 'Not logged in'}
-          </p>
-          <p>
-            Token:
-            {token}
-          </p>
-          <p>
-            Theme:
-            {theme}
-          </p>
-          <Box my={4}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              Next.js example
-            </Typography>
-            <Button variant="contained" color="primary" component={Link} naked href="/">
-              Go to the main page
-            </Button>
-            <ProTip />
-            <Copyright />
-          </Box>
-        </Container>
-        <Footer title="Footer" description="Something here to give the footer a purpose!" />
-      {/*</StrictMode>*/}
+      <DynamicHead meta={meta} />
+      <ThemeProvider theme={darkLightTheme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: open,
+            })}
+          >
+            <Header loading={false} />
+          </AppBar>
+
+          {token && user ? (
+            <MainLayoutDrawer
+              classes={classes}
+              open={open}
+              theme={theme}
+              mainPage={mainPage}
+              itemId={itemId}
+            />
+          ) : (
+            <>
+              <br />
+              <p className={classes.h1}>OctoPlasm</p>
+              <p className={classes.h2}>
+                The easy way to share your ideas,
+                knowledge or views with the world.
+              </p>
+
+              <p className={classes.h3}>1. Create a profile</p>
+              <p className={classes.h3}>2. SignIn</p>
+              <p className={classes.h3}>3. And you are ready to do your first post</p>
+              <p className={classes.h3}>
+                4. Or alternatively
+                just explore what other people are writing about &#129488;
+              </p>
+            </>
+          )}
+        </div>
+
+      </ThemeProvider>
     </>
   );
 }

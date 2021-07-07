@@ -19,6 +19,7 @@ import googleService from '../utils/googleService';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 import {tokenSetter} from '../utils/tokenUtils';
+import utilStyles from '../styles/utils.module.css';
 
 export default function Login({ URL }) {
   const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ export default function Login({ URL }) {
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: `${theme.palette.secondary.main}`,
+      backgroundColor: theme.palette.primary.main,
     },
     link: {
       // margin: theme.spacing(1, 1.5),
@@ -209,13 +210,13 @@ export default function Login({ URL }) {
                 && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
             <Grid container>
               <Grid item xs>
-                <Link href="/forgotPassword" variant="body2">
-                  Forgot password?
+                <Link className={utilStyles.a} href="/forgotPassword" variant="body2">
+                  <a className={utilStyles.a}>Forgot password?</a>
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  Don't have an account? Sign Up
+                  <a className={utilStyles.a}>Don't have an account? Sign Up</a>
                 </Link>
               </Grid>
             </Grid>

@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import clsx from 'clsx';
 import DOMPurify from 'dompurify';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import { TextField } from '@material-ui/core';
+import {TextField} from '@material-ui/core';
 import Header from '../Header';
 import mdToHtml from '../../utils/mdUtils';
 import EditorSideDrawer from './EditorSideDrawer';
@@ -16,6 +16,11 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+  },
+  mdContent: {
+    color: theme.palette.type === 'light'
+      ? 'black'
+      : 'tomato',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -92,9 +97,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditorPage({ content }) {
-  const classes = useStyles();
   const textareaRef = useRef();
   const theme = useTheme();
+  const classes = useStyles(theme);
   let sanitizer = (a) => a;
   if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
   const [open, setOpen] = React.useState(false);
@@ -189,7 +194,7 @@ export default function EditorPage({ content }) {
         </main>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <ReactMd markdown={mdContent} />
+          <ReactMd className={classes.mdContent} markdown={mdContent} />
           {/*<Typography*/}
           {/*  paragraph*/}
           {/*  dangerouslySetInnerHTML={{ __html: parsedContent }}*/}

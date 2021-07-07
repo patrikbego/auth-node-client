@@ -77,11 +77,14 @@ function Header({ loading }) {
   };
 
   const changeTheme = () => {
+    console.log('SET_THEME ===== ', theme);
     dispatch({
       type: 'SET_THEME',
       theme: !theme,
     });
   };
+
+  console.log('Header theme ===== ', theme);
 
   const linkText = loading && user ? `Welcome ${user.firstName}` : '';
 
