@@ -18,35 +18,35 @@ import { useStateValue } from '../../utils/reducers/StateProvider';
 import { handleAddUpdate } from '../../api/posts';
 import {parseTitle} from '../../utils/metaUtils';
 
-const styles = (theme) => ({
+const styles = (defTheme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      margin: defTheme.spacing(1),
     },
   },
   closeButton: {
     position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
+    right: defTheme.spacing(1),
+    top: defTheme.spacing(1),
     // color: theme.palette.grey[500],
   },
 });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
+    padding: defTheme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
+    ...defTheme.mixins.toolbar,
   },
   paragraphContent: {
     display: 'flex',
     flexWrap: 'wrap',
     '& > *': {
-      margin: theme.spacing(1),
-      width: theme.spacing(100),
+      margin: defTheme.spacing(1),
+      width: defTheme.spacing(100),
       // height: theme.spacing(16),
     },
   },
@@ -72,17 +72,17 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-const DialogContent = withStyles((theme) => ({
+const DialogContent = withStyles((defTheme) => ({
   root: {
     // padding: theme.spacing(2),
     display: 'flex',
   },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({
+const DialogActions = withStyles((defTheme) => ({
   root: {
     margin: 0,
-    padding: theme.spacing(1),
+    padding: defTheme.spacing(1),
   },
 }))(MuiDialogActions);
 

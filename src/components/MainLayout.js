@@ -10,7 +10,7 @@ import {parseJwt, tokenSetter, validateJwt} from '../utils/tokenUtils';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   '@global': {
     ul: {
       margin: 0,
@@ -22,18 +22,18 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+    zIndex: defTheme.zIndex.drawer + 1,
+    transition: defTheme.transitions.create(['width', 'margin'], {
+      easing: defTheme.transitions.easing.sharp,
+      duration: defTheme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+    transition: defTheme.transitions.create(['width', 'margin'], {
+      easing: defTheme.transitions.easing.sharp,
+      duration: defTheme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
@@ -49,34 +49,34 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerOpen: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+    transition: defTheme.transitions.create('width', {
+      easing: defTheme.transitions.easing.sharp,
+      duration: defTheme.transitions.duration.enteringScreen,
     }),
   },
   drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+    transition: defTheme.transitions.create('width', {
+      easing: defTheme.transitions.easing.sharp,
+      duration: defTheme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing(6) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(7) + 1,
+    width: defTheme.spacing(6) + 1,
+    [defTheme.breakpoints.up('sm')]: {
+      width: defTheme.spacing(7) + 1,
     },
-    background: `${theme.palette.primary.main}`,
+    background: `${defTheme.palette.primary.main}`,
   },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
+    padding: defTheme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
+    ...defTheme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: defTheme.spacing(3),
     width: '50%',
   },
   listButton: {
@@ -130,7 +130,7 @@ export default function MainLayout({
   const [{ user, token }, dispatch] = useStateValue();
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-  const theme = useTheme();
+  const defMaterialTheme = useTheme();
   tokenSetter(token, dispatch, useEffect);
   // useEffect(() => {
   //   if (typeof localStorage !== 'undefined') {
@@ -186,7 +186,7 @@ export default function MainLayout({
           <MainLayoutDrawer
             classes={classes}
             open={open}
-            theme={theme}
+            theme={defMaterialTheme}
             mainPage={mainPage}
             itemId={itemId}
           />

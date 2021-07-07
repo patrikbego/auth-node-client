@@ -7,14 +7,14 @@ import DateLabel from './DateLabel';
 import ReactMd from './markdownEditor/ReactMd';
 
 export default function MainList({ postsData }) {
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((defTheme) => ({
     p: {
       color: 'tomato',
     },
 
   }));
   const classes = useStyles();
-  const theme = useTheme();
+  const defMaterialTheme = useTheme();
 
   if (postsData) {
     let sanitizer = (a) => a;

@@ -10,7 +10,6 @@ import MainList from './MainList';
 
 export default function MainPanel({ appUser, postsData, defMeta }) {
   const [{ token }, dispatch] = useStateValue();
-  const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
 
   // if ((appUser && appUser.errors) || (postsData && postsData.errors)) {
   //   openAlertBar(dispatch, appUser.errors + postsData.errors, 'error');
@@ -29,25 +28,23 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
     <>
       {/* <StrictMode> */}
       <DynamicHead meta={defMeta || meta} />
-      <ThemeProvider theme={darkLightTheme}>
-        <MainLayout user={appUser} mainPage>
-          {appUser && appUser.errors ? (
-            <AlertBar
-              alertOpen
-              alertMessage={appUser.errors}
-              alertType="error"
-            />
-          ) : (<></>)}
-          <GlobalAlertBar />
-          {postsData && postsData.errors ? (
-            <AlertBar
-              alertOpen
-              alertMessage={postsData.errors}
-              alertType="error"
-            />
-          ) : (<MainList postsData={postsData} />)}
-        </MainLayout>
-      </ThemeProvider>
+      <MainLayout user={appUser} mainPage>
+        {appUser && appUser.errors ? (
+          <AlertBar
+            alertOpen
+            alertMessage={appUser.errors}
+            alertType="error"
+          />
+        ) : (<></>)}
+        <GlobalAlertBar />
+        {postsData && postsData.errors ? (
+          <AlertBar
+            alertOpen
+            alertMessage={postsData.errors}
+            alertType="error"
+          />
+        ) : (<MainList postsData={postsData} />)}
+      </MainLayout>
       {/* </StrictMode> */}
     </>
   );

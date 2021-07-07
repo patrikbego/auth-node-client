@@ -18,43 +18,43 @@ import { useStateValue } from '../utils/reducers/StateProvider';
 import { openAlertBar } from '../utils/alertBarUtils';
 
 export default function EditProfile({ appUser }) {
-  const [{ theme, user, token }, dispatch] = useStateValue();
+  const [{ darkOrLiteTheme, user, token }, dispatch] = useStateValue();
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((defTheme) => ({
     root: {
       height: '100vh',
     },
     large: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
+      width: defTheme.spacing(7),
+      height: defTheme.spacing(7),
     },
     image: {
       backgroundImage: 'url(https://source.unsplash.com/random)',
       backgroundRepeat: 'no-repeat',
       backgroundColor:
-          theme.palette.type === 'light'
-            ? theme.palette.grey[50]
-            : theme.palette.grey[900],
+          defTheme.palette.type === 'light'
+            ? defTheme.palette.grey[50]
+            : defTheme.palette.grey[900],
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     },
     paper: {
-      marginTop: theme.spacing(8),
+      marginTop: defTheme.spacing(8),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     },
     avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.primary.main,
+      margin: defTheme.spacing(1),
+      backgroundColor: defTheme.palette.primary.main,
       // backgroundColor: 'red',
     },
     form: {
       width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
+      marginTop: defTheme.spacing(3),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      margin: defTheme.spacing(3, 0, 2),
     },
   }));
 

@@ -1,13 +1,13 @@
 import { red } from '@material-ui/core/colors';
 
 export default function muiSetter(reactUseStateValue, reactCreateMuiTheme) {
-  const [{ theme }] = reactUseStateValue();
+  const [{ darkOrLiteTheme }] = reactUseStateValue();
 
-  const palletType = theme ? 'dark' : 'light';
-  const mainPrimaryColor = theme ? '#272c34' : '#fff';
-  const mainSecondaryColor = theme ? '#fff' : '#272c34';
+  const palletType = darkOrLiteTheme ? 'dark' : 'light';
+  const mainPrimaryColor = darkOrLiteTheme ? '#272c34' : '#fff';
+  const mainSecondaryColor = darkOrLiteTheme ? '#fff' : '#272c34';
   const darkLightTheme = reactCreateMuiTheme({
-    ...theme,
+    ...darkOrLiteTheme,
     palette: {
       type: palletType,
       // text: {

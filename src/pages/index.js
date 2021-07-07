@@ -1,11 +1,20 @@
 import React from 'react';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import controllers from '../api/controller';
 import { errorWrapper } from '../utils/errorUtils';
 import MainPanel from '../components/MainPanel';
+import muiSetter from '../utils/theme';
+import { useStateValue } from '../utils/reducers/StateProvider';
 
 export default function Home({ appUser, postsData }) {
+  const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
+
   return (
-    <MainPanel appUser={appUser} postsData={postsData} />
+    <>
+      <ThemeProvider theme={darkLightTheme}>
+        <MainPanel appUser={appUser} postsData={postsData} />
+      </ThemeProvider>
+    </>
   );
 }
 

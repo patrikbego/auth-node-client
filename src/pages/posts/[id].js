@@ -62,7 +62,7 @@ export default function Post({ postData, shareUrl }) {
   }, []);
   let sanitizer = (a) => a;
   if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
-  const [{ user, token, theme }, dispatch] = useStateValue();
+  const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
   const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
   // tokenSetter(token, dispatch, useEffect);
   const [htmlContent, setHtmlContent] = useState();
@@ -77,21 +77,21 @@ export default function Post({ postData, shareUrl }) {
     setHtmlContent(e);
   });
 
-  console.log('theme ====== ', theme);
+  console.log('darkOrLiteTheme ====== ', darkOrLiteTheme);
   const useStyles = makeStyles(() => ({
     root: {
       display: 'flex',
     },
     mdContent: {
       color:
-          theme
+          darkOrLiteTheme
             ? 'tomato'
             : 'black',
     },
 
   }));
 
-  const classes = useStyles(theme);
+  const classes = useStyles();
 
   return (
     <>

@@ -3,7 +3,7 @@
 export const initialState = {
   user: null,
   token: null,
-  theme: false,
+  darkOrLiteTheme: false,
   alertMessage: null,
   alertType: 'none',
   alertOpen: false,
@@ -41,7 +41,7 @@ const reducer = (state, action) => {
     case 'SET_THEME':
       return {
         ...state,
-        theme: action.theme,
+        darkOrLiteTheme: action.darkOrLiteTheme,
       };
     default:
       return state;

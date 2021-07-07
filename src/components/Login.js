@@ -22,7 +22,7 @@ import {tokenSetter} from '../utils/tokenUtils';
 import utilStyles from '../styles/utils.module.css';
 
 export default function Login({ URL }) {
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((defTheme) => ({
     root: {
       height: '100vh',
     },
@@ -30,31 +30,31 @@ export default function Login({ URL }) {
       backgroundImage: 'url(https://source.unsplash.com/random)',
       backgroundRepeat: 'no-repeat',
       backgroundColor:
-          theme.palette.type === 'light'
-            ? theme.palette.grey[50]
-            : theme.palette.grey[900],
+          defTheme.palette.type === 'light'
+            ? defTheme.palette.grey[50]
+            : defTheme.palette.grey[900],
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     },
     paper: {
-      margin: theme.spacing(8, 4),
+      margin: defTheme.spacing(8, 4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     },
     avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.primary.main,
+      margin: defTheme.spacing(1),
+      backgroundColor: defTheme.palette.primary.main,
     },
     link: {
       // margin: theme.spacing(1, 1.5),
     },
     form: {
       width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
+      marginTop: defTheme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      margin: defTheme.spacing(3, 0, 2),
     },
   }));
 
@@ -62,7 +62,7 @@ export default function Login({ URL }) {
   facebookService.initFacebookSdk().then(console.log('initialized'));
   googleService.init().then(console.log('google script loaded'));
 
-  const [{ user, token, theme }, dispatch] = useStateValue();
+  const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
 
   const classes = useStyles();
   const [disable, setDisabled] = useState(true);

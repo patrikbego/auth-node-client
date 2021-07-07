@@ -14,7 +14,7 @@ import { useStateValue } from '../utils/reducers/StateProvider';
 import controller from '../api/controller';
 import Link from './Link';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   '@global': {
     ul: {
       margin: 0,
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${defTheme.palette.divider}`,
   },
   toolbar: {
     flexWrap: 'wrap',
@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
     // color: `${theme.palette.secondary.main}`,
   },
   heroContent: {
-    padding: theme.spacing(8, 0, 6),
+    padding: defTheme.spacing(8, 0, 6),
   },
   small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: defTheme.spacing(3),
+    height: defTheme.spacing(3),
   },
   headerImg: {
     '@media (max-width:600px)': {
@@ -57,7 +57,7 @@ function Header({ loading }) {
   const router = useRouter();
   const classes = useStyles();
 
-  const [{ theme, user, token }, dispatch] = useStateValue();
+  const [{ darkOrLiteTheme, user, token }, dispatch] = useStateValue();
   console.log(user, token);
   const logout = async () => {
     try {
@@ -77,14 +77,14 @@ function Header({ loading }) {
   };
 
   const changeTheme = () => {
-    console.log('SET_THEME ===== ', theme);
+    console.log('SET_THEME ===== ', darkOrLiteTheme);
     dispatch({
       type: 'SET_THEME',
-      theme: !theme,
+      darkOrLiteTheme: !darkOrLiteTheme,
     });
   };
 
-  console.log('Header theme ===== ', theme);
+  console.log('Header darkOrLiteTheme ===== ', darkOrLiteTheme);
 
   const linkText = loading && user ? `Welcome ${user.firstName}` : '';
 

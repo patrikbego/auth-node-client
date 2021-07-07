@@ -1,10 +1,12 @@
 import React from 'react';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import controllers from '../../api/controller';
-import {errorWrapper} from '../../utils/errorUtils';
+import { errorWrapper } from '../../utils/errorUtils';
 import MainPanel from '../../components/MainPanel';
+import muiSetter from '../../utils/theme';
+import { useStateValue } from '../../utils/reducers/StateProvider';
 
 export default function Home({ appUser, postsData }) {
-
   const meta = {
     shareUrl: 'https://octoplasm.com', // TODO setup right url
     keywords: 'time to put your mind on paper',
@@ -12,8 +14,14 @@ export default function Home({ appUser, postsData }) {
     title: 'OctoPlasm',
   };
 
+  const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
+
   return (
-    <MainPanel appUser={appUser} postsData={postsData} defMeta={meta} />
+    <>
+      <ThemeProvider theme={darkLightTheme}>
+        <MainPanel appUser={appUser} postsData={postsData} defMeta={meta} />
+      </ThemeProvider>
+    </>
   );
 }
 

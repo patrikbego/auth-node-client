@@ -12,13 +12,13 @@ function LightBulbIcon(props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   root: {
-    margin: theme.spacing(6, 0, 3),
+    margin: defTheme.spacing(6, 0, 3),
   },
   lightBulb: {
     verticalAlign: 'middle',
-    marginRight: theme.spacing(1),
+    marginRight: defTheme.spacing(1),
   },
 }));
 

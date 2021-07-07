@@ -153,39 +153,39 @@ const content = '\n'
 let sanitizer = (a) => a;
 if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
 
-const styles = (theme) => ({
+const styles = (defTheme) => ({
   root: {
     margin: 0,
-    padding: theme.spacing(2),
+    padding: defTheme.spacing(2),
   },
   closeButton: {
     position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
+    right: defTheme.spacing(1),
+    top: defTheme.spacing(1),
+    color: defTheme.palette.grey[500],
   },
 });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   mdContent: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: defTheme.spacing(3),
     width: '50px',
   },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
+    padding: defTheme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
+    ...defTheme.mixins.toolbar,
   },
   paragraphContent: {
     display: 'flex',
     flexWrap: 'wrap',
     '& > *': {
-      margin: theme.spacing(1),
-      width: theme.spacing(100),
+      margin: defTheme.spacing(1),
+      width: defTheme.spacing(100),
       // height: theme.spacing(16),
     },
   },
@@ -211,17 +211,17 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-const DialogContent = withStyles((theme) => ({
+const DialogContent = withStyles((defTheme) => ({
   root: {
     // padding: theme.spacing(2),
     display: 'flex',
   },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({
+const DialogActions = withStyles((defTheme) => ({
   root: {
     margin: 0,
-    padding: theme.spacing(1),
+    padding: defTheme.spacing(1),
   },
 }))(MuiDialogActions);
 

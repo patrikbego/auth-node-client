@@ -7,11 +7,11 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   root: {
     width: '100%',
     '& > * + *': {
-      marginTop: theme.spacing(2),
+      marginTop: defTheme.spacing(2),
     },
   },
 }));

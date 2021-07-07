@@ -8,15 +8,15 @@ import Box from '@material-ui/core/Box';
 import Copyright from './Copyright';
 import Link from './Link';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((defTheme) => ({
   footer: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing(6),
-      paddingBottom: theme.spacing(6),
+    borderTop: `1px solid ${defTheme.palette.divider}`,
+    marginTop: defTheme.spacing(8),
+    paddingTop: defTheme.spacing(3),
+    paddingBottom: defTheme.spacing(3),
+    [defTheme.breakpoints.up('sm')]: {
+      paddingTop: defTheme.spacing(6),
+      paddingBottom: defTheme.spacing(6),
     },
   },
 }));

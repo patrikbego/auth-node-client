@@ -44,12 +44,12 @@ export default function MainLayoutDrawer(props) {
 
   }
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((defTheme) => ({
     root: {
       width: '80%',
     },
     typography: {
-      padding: theme.spacing(2),
+      padding: defTheme.spacing(2),
     },
   }));
   const classes = useStyles();
@@ -57,7 +57,7 @@ export default function MainLayoutDrawer(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
-  const [{ theme, user, token }, dispatch] = useStateValue();
+  const [{ user, token }, dispatch] = useStateValue();
 
   const handleSearchClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
