@@ -58,7 +58,7 @@ function Header({ loading }) {
   const classes = useStyles();
 
   const [{ darkOrLiteTheme, user, token }, dispatch] = useStateValue();
-  console.log(user, token);
+  console.debug(user, token);
   const logout = async () => {
     try {
       await controller.logout();
@@ -72,19 +72,16 @@ function Header({ loading }) {
       });
       await router.push('/about');
     } catch (e) {
-      console.log(e.message);
+      console.error(e.message);
     }
   };
 
   const changeTheme = () => {
-    console.log('SET_THEME ===== ', darkOrLiteTheme);
     dispatch({
       type: 'SET_THEME',
       darkOrLiteTheme: !darkOrLiteTheme,
     });
   };
-
-  console.log('Header darkOrLiteTheme ===== ', darkOrLiteTheme);
 
   const linkText = loading && user ? `Welcome ${user.firstName}` : '';
 

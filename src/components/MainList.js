@@ -19,7 +19,6 @@ export default function MainList({ postsData }) {
   if (postsData) {
     let sanitizer = (a) => a;
     if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
-    console.log('postsData', postsData);
 
     return (
       <ul className={utilStyles.list}>

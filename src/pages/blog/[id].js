@@ -166,13 +166,11 @@ export async function getServerSideProps({ params, req }) {
       + '```\n';
   // Here we are getting user from server (just as an example of prerendering).
   // Actually we should get user from token
-  console.log('we are inside', params, params.id !== '0');
   if (params && params.id && params.id !== '0') {
     const postData = await controllers.getBlog(params.id);
     content = postData;
     // const blogger = await getUserData('patrik.bego'); // TODO hard coded for now
   }
-  console.log(content);
   return {
     props: {
       content,

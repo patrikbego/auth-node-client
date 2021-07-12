@@ -59,8 +59,8 @@ export default function Login({ URL }) {
   }));
 
   // TODO consider loading this async / in the background
-  facebookService.initFacebookSdk().then(console.log('initialized'));
-  googleService.init().then(console.log('google script loaded'));
+  facebookService.initFacebookSdk().then(console.info('fb initialized'));
+  googleService.init().then(console.log('google initialized'));
 
   const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
 
@@ -111,15 +111,14 @@ export default function Login({ URL }) {
             await router.push('/');
           }
         } catch (e) {
-          console.log(e);
+          console.error(e);
           setFetchErrorMsg('User login failed!');
         }
       },
     ).catch(
       (e) => {
-        console.log(e);
+        console.error(e);
         if (e) {
-          console.log(e);
           setFetchErrorMsg(e);
         } else {
           setFetchErrorMsg('User login failed!');

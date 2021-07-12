@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 import MainLayoutDrawer from './MainLayoutDrawer';
-import {parseJwt, tokenSetter, validateJwt} from '../utils/tokenUtils';
+import { parseJwt, tokenSetter, validateJwt } from '../utils/tokenUtils';
 
 const drawerWidth = 240;
 
@@ -124,11 +124,9 @@ const useStyles = makeStyles((defTheme) => ({
 }));
 
 export default function MainLayout({
-  children, appUser, mainPage, itemId,
+  children, user, mainPage, itemId, token,
 }) {
-  console.log('MainLayout', itemId);
-  const [{ user, token }, dispatch] = useStateValue();
-  const [open, setOpen] = React.useState(false);
+  const [{}, dispatch] = useStateValue();
   const classes = useStyles();
   const defMaterialTheme = useTheme();
   tokenSetter(token, dispatch, useEffect);
@@ -147,28 +145,53 @@ export default function MainLayout({
   //     }
   //   }
   // });
-  function useFetchUser() {
-    const [loading, setLoading] = useState(() => !user);
-
-    useEffect(
-      () => {
-        if (!loading && user) {
-          return;
-        }
-        setLoading(true);
-        console.log(loading, 'before call');
-
-        console.log(user);
-        setLoading(false);
-        console.log(loading, 'after call');
-      },
-      [],
+  // function useFetchUser() {
+  //   const [loading, setLoading] = useState(() => !user);
+  //
+  //   useEffect(
+  //     () => {
+  //       if (!loading && user) {
+  //         return;
+  //       }
+  //       setLoading(true);
+  //       console.log(loading, 'before call');
+  //
+  //       console.log(user);
+  //       setLoading(false);
+  //       console.log(loading, 'after call');
+  //     },
+  //     [],
+  //   );
+  //
+  //   return { loading };
+  // }
+  //
+  // const { loading } = useFetchUser();
+  if (token) {
+    return (
+      <>
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: false,
+            })}
+          >
+            <Header loading={false} />
+          </AppBar>
+          <MainLayoutDrawer
+            classes={classes}
+            open={false}
+            theme={defMaterialTheme}
+            mainPage={mainPage}
+            itemId={itemId}
+          />
+          <div className={classes.mainLayoutContainer}>{children}</div>
+        </div>
+      </>
     );
-
-    return { loading };
   }
-
-  const { loading } = useFetchUser();
   return (
     <>
       <div className={classes.root}>
@@ -176,21 +199,11 @@ export default function MainLayout({
         <AppBar
           position="fixed"
           className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
+            [classes.appBarShift]: false,
           })}
         >
           <Header loading={false} />
         </AppBar>
-
-        {token && user ? (
-          <MainLayoutDrawer
-            classes={classes}
-            open={open}
-            theme={defMaterialTheme}
-            mainPage={mainPage}
-            itemId={itemId}
-          />
-        ) : (<></>)}
         <div className={classes.mainLayoutContainer}>{children}</div>
       </div>
     </>

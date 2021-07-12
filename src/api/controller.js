@@ -34,17 +34,17 @@ const controllers = {
     if (fs) {
       try {
         facebookService.logout();
-        console.log('logged out from facebook');
+        console.info('logged out from facebook');
       } catch (e) {
-        console.log('not logged in with FB', e);
+        console.error('not logged in with FB', e);
       }
     }
     if (gs) {
       try {
         await googleService.logout();
-        console.log('logged out from google');
+        console.info('logged out from google');
       } catch (e) {
-        console.log('not logged in with google', e);
+        console.error('not logged in with google', e);
       }
     }
     try {
@@ -191,7 +191,7 @@ const controllers = {
       if (res.status === 401) return { error: 'Please Login!' };
       data = await res.json();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     return data;
   },

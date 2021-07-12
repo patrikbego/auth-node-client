@@ -10,7 +10,6 @@ export default function TextFieldRequired(disableCallback, fieldProps) {
   const [textError, setTextError] = useState(null);
 
   const textValidation = () => {
-    console.log('formValidation');
     setTextError(null);
 
     let valid = true;

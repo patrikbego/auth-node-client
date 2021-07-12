@@ -19,7 +19,7 @@ export default function ConfirmEmail() {
   );
   const urlToken = urlParams.get('token');
   if (urlToken && token !== urlToken) {
-    console.log('CONFIRMING EMAIL for token', urlToken);
+    console.debug('CONFIRMING EMAIL for token', urlToken);
     setToken(urlToken);
     controllers.confirmEmail({
       id: urlToken,
@@ -43,9 +43,8 @@ export default function ConfirmEmail() {
       )
       .catch(
         (e) => {
-          console.log(e);
+          console.error(e);
           if (e) {
-            console.log(e);
             setFetchErrorMsg(e);
           } else {
             setFetchErrorMsg('Email confirmation failed!');

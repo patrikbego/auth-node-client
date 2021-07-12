@@ -8,7 +8,6 @@ export default function Password(props) {
   const [passwordValue, setPasswordValue] = useState('');
 
   const passwordValidation = () => {
-    console.log('formValidation');
     setPasswordError(null);
 
     let valid = true;

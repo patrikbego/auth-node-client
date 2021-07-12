@@ -23,7 +23,6 @@ import SaveDialog from './SaveDialog';
 import mdToHtml from '../../utils/mdUtils';
 
 export default function EditorSideDrawer(props) {
-  console.log('props.tags', props.tags);
   const mdAction = {
     bold: 'bold',
     italic: 'italic',
@@ -35,8 +34,6 @@ export default function EditorSideDrawer(props) {
     listNumbered: 'listNumbered',
   };
   const addMdElement = async (e) => {
-    console.log(e);
-
     switch (e) {
       case mdAction.bold:
         props.setMdContent([
@@ -87,7 +84,7 @@ export default function EditorSideDrawer(props) {
           props.mdContent.slice(props.selEnd)].join(''));
         break;
       default:
-        console.log('Md action not found!');
+        console.info('Md action not found!');
     }
     const contentHtml = await mdToHtml(props.mdContent);
     props.setParsedContent(contentHtml);

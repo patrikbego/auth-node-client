@@ -66,12 +66,12 @@ const googleService = {
       if (googleService.googleAuth) resolve(googleService.googleAuth);
       gapi.load('auth2', () => {
         /* Ready. Make a call to gapi.auth2.init or some other API */
-        console.log('google 2');
+        console.debug('before google api call');
         googleService.googleAuth = window.gapi.auth2.init({
           client_id: googleAppId,
           scope: 'email profile openid',
         });
-        console.log('google 3', googleService.googleAuth);
+        console.debug('after google api call', googleService.googleAuth);
         resolve(googleService.googleAuth);
       });
     });
@@ -93,9 +93,9 @@ const googleService = {
     return new Promise(async (resolve) => {
       const gapi = await googleService.init();
 
-      console.log('gapi.isSignedIn.get()', gapi.isSignedIn.get());
-      console.log('currentUser.get()', gapi.currentUser.get());
-      console.log('currentUser.get()', gapi.currentUser.get().getGrantedScopes());
+      console.debug('gapi.isSignedIn.get()', gapi.isSignedIn.get());
+      console.debug('currentUser.get()', gapi.currentUser.get());
+      console.debug('currentUser.get()', gapi.currentUser.get().getGrantedScopes());
       gapi.signIn({
         // client_id: googleAppId,
         scope: 'email profile openid',
@@ -104,12 +104,12 @@ const googleService = {
       // gapi.grantOfflineAccess().then(async (response) => {
         if (response.error) {
         // An error happened!
-          console.log(response.error);
+          console.error(response.error);
           return;
         }
 
         let user;
-        console.log('login response', response);
+        console.debug('login response', response);
         const options = googleService.processAuthResponse(
           response && response.accessToken ? response.accessToken : response.uc.access_token,
         );
@@ -118,9 +118,8 @@ const googleService = {
           const r1 = await controllers.loginWithGooglReq(options);
           // const token = r.headers.get('Authorization');
           user = await r1.json();
-          console.log(user);
         }
-        console.log(user);
+        console.debug(user);
         resolve(user);
 
       // You can also now use gapi.client to perform authenticated requests.
@@ -137,12 +136,12 @@ const googleService = {
     let googleAuth = null;
     window.gapi.load('auth2', () => {
       /* Ready. Make a call to gapi.auth2.init or some other API */
-      console.log('google 2');
+      console.debug('before google api call');
       googleAuth = window.gapi.auth2.init({
         client_id: googleAppId,
         // scope: 'profile email',
       });
-      console.log('google 3');
+      console.debug('after google api call');
       const auth2 = window.gapi.auth2.getAuthInstance();
       // if (auth2) {
       //   console.log(auth2);

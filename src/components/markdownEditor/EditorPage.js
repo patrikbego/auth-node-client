@@ -111,14 +111,13 @@ export default function EditorPage({ content }) {
 
   const saveCursorPosition = (e) => {
     const { selectionStart, selectionEnd, value } = e.target;
-    console.log(selectionStart, selectionEnd, value);
+    console.debug(selectionStart, selectionEnd, value);
     setSelStart(selectionStart);
     setSelEnd(selectionEnd);
     setSelValue(value.substring(selectionStart, selectionEnd));
   };
 
   useEffect(() => {
-    console.log('mdContent updated', mdContent);
     mdToHtml(mdContent).then((e) => {
       e = `${'<style>\n'
       + '  h1 {color:red;}\n'

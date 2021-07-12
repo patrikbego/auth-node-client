@@ -7,9 +7,10 @@ import MainLayout from './MainLayout';
 import AlertBar from './AlertBar';
 import GlobalAlertBar from './GlobalAlertBar';
 import MainList from './MainList';
+import {validateJwt} from '../utils/tokenUtils';
 
 export default function MainPanel({ appUser, postsData, defMeta }) {
-  const [{ token }, dispatch] = useStateValue();
+  const [{ user, token }, dispatch] = useStateValue();
 
   // if ((appUser && appUser.errors) || (postsData && postsData.errors)) {
   //   openAlertBar(dispatch, appUser.errors + postsData.errors, 'error');
@@ -28,7 +29,7 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
     <>
       {/* <StrictMode> */}
       <DynamicHead meta={defMeta || meta} />
-      <MainLayout user={appUser} mainPage>
+      <MainLayout user={appUser} mainPage token={token}>
         {appUser && appUser.errors ? (
           <AlertBar
             alertOpen
@@ -36,7 +37,7 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
             alertType="error"
           />
         ) : (<></>)}
-        <GlobalAlertBar />
+
         {postsData && postsData.errors ? (
           <AlertBar
             alertOpen

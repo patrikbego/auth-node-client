@@ -8,7 +8,6 @@ export default function Phone({disableCallback, user}) {
   const [phoneError, setPhoneError] = useState(null);
 
   const phoneValidation = () => {
-    console.log('formValidation');
     setPhoneError(null);
 
     let valid = true;

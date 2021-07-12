@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import controller from '../api/controller';
 
 export function parseJwt(jwt) {
@@ -29,7 +28,7 @@ export function clearGlobalState(token, dispatch) {
 
 export function validateJwt(jwt, dispatch) {
   const pjwt = parseJwt(jwt);
-  if ((pjwt.user && (pjwt.exp * 1000) < Date.now()) || !pjwt.user) {
+  if (pjwt && (pjwt.exp * 1000) < Date.now()) {
     controller.logout().then(() => console.log('Token expired'));
     if (dispatch) clearGlobalState(jwt, dispatch);
   } else {

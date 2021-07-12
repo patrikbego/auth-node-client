@@ -23,18 +23,12 @@ import ReactMd from '../../components/markdownEditor/ReactMd';
 
 export default function Post({ postData, shareUrl }) {
   (function () {
-    console.log(
-      `typeof window !== 'undefined' ${typeof window !== 'undefined' && typeof window.location !== 'undefined'}`,
-    );
     if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
       shareUrl = window.location.href;
-      console.log(`shareUrl = window.location.href;  ${shareUrl}`);
-      console.log(`shareUrl = window.location.href;  ${Date.now()}`);
+      console.debug(`shareUrl = window.location.href;  ${shareUrl}`);
     }
   }());
   const windowFunc = function () {
-    console.log(`typeof window !== 'undefined' windowFunc ${
-      typeof window !== 'undefined' && typeof window.location !== 'undefined'}`);
     if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
       shareUrl = window.location.href;
       console.log(`shareUrl = window.location.href;  windowFunc ${shareUrl}`);
@@ -98,7 +92,7 @@ export default function Post({ postData, shareUrl }) {
       {/* <StrictMode> */}
       <DynamicHead meta={parseMetaData(postData.body, shareUrl)} />
       <ThemeProvider theme={darkLightTheme}>
-        <MainLayout user={user} itemId={postData.id}>
+        <MainLayout user={user} itemId={postData.id} token={token}>
           <GlobalAlertBar />
           <Head>
             <title>{parseTitle(postData.title)}</title>

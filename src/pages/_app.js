@@ -17,10 +17,30 @@ export default function MyApp(props) {
     }
   }, []);
   console.log('App loaded');
+  if (typeof window !== 'undefined') {
+    const userStorage = sessionStorage.getItem('user');
+    if (userStorage) {
+      const us = JSON.parse(userStorage);
+      initialState.user = us;
+    }
+    const tokenStorage = sessionStorage.getItem('token');
+    if (tokenStorage) {
+      const ts = JSON.parse(tokenStorage);
+      initialState.token = ts;
+    }
+    const darkOrLiteThemeStorage = sessionStorage.getItem('darkOrLiteTheme');
+    if (darkOrLiteThemeStorage) {
+      const ds = JSON.parse(darkOrLiteThemeStorage);
+      initialState.darkOrLiteTheme = ds;
+    }
+  }
 
   return (
     <>
-      <StateProvider initialState={initialState} reducer={reducer}>
+      <StateProvider
+        initialState={initialState}
+        reducer={reducer}
+      >
         <Head>
           <title>OctoPlasm</title>
           <meta

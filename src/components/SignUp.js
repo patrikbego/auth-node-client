@@ -83,7 +83,6 @@ export default function SignUp({ appUser }) {
   };
 
   const formValidation = (obj) => {
-    console.log('formValidation');
     setTosError(null);
 
     let valid = true;
@@ -152,9 +151,8 @@ export default function SignUp({ appUser }) {
       },
     ).catch(
       (e) => {
-        console.log(e);
+        console.error(e);
         if (e) {
-          console.log(e);
           setFetchErrorMsg(e);
         } else {
           setFetchErrorMsg('User creation failed!');
@@ -214,7 +212,7 @@ export default function SignUp({ appUser }) {
                         name="tosAgreement"
                         onChange={(e) => {
                           setTosValue((tosValue) => !tosValue);
-                          console.log('changed to ',
+                          console.info('changed to ',
                             e.target.value);
                         }}
                       />

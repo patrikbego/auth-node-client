@@ -10,9 +10,9 @@ export const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log(action);
   switch (action.type) {
     case 'SET_USER':
+      sessionStorage.setItem('user', JSON.stringify(action.user));
       return {
         ...state,
         user: action.user,
@@ -33,12 +33,13 @@ const reducer = (state, action) => {
         alertOpen: action.alertOpen,
       };
     case 'SET_TOKEN':
-      // setter
+      sessionStorage.setItem('token', JSON.stringify(action.token));
       return {
         ...state,
         token: action.token,
       };
     case 'SET_THEME':
+      sessionStorage.setItem('darkOrLiteTheme', JSON.stringify(action.darkOrLiteTheme));
       return {
         ...state,
         darkOrLiteTheme: action.darkOrLiteTheme,

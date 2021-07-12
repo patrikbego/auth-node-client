@@ -86,7 +86,7 @@ export default function EditProfile({ appUser }) {
   };
 
   const formValidation = (obj) => {
-    console.log('formValidation');
+    console.debug('formValidation');
     setTosError(null);
 
     let valid = true;
@@ -156,9 +156,8 @@ export default function EditProfile({ appUser }) {
       },
     ).catch(
       (e) => {
-        console.log(e);
+        console.error(e);
         if (e) {
-          console.log(e);
           setFetchErrorMsg(e);
         } else {
           setFetchErrorMsg('User creation failed!');

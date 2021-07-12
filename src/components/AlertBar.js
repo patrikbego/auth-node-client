@@ -23,7 +23,7 @@ export default function AlertBar({ alertOpen, alertMessage, alertType }) {
   const [open, setOpen] = React.useState(true);
 
   const handleClose = (event, reason) => {
-    console.log('clicked', alertOpen, reason);
+    console.debug('clicked', alertOpen, reason);
     if (reason === 'clickaway') {
       return;
     }

@@ -13,7 +13,6 @@ const facebookService = {
       [JSON.stringify({ access_token: authResponse.accessToken }, null, 2)],
       { type: 'application/json' },
     );
-    console.log('access_token', authResponse.accessToken);
     return {
       method: 'POST',
       body: tokenBlob,
@@ -79,11 +78,11 @@ const facebookService = {
         if (options) {
           const r = await controllers.loginWithFbReq(options);
           if (r.code === 200) {
-            console.log('all ok no need to procced');
-            console.log(r.json());
+            console.debug('all ok no need to procced');
+            console.debug(r.json());
             user = r.json();
           }
-          console.log('not ok ', authResponse, r);
+          console.error('not ok ', authResponse, r);
           window.FB.login(async (authResponse1) => { // TODO handle errors
             // handle the response
             // const { authResponse } = await new Promise(window.FB.login);
@@ -143,16 +142,15 @@ const facebookService = {
 
       FB.login(async (response) => {
         let user;
-        console.log('login response', response);
+        console.debug('login response', response);
         const options = facebookService.processAuthResponse(response.authResponse);
-        console.log('login options', options);
+        console.debug('login options', options);
         if (options) {
           const r1 = await controllers.loginWithFbReq(options);
           // const token = r.headers.get('Authorization');
           user = await r1.json();
-          console.log(user);
         }
-        console.log(user);
+        console.debug(user);
         resolve(user);
       }, params);
     });

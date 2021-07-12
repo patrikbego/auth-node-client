@@ -32,10 +32,9 @@ export async function getServerSideProps({ params, req }) {
     postsData.errors = allBlogsPromise.statusText;
   } else {
     postsData = await allBlogsPromise.json();
-    console.log(postsData);
   }
   const appUser = errorWrapper(await controllers.getUser());
-  console.log(`appUser : ${appUser.errors}`);
+  console.debug(`appUser : ${appUser.errors}`);
   return {
     props: {
       appUser,

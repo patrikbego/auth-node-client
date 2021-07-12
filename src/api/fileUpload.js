@@ -9,8 +9,8 @@ export default function uploadFile(file) {
   }).then(
     (response) => response.json(), // if the response is a JSON object
   ).then(
-    (success) => console.log(success), // Handle the success response object
+    (success) => console.info(success), // Handle the success response object
   ).catch(
-    (error) => console.log(error), // Handle the error response object
+    (error) => console.error(error), // Handle the error response object
   );
 }

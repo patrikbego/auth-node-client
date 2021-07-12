@@ -1,29 +1,20 @@
 import Drawer from '@material-ui/core/Drawer';
-import clsx from 'clsx';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import {
-  Fade, makeStyles, Paper, Popper, Tooltip,
-} from '@material-ui/core';
+import { makeStyles, Tooltip } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {
-  Add, Create, MenuBook, Search, Share,
+  Add, Create, MenuBook, Share,
 } from '@material-ui/icons';
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Typography from '@material-ui/core/Typography';
 import DeleteDialog from './DeleteDialog';
-import ShareFooter from './ShareFooter';
-import {useStateValue} from '../utils/reducers/StateProvider';
+import { useStateValue } from '../utils/reducers/StateProvider';
 
 export default function MainLayoutDrawer(props) {
   const router = useRouter();
-  console.log('MainLayoutDrawer', props);
 
   async function addArticle() {
     // TODO check if logged in
@@ -32,7 +23,6 @@ export default function MainLayoutDrawer(props) {
 
   async function editArticle() {
     // TODO check if logged in
-    console.log(`/blog/${props.itemId}`);
     await router.push(`/blog/${props.itemId}`);
   }
 
@@ -66,48 +56,42 @@ export default function MainLayoutDrawer(props) {
   };
 
   const handleDraftClick = (newPlacement) => async (event) => {
-    console.log(`/drafts/${user.userName}`);
+    console.debug(`/drafts/${user.userName}`);
     await router.push(`/drafts/${user.userName}`);
   };
 
   return (
     <>
-      <Popper
-        className={classes.root}
-        open={open}
-        anchorEl={anchorEl}
-        placement={placement}
-        transition
-      >
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
-            <Paper>
-              <Typography className={classes.typography}>
-                <ShareFooter postData="octoplasm.com" shareUrl="https://octoplasm.com" />
-              </Typography>
-            </Paper>
-          </Fade>
-        )}
-      </Popper>
+      {/* <Popper */}
+      {/*  className={classes.root} */}
+      {/*  open={open} */}
+      {/*  anchorEl={anchorEl} */}
+      {/*  placement={placement} */}
+      {/*  transition */}
+      {/* > */}
+      {/*  {({ TransitionProps }) => ( */}
+      {/*    <Fade {...TransitionProps} timeout={350}> */}
+      {/*      <Paper> */}
+      {/*        <Typography className={classes.typography}> */}
+      {/*          <ShareFooter postData="octoplasm.com" shareUrl="https://octoplasm.com" /> */}
+      {/*        </Typography> */}
+      {/*      </Paper> */}
+      {/*    </Fade> */}
+      {/*  )} */}
+      {/* </Popper> */}
       <Drawer
         variant="permanent"
-        className={clsx(props.classes.drawer, {
-          [props.classes.drawerOpen]: props.open,
-          [props.classes.drawerClose]: !props.open,
-        })}
+        className={props.classes.drawerClose}
         classes={{
-          paper: clsx({
-            [props.classes.drawerOpen]: props.open,
-            [props.classes.drawerClose]: !props.open,
-          }),
+          paper: props.classes.drawerClose,
         }}
       >
         <div className={props.classes.toolbar}>
-          <IconButton onClick={props.onClick}>
-            {props.theme.direction === 'rtl'
-              ? <ChevronRightIcon />
-              : <ChevronLeftIcon />}
-          </IconButton>
+          {/* <IconButton onClick={props.onClick}> */}
+          {/*  {props.theme.direction === 'rtl' */}
+          {/*    ? <ChevronRightIcon /> */}
+          {/*    : <ChevronLeftIcon />} */}
+          {/* </IconButton> */}
         </div>
         <Divider />
         <Divider />
@@ -125,28 +109,28 @@ export default function MainLayoutDrawer(props) {
                   </ListItemIcon>
                 </Tooltip>
               </ListItem>
-              {token && user ? (
-                  <ListItem
-                      button
-                      onClick={handleDraftClick()}
-                  >
-                    <Tooltip title="Get all drafts" placement="right">
-                      <ListItemIcon>
-                        <MenuBook />
-                      </ListItemIcon>
-                    </Tooltip>
-                  </ListItem>
-              ) : (<></>)}
+              {/* {token ? ( */}
               <ListItem
                 button
-                onClick={handleSearchClick('right')}
+                onClick={handleDraftClick()}
               >
-                <Tooltip title="Search posts" placement="right">
+                <Tooltip title="Get all drafts" placement="right">
                   <ListItemIcon>
-                    <Search />
+                    <MenuBook />
                   </ListItemIcon>
                 </Tooltip>
               </ListItem>
+              {/* ) : (<></>)} */}
+              {/* <ListItem */}
+              {/*  button */}
+              {/*  onClick={handleSearchClick('right')} */}
+              {/* > */}
+              {/*  <Tooltip title="Search posts" placement="right"> */}
+              {/*    <ListItemIcon> */}
+              {/*      <Search /> */}
+              {/*    </ListItemIcon> */}
+              {/*  </Tooltip> */}
+              {/* </ListItem> */}
               <ListItem
                 button
                 onClick={handleSearchClick('right')}

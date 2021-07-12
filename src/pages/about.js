@@ -20,25 +20,23 @@ export default function About() {
     h1: {
       color: 'tomato',
       textAlign: 'center',
-      fontSize: '6vw',
+      fontSize: '8vw',
       paddingTop: '6vh',
     },
     h2: {
       color: 'tomato',
       textAlign: 'center',
-      fontSize: '3vw',
+      fontSize: '5vw',
     },
     h3: {
       color: 'tomato',
       textAlign: 'left',
-      fontSize: '2vw',
-      paddingLeft: '6vw',
+      fontSize: '4vw',
+      paddingLeft: '9vw',
 
     },
 
   }));
-  console.log('about darkOrLiteTheme ========= ', darkOrLiteTheme);
-  console.log('about darklite ========= ', darkLightTheme);
   const classes = useStyles(darkLightTheme);
 
   const meta = {

@@ -8,7 +8,6 @@ export default function Email({disableCallback, user}) {
   const [emailValue, setEmailValue] = useState('');
 
   const emailValidation = () => {
-    console.log('formValidation');
     setEmailError(null);
 
     let valid = true;

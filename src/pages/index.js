@@ -5,6 +5,7 @@ import { errorWrapper } from '../utils/errorUtils';
 import MainPanel from '../components/MainPanel';
 import muiSetter from '../utils/theme';
 import { useStateValue } from '../utils/reducers/StateProvider';
+import GlobalAlertBar from '../components/GlobalAlertBar';
 
 export default function Home({ appUser, postsData }) {
   const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
@@ -13,6 +14,8 @@ export default function Home({ appUser, postsData }) {
     <>
       <ThemeProvider theme={darkLightTheme}>
         <MainPanel appUser={appUser} postsData={postsData} />
+        {/* TODO: check if global alert bar is needed here */}
+        <GlobalAlertBar />
       </ThemeProvider>
     </>
   );
@@ -25,10 +28,9 @@ export async function getServerSideProps({ params, req }) {
     postsData.errors = allBlogsPromise.statusText;
   } else {
     postsData = await allBlogsPromise.json();
-    console.log(postsData);
   }
   const appUser = errorWrapper(await controllers.getUser());
-  console.log(`appUser : ${appUser.errors}`);
+  console.info(`appUser : ${appUser.errors}`);
   return {
     props: {
       appUser,
