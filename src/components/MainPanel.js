@@ -1,13 +1,9 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import React from 'react';
-import { useStateValue } from '../utils/reducers/StateProvider';
-import muiSetter from '../utils/theme';
+import {useStateValue} from '../utils/reducers/StateProvider';
 import DynamicHead from './DynamicHead';
 import MainLayout from './MainLayout';
 import AlertBar from './AlertBar';
-import GlobalAlertBar from './GlobalAlertBar';
 import MainList from './MainList';
-import {validateJwt} from '../utils/tokenUtils';
 
 export default function MainPanel({ appUser, postsData, defMeta }) {
   const [{ user, token }, dispatch] = useStateValue();

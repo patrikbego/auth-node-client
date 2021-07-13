@@ -213,7 +213,7 @@ export default function EditorSideDrawer(props) {
           </Tooltip>
         </ListItem>
         <HelpDialog />
-        <SaveDialog content={props.mdContent} itemId={props.itemId} originalTags={props.tags} />
+        <SaveDialog content={props.mdContent} itemId={props.itemId} userId={props.userId} originalTags={props.tags} />
       </List>
     </Drawer>
   );
@@ -234,5 +234,6 @@ EditorSideDrawer.propTypes = {
   setSelValue: PropTypes.func,
   setParsedContent: PropTypes.func,
   itemId: PropTypes.number,
+  userId: PropTypes.userId,
   tags: PropTypes.string,
 };

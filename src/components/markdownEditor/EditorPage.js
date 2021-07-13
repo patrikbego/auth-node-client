@@ -172,6 +172,7 @@ export default function EditorPage({ content }) {
           setSelValue={setSelValue}
           setParsedContent={setParsedContent}
           itemId={content.id}
+          userId={content.userId}
           tags={content.tags}
         />
         <main className={classes.content}>

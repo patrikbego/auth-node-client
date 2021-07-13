@@ -86,7 +86,7 @@ const DialogActions = withStyles((defTheme) => ({
   },
 }))(MuiDialogActions);
 
-export default function SaveDialog({ content, itemId, originalTags }) {
+export default function SaveDialog({ content, itemId, userId, originalTags }) {
   console.log('originalTags', originalTags);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -108,11 +108,11 @@ export default function SaveDialog({ content, itemId, originalTags }) {
     setOpen(false);
   };
   const handleSave = () => {
-    handleAddUpdate(content, setOpen, dispatch, tags, true, itemId);
+    handleAddUpdate(content, setOpen, dispatch, tags, true, itemId, userId);
   };
 
   const handleSaveDraft = () => {
-    handleAddUpdate(content, setOpen, dispatch, tags, false, itemId);
+    handleAddUpdate(content, setOpen, dispatch, tags, false, itemId, userId);
   };
 
   function handleTags(event) {

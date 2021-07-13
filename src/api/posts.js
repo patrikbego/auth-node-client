@@ -82,7 +82,7 @@ export async function getPostData(id) {
   };
 }
 
-export function handleAddUpdate(content, setOpen, dispatch, tags, publish, itemId) {
+export function handleAddUpdate(content, setOpen, dispatch, tags, publish, itemId, userId) {
   if (!content) {
     setOpen(false);
     console.log('content is required');
@@ -102,16 +102,18 @@ export function handleAddUpdate(content, setOpen, dispatch, tags, publish, itemI
     original: 'EN',
     title: articleTitle,
     body: content,
+    userId,
     tags,
     published: !!publish,
     status: publish ? 'PUBLISHED' : 'DRAFT',
   };
   if (!itemId) {
     blog.createdDate = new Date();
-    controllers.createBlog(blog).then((res) => {
+    controllers.createBlog(blog).then(async (res) => {
       setOpen(false);
+      const data = await res.json();
       if (res.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
-        openAlertBar(dispatch, res.statusText, 'error');
+        openAlertBar(dispatch, data, 'error');
       } else {
         openAlertBar(dispatch, 'Article has been created!', 'success');
       }
