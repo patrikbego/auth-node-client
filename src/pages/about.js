@@ -85,7 +85,7 @@ export default function About() {
                 </Link>
               </p>
               <p className={classes.h3}>
-                <Link href="/signin" variant="body2">
+                <Link href="/login" variant="body2">
                   <a className={utilStyles.a}>2. SignIn</a>
                 </Link>
               </p>

@@ -77,6 +77,7 @@ export default function Post({ postData, shareUrl }) {
       display: 'flex',
     },
     mdContent: {
+      textAlign: 'left',
       color:
           darkOrLiteTheme
             ? 'tomato'

@@ -1,4 +1,5 @@
 const sonarqubeScanner = require('sonarqube-scanner');
+const envToExport = require('./config.local');
 
 sonarqubeScanner(
   {
@@ -11,7 +12,10 @@ sonarqubeScanner(
       'sonar.javascript.lcov.reportPaths': 'coverage/lcov.info',
       // 'sonar.testExecutionReportPaths': 'coverage/test-reporter.xml',
       'sonar.projectKey': 'auth-node-client',
-      'sonar.login': process.env.SONAR_CLIENT_ID,
+      'sonar.login': envToExport.sonar.clientID,
     },
-  }, () => {},
+  }, () => {
+    console.log('process.env.SONAR_CLIENT_ID ===== ', process.env.SONAR_CLIENT_ID);
+    console.log('process.env ===== ', process.env);
+  },
 );
