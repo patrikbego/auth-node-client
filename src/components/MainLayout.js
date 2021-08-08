@@ -7,6 +7,7 @@ import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 import MainLayoutDrawer from './MainLayoutDrawer';
 import { parseJwt, tokenSetter, validateJwt } from '../utils/tokenUtils';
+import Footer from './Footer';
 
 const drawerWidth = 240;
 
@@ -206,6 +207,7 @@ export default function MainLayout({
         </AppBar>
         <div className={classes.mainLayoutContainer}>{children}</div>
       </div>
+      <Footer />
     </>
   );
 }

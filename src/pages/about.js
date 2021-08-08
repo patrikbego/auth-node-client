@@ -13,6 +13,7 @@ import { useStateValue } from '../utils/reducers/StateProvider';
 import muiSetter from '../utils/theme';
 import DynamicHead from '../components/DynamicHead';
 import utilStyles from '../styles/utils.module.css';
+import Footer from '../components/Footer';
 
 export default function About() {
   const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
@@ -21,6 +22,7 @@ export default function About() {
   const useStyles = makeStyles(() => ({
     root: {
       display: 'flex',
+      height: '100vh',
     },
     h1: {
       color: 'tomato',
@@ -91,18 +93,18 @@ export default function About() {
               </p>
               <p className={classes.h3}>
                 <Link href="/blog/0" variant="body2">
-                  <a className={utilStyles.a}>3. And you are ready to do your first post</a>
+                  <a className={utilStyles.a}>
+                    3. And you are ready to do your first post,
+                    or create a private draft,
+                    visible only to you.
+                  </a>
                 </Link>
               </p>
-              <p className={classes.h3}>
-                <Link href="/" variant="body2">
-                  <a className={utilStyles.a}>3. And you are ready to do your first post</a>
-                </Link>
-              </p>
+              <br />
               <p className={classes.h3}>
                 <Link href="/" variant="body2">
                   <a className={utilStyles.a}>
-                    4. Or alternatively
+                    Or alternatively, you can
                     just explore what other people are writing about &#129488;
                   </a>
                 </Link>
@@ -110,6 +112,7 @@ export default function About() {
             </div>
           </div>
         </div>
+        <Footer />
       </ThemeProvider>
     </>
   );

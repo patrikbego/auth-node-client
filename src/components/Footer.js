@@ -11,41 +11,44 @@ import Link from './Link';
 const useStyles = makeStyles((defTheme) => ({
   footer: {
     borderTop: `1px solid ${defTheme.palette.divider}`,
-    marginTop: defTheme.spacing(8),
-    paddingTop: defTheme.spacing(3),
-    paddingBottom: defTheme.spacing(3),
-    [defTheme.breakpoints.up('sm')]: {
-      paddingTop: defTheme.spacing(6),
-      paddingBottom: defTheme.spacing(6),
-    },
+    // marginTop: defTheme.spacing(8),
+    paddingTop: defTheme.spacing(1),
+    paddingBottom: defTheme.spacing(1),
+    textAlign: 'center',
+    // [defTheme.breakpoints.up('sm')]: {
+    //   paddingTop: defTheme.spacing(6),
+    //   paddingBottom: defTheme.spacing(6),
+    // },
   },
 }));
 
 const footers = [
   {
     title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
+    description: [
+      'Team',
+      'Contact us',
+    ],
   },
   {
     title: 'Features',
     description: [
       'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one'],
+      'Developer stuff'],
   },
-  {
-    title: 'Resources',
-    description: [
-      'Resource',
-      'Resource name',
-      'Another resource',
-      'Final resource'],
-  },
+  // {
+  //   title: 'Resources',
+  //   description: [
+  //     'Resource',
+  //     'Resource name',
+  //     'Another resource',
+  //     'Final resource'],
+  // },
   {
     title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
+    description: [
+      'Privacy policy',
+      'Terms of use'],
   },
 ];
 
@@ -58,7 +61,7 @@ export default function Footer(props) {
       <Container maxWidth="md" component="footer" className={classes.footer}>
         <Grid container spacing={4} justify="space-evenly">
           {footers.map((footer) => (
-            <Grid item xs={6} sm={3} key={footer.title}>
+            <Grid item xs key={footer.title}>
               <Typography variant="h6" gutterBottom>
                 {footer.title}
               </Typography>
