@@ -5,7 +5,6 @@ import {
   createMuiTheme,
   makeStyles,
   ThemeProvider,
-  useTheme,
 } from '@material-ui/core/styles';
 import DateLabel from '../../components/DateLabel';
 import utilStyles from '../../styles/utils.module.css';
@@ -22,38 +21,13 @@ import { parseMetaData, parseTitle } from '../../utils/metaUtils';
 import ReactMd from '../../components/markdownEditor/ReactMd';
 
 export default function Post({ postData, shareUrl }) {
-  (function () {
-    if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
-      shareUrl = window.location.href;
-      console.debug(`shareUrl = window.location.href;  ${shareUrl}`);
-    }
-  }());
-  const windowFunc = function () {
-    if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
-      shareUrl = window.location.href;
-      console.log(`shareUrl = window.location.href;  windowFunc ${shareUrl}`);
-      console.log(`shareUrl = window.location.href;  windowFunc ${Date.now()}`);
-    }
-  };
   useEffect(() => {
     // this.setState({shareUrl: window.location.href})
     if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
       shareUrl = window.location.href;
     }
-    console.log(`shareUrl = window.location.href ${shareUrl}`);
-    console.log(`shareUrl = window.location.href ${Date.now()}`);
   });
-  console.log(`component render: ${Date.now()}`);
-  const [share, setShare] = useState();
-  useEffect(() => {
-    async function loadTodos() {
-      if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
-        setShare(window.location.href);
-      }
-    }
 
-    loadTodos();
-  }, []);
   let sanitizer = (a) => a;
   if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
   const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
@@ -90,7 +64,6 @@ export default function Post({ postData, shareUrl }) {
 
   return (
     <>
-      {/* <StrictMode> */}
       <DynamicHead meta={parseMetaData(postData.body, shareUrl)} />
       <ThemeProvider theme={darkLightTheme}>
         <MainLayout user={user} itemId={postData.id} token={token}>
@@ -104,7 +77,6 @@ export default function Post({ postData, shareUrl }) {
             <div className={utilStyles.lightText}>
               <DateLabel dateString={postData.createdDate} />
             </div>
-            {/* <div dangerouslySetInnerHTML={{ __html: htmlContent }} /> */}
             <ReactMd cssClass={classes.mdContent} markdown={postData.body} />
           </article>
           <br />
@@ -112,10 +84,9 @@ export default function Post({ postData, shareUrl }) {
           <br />
           {' '}
           <br />
-          <ShareFooter postData={parseMetaData(postData.body, shareUrl)} shareUrl={share} />
+          <ShareFooter postData={parseMetaData(postData.body, shareUrl)} shareUrl={shareUrl} />
         </MainLayout>
       </ThemeProvider>
-      {/* </StrictMode> */}
     </>
   );
 }
@@ -123,11 +94,9 @@ export default function Post({ postData, shareUrl }) {
 export async function getServerSideProps({ params, req }) {
   console.log(`params: ${params}`);
   const postData = await controllers.getBlog(params.id);
-  // const blogger = await getUserData('patrik.bego'); // TODO hard coded for now
   return {
     props: {
       postData,
-      // blogger,
     },
   };
 }

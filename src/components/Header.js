@@ -124,9 +124,9 @@ function Header({ loading }) {
             </Typography>
 
             <nav>
-              <Tooltip title="Change Color" aria-label="Change Color">
+              <Tooltip title="Profile" aria-label="Profile">
                 <IconButton
-                  aria-label="Change Color"
+                  aria-label="Profile"
                   onClick={goToProfile}
                 >
                   <Avatar onClick={goToProfile} className={classes.small}>{user ? user.firstName : 'Not logged in'}</Avatar>

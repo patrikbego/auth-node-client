@@ -8,3 +8,11 @@
     // NEXT_PUBLIC_REST_API1: process.env.NEXT_PUBLIC_REST_API,
   // },
 // };
+
+module.exports = {
+  eslint: {
+    // Warning: Dangerously allow production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+};

@@ -114,7 +114,7 @@ export default function MainLayoutDrawer(props) {
                 button
                 onClick={handleDraftClick()}
               >
-                <Tooltip title="Get all drafts" placement="right">
+                <Tooltip title="My drafts" placement="right">
                   <ListItemIcon>
                     <MenuBook />
                   </ListItemIcon>
@@ -131,16 +131,16 @@ export default function MainLayoutDrawer(props) {
               {/*    </ListItemIcon> */}
               {/*  </Tooltip> */}
               {/* </ListItem> */}
-              <ListItem
-                button
-                onClick={handleSearchClick('right')}
-              >
-                <Tooltip title="Search posts" placement="right">
-                  <ListItemIcon>
-                    <Share />
-                  </ListItemIcon>
-                </Tooltip>
-              </ListItem>
+              {/*<ListItem*/}
+              {/*  button*/}
+              {/*  onClick={handleSearchClick('right')}*/}
+              {/*>*/}
+              {/*  <Tooltip title="Search posts" placement="right">*/}
+              {/*    <ListItemIcon>*/}
+              {/*      <Share />*/}
+              {/*    </ListItemIcon>*/}
+              {/*  </Tooltip>*/}
+              {/*</ListItem>*/}
             </>
           ) : (
             <>

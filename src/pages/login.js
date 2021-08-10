@@ -23,7 +23,7 @@ export default function LoginP({ URL }) {
 }
 
 export async function getStaticProps() {
-  const URL = await controllers.url();
+  const URL = controllers.url();
   return {
     props: {
       URL,
