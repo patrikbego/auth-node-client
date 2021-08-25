@@ -52,14 +52,8 @@ const controllers = {
       if (typeof localStorage !== 'undefined') {
         localStorage.clear();
         sessionStorage.clear();
-        const cookies = document.cookie;
 
-        for (let i = 0; i < cookies.split(';').length; i++) {
-          const myCookie = cookies[i];
-          const pos = myCookie.indexOf('=');
-          const name = pos > -1 ? myCookie.substr(0, pos) : myCookie;
-          document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-        }
+        document.cookie = 'devst=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
       }
     } catch (e) {
       console.log('failed to clear the auth data');
@@ -154,10 +148,14 @@ const controllers = {
     });
   },
 
-  getUserDraftBlogs(id, req) {
-    let headers = new Headers();
-    headers = req.headers;
-    return fetch(`${controllers.URL}/blog/getUserDraftBlogs/${id}`, {
+  getUserDraftBlogs(username, req, token) {
+    const headers = new Headers();
+    // headers.append('Set-Cookie', `devst=${token}`);
+    headers.append('cookie', `devst=${token}`);
+    headers.append('Content-Type', 'application/json');
+    // headers['Content-Type'] = 'application/json';
+    console.debug('getUserDraftBlogs URL => ', `${controllers.URL}/blog/getUserDraftBlogs/${username}`);
+    return fetch(`${controllers.URL}/blog/getUserDraftBlogs/${username}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'default',
@@ -166,8 +164,8 @@ const controllers = {
     });
   },
 
-  getUserBlogs(id) {
-    return fetch(`${controllers.URL}/blog/getUserBlogs/${id}`, {
+  getUserBlogs(username) {
+    return fetch(`${controllers.URL}/blog/getUserBlogs/${username}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'default',

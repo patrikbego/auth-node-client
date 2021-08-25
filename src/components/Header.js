@@ -70,7 +70,7 @@ function Header({ loading }) {
         type: 'SET_TOKEN',
         token: null,
       });
-      await router.push('/about');
+      await router.push('/');
     } catch (e) {
       console.error(e.message);
     }

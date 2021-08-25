@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -18,7 +18,6 @@ import facebookService from '../utils/facebookService';
 import googleService from '../utils/googleService';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
-import {tokenSetter} from '../utils/tokenUtils';
 import utilStyles from '../styles/utils.module.css';
 
 export default function Login({ URL }) {
@@ -59,8 +58,12 @@ export default function Login({ URL }) {
   }));
 
   // TODO consider loading this async / in the background
-  facebookService.initFacebookSdk().then(console.info('fb initialized'));
-  googleService.init().then(console.log('google initialized'));
+  try {
+    facebookService.initFacebookSdk().then(console.info('fb initialized'));
+    googleService.init().then(console.log('google initialized'));
+  } catch (e) {
+    console.error('Social init failed -> ', e);
+  }
 
   const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
 
@@ -77,8 +80,10 @@ export default function Login({ URL }) {
       type: 'SET_USER',
       user: res.user,
     });
-    if (localStorage) {
+    if (typeof window !== 'undefined') {
       localStorage.setItem('token', res.token);
+      // document.cookie = `devst=${res.token};max-age=604800;domain=bego.tips`;
+      document.cookie = `devst=${res.token};max-age=604800`;
     }
     dispatch({
       type: 'SET_TOKEN',

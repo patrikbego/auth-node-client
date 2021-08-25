@@ -27,8 +27,10 @@ export default function Home({ appUser, postsData }) {
 
 export async function getServerSideProps({ params, req }) {
   let postsData = {};
-  const allBlogsPromise = await controllers.getUserBlogs(params.id);
+  const allBlogsPromise = await controllers.getUserBlogs(params.username);
+  console.debug('blogger id/usrname = ', params.id);
   if (allBlogsPromise.status !== 200) { // TODO extract that and add info level for 200 or 300 codes
+    console.error('blogger/', params.id, ' error is ', allBlogsPromise.status, allBlogsPromise.statusText);
     postsData.errors = allBlogsPromise.statusText;
   } else {
     postsData = await allBlogsPromise.json();

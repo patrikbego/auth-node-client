@@ -45,21 +45,20 @@ export function tokenSetter(token, dispatch, reactUseEffect) {
     // clearing interval
     return () => clearInterval(timer);
   });
+}
 
-  // reactUseEffect(() => {
-  //   if (typeof localStorage !== 'undefined') {
-  //     const lsToken = localStorage.getItem('token');
-  //     if (!token && lsToken) {
-  //       dispatch({
-  //         type: 'SET_USER',
-  //         user: parseJwt(lsToken).user,
-  //       });
-  //       dispatch({
-  //         type: 'SET_TOKEN',
-  //         token: lsToken,
-  //       });
-  //       console.log('TokenUtils token', token);
-  //     }
-  //   }
-  // });
+export function extractTokenFromHeaders(headers) {
+  let token;
+  if (headers && headers.cookie) {
+    headers.cookie.split(';').forEach((cookie) => {
+      const parts = cookie.split('=');
+      console.log(
+        `cookie: ${parts[0]}=${parts[1]}`,
+      );
+      if (parts[0].trim() === '__st' || parts[0].trim() === 'devst') {
+        token = parts.length === 2 ? parts[1] : undefined;
+      }
+    });
+  }
+  return token;
 }
