@@ -7,7 +7,7 @@ import {
 import reducer, { initialState } from '../src/utils/reducers/reducer';
 
 const user = {
-  name: 'Patrik', surname: 'Bego', about: 'Philosopher|Entrepreneur|Code and Life hacker', siteTitle: 'My new blog',
+  name: 'Patrik', surname: 'Test', about: 'Philosopher|Entrepreneur|Code and Life hacker', siteTitle: 'My new blog',
 };
 
 jest.mock('next/router', () => ({

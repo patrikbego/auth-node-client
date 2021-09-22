@@ -58,7 +58,7 @@ function Header({ loading }) {
   const classes = useStyles();
 
   const [{ darkOrLiteTheme, user, token }, dispatch] = useStateValue();
-  console.debug(user, token);
+
   const logout = async () => {
     try {
       await controller.logout();

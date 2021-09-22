@@ -169,7 +169,7 @@ export async function getServerSideProps({ params, req }) {
   if (params && params.id && params.id !== '0') {
     const postData = await controllers.getBlog(params.id);
     content = postData;
-    // const blogger = await getUserData('patrik.bego'); // TODO hard coded for now
+    // const blogger = await getUserData('patrik.test'); // TODO hard coded for now
   }
   return {
     props: {

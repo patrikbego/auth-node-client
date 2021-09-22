@@ -117,6 +117,8 @@ export function handleAddUpdate(content, setOpen, dispatch, tags, publish, itemI
       } else {
         openAlertBar(dispatch, 'Article has been created!', 'success');
       }
+    }).catch((e) => {
+      console.error('It failed to create blog', e.stackTrace, e);
     });
   } else {
     blog.updatedDate = new Date();

@@ -7,6 +7,6 @@ export default async function resInterceptor(res) {
     await router.push('/login');
     return null;
   }
-
+  //TODO in case the body is not json it will fail
   return res.json();
 }

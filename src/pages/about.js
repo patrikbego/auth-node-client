@@ -54,8 +54,8 @@ export default function About() {
 
   const meta = {
     shareUrl: 'https://octoplasm.com',
-    keywords: 'put your thoughts on online',
-    description: 'Easiest way to put your thoughts  ;)',
+    keywords: 'Put Your Thoughts Online',
+    description: 'Put Your Thoughts Online ;)',
     title: 'OctoPlasm',
   };
   return (

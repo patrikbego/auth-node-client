@@ -21,12 +21,17 @@ import { parseMetaData, parseTitle } from '../../utils/metaUtils';
 import ReactMd from '../../components/markdownEditor/ReactMd';
 
 export default function Post({ postData, shareUrl }) {
+  console.debug('shareUrl before => ', shareUrl);
+  const [hrefPath, setHrefPath] = useState();
   useEffect(() => {
     // this.setState({shareUrl: window.location.href})
     if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
-      shareUrl = window.location.href;
+      setHrefPath(window.location.href);
+      console.debug('shareUrl => ', hrefPath);
     }
-  });
+    console.debug('shareUrl inside => ', hrefPath);
+  }, [hrefPath]);
+  console.debug('shareUrl after => ', hrefPath);
 
   let sanitizer = (a) => a;
   if (typeof window !== 'undefined') sanitizer = DOMPurify.sanitize;
@@ -84,7 +89,7 @@ export default function Post({ postData, shareUrl }) {
           <br />
           {' '}
           <br />
-          <ShareFooter postData={parseMetaData(postData.body, shareUrl)} shareUrl={shareUrl} />
+          <ShareFooter postData={parseMetaData(postData.body, shareUrl)} shareUrl={hrefPath} />
         </MainLayout>
       </ThemeProvider>
     </>

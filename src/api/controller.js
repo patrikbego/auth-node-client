@@ -60,7 +60,7 @@ const controllers = {
     }
   },
 
-  async loginWithFbReq(options) {
+  loginWithFbReq(options) {
     // login with facebook then authenticate with the API to get a JWT auth token
     return fetch(`${controllers.URL}/auth/fb`, options);
     // get return url from location state or default to home page
@@ -186,7 +186,7 @@ const controllers = {
           'Content-Type': 'application/json',
         },
       });
-      if (res.status === 401) return { error: 'Please Login!' };
+      if (res.status !== 200) return { error: 'Please Login!' };
       data = await res.json();
     } catch (e) {
       console.error(e);

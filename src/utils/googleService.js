@@ -1,6 +1,6 @@
 import controllers from '../api/controller';
 
-const googleAppId = '839689581172-k2skjchvrjtl5cgptpg64gomt8gn10ab.apps.googleusercontent.com';
+const googleAppId = '834417214001-8ftp5ufhf1rrmhe8khil3p8bgo4vg3hk.apps.googleusercontent.com';
 
 const googleService = {
   user: null,
@@ -15,7 +15,7 @@ const googleService = {
     console.log('access_token', authResponse);
     const headers = new Headers();
     headers.append('Authorization',
-        `Bearer ${btoa(`: ${authResponse}`)}`);
+      `Bearer ${btoa(`: ${authResponse}`)}`);
     headers.append('access_token', authResponse);
     return {
       method: 'POST',
@@ -95,15 +95,16 @@ const googleService = {
 
       console.debug('gapi.isSignedIn.get()', gapi.isSignedIn.get());
       console.debug('currentUser.get()', gapi.currentUser.get());
-      console.debug('currentUser.get()', gapi.currentUser.get().getGrantedScopes());
+      console.debug('currentUser.get()',
+        gapi.currentUser.get().getGrantedScopes());
       gapi.signIn({
         // client_id: googleAppId,
         scope: 'email profile openid',
         // response_type: 'id_token permission',
       }).then(async (response) => { // TODO handle errors
-      // gapi.grantOfflineAccess().then(async (response) => {
+        // gapi.grantOfflineAccess().then(async (response) => {
         if (response.error) {
-        // An error happened!
+          // An error happened!
           console.error(response.error);
           return;
         }
@@ -111,7 +112,9 @@ const googleService = {
         let user;
         console.debug('login response', response);
         const options = googleService.processAuthResponse(
-          response && response.accessToken ? response.accessToken : response.uc.access_token,
+          response && response.accessToken
+            ? response.accessToken
+            : response.getAuthResponse().access_token,
         );
         console.log('login options', options);
         if (options) {
@@ -122,8 +125,22 @@ const googleService = {
         console.debug(user);
         resolve(user);
 
-      // You can also now use gapi.client to perform authenticated requests.
+        // You can also now use gapi.client to perform authenticated requests.
       }, params);
+    });
+  },
+
+  async loginWithG(params = { scope: 'email profile openid' }) {
+    const gapi = await googleService.init();
+
+    console.debug('gapi.isSignedIn.get()', gapi.isSignedIn.get());
+    console.debug('currentUser.get()', gapi.currentUser.get());
+    console.debug('currentUser.get()',
+      gapi.currentUser.get().getGrantedScopes());
+    return gapi.signIn({
+      // client_id: googleAppId,
+      scope: params.scope,
+      // response_type: 'id_token permission',
     });
   },
 

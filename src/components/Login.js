@@ -143,15 +143,73 @@ export default function Login({ URL }) {
     }
   }
 
-  async function loginWithGoogle() {
-    const res = await googleService.login();
-    if (res) {
-      setAuthState(res);
-      await router.push('/');
-    } else {
-      console.error('google login failed');
-    }
+  async function loginWithFacebook1() {
+    const FB = await facebookService.initFacebookSdk();
+
+    FB.login(async (response) => {
+      console.debug('login response', response);
+      const options = facebookService.processAuthResponse(response.authResponse);
+      console.debug('login options', options);
+      if (options) {
+        controllers.loginWithFbReq(options).then(async (res) => {
+          const resBody = await res.json();
+          if (!res.ok) {
+            setFetchErrorMsg(resBody.message);
+            console.error('fb login failed');
+          } else {
+            console.log(resBody);
+            setAuthState(resBody);
+            await router.push('/');
+          }
+        }).catch((error) => {
+          console.error(error.stackTrace);
+          setFetchErrorMsg(error.message);
+          console.error('fb login failed');
+        });
+      }
+    });
   }
+
+  async function loginWithGoogle() {
+    googleService.loginWithG().then(async (response) => { // TODO handle errors
+      // gapi.grantOfflineAccess().then(async (response) => {
+
+      if (response.error) {
+        // An error happened!
+        setFetchErrorMsg(response.error);
+        console.error('google login failed', response.error);
+        return;
+      }
+
+      console.debug('login response', response);
+      const options = googleService.processAuthResponse(
+        response && response.accessToken
+          ? response.accessToken
+          : response.getAuthResponse().access_token,
+      );
+      console.log('login options', options);
+      if (options) {
+        controllers.loginWithGooglReq(options).then(async (res) => {
+          const resBody = await res.json();
+          if (!res.ok) {
+            setFetchErrorMsg(resBody.message);
+            console.error('google login failed');
+          } else {
+            console.log(resBody);
+            setAuthState(resBody);
+            await router.push('/');
+          }
+        }).catch((error) => {
+          console.error(error.stackTrace);
+          setFetchErrorMsg(error.message);
+          console.error('google login failed');
+        });
+      }
+      console.debug(user);
+    });
+  }
+
+  // You can also now use gapi.client to perform authenticated requests.
 
   return (
 
@@ -197,7 +255,7 @@ export default function Login({ URL }) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={loginWithFacebook}
+              onClick={loginWithFacebook1}
             >
               Sign In with Facebook
             </Button>
@@ -211,16 +269,23 @@ export default function Login({ URL }) {
               Sign In with Google
             </Button>
             {fetchErrorMsg
-                && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
+              && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
             <Grid container>
               <Grid item xs>
-                <Link className={utilStyles.a} href="/forgotPassword" variant="body2">
+                <Link
+                  className={utilStyles.a}
+                  href="/forgotPassword"
+                  variant="body2"
+                >
                   <a className={utilStyles.a}>Forgot password?</a>
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  <a className={utilStyles.a}>Don't have an account? Sign Up</a>
+                  <a className={utilStyles.a}>
+                    Don't have an account? Sign
+                    Up
+                  </a>
                 </Link>
               </Grid>
             </Grid>

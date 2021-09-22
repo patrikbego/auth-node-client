@@ -168,7 +168,7 @@ export default function MainLayout({
   // }
   //
   // const { loading } = useFetchUser();
-  if (token) {
+  // if (token) {
     return (
       <>
         <div className={classes.root}>
@@ -192,22 +192,22 @@ export default function MainLayout({
         </div>
       </>
     );
-  }
-  return (
-    <>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: false,
-          })}
-        >
-          <Header loading={false} />
-        </AppBar>
-        <div className={classes.mainLayoutContainer}>{children}</div>
-      </div>
-      <Footer />
-    </>
-  );
+  // }
+  // return (
+  //   <>
+  //     <div className={classes.root}>
+  //       <CssBaseline />
+  //       <AppBar
+  //         position="fixed"
+  //         className={clsx(classes.appBar, {
+  //           [classes.appBarShift]: false,
+  //         })}
+  //       >
+  //         <Header loading={false} />
+  //       </AppBar>
+  //       <div className={classes.mainLayoutContainer}>{children}</div>
+  //     </div>
+  //     <Footer />
+  //   </>
+  // );
 }

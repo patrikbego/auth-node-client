@@ -16,8 +16,8 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
 
   const meta = {
     shareUrl: 'https://octoplasm.com',
-    keywords: 'put your thoughts on online',
-    description: 'put your thoughts on online ;)',
+    keywords: 'Put Your Thoughts Online',
+    description: 'Put Your Thoughts Online ;)',
     title: 'OctoPlasm',
   };
 

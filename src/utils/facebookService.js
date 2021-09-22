@@ -2,7 +2,7 @@
 
 import controllers from '../api/controller';
 
-const facebookAppId = 549794122820312;
+const facebookAppId = 545112093272562;
 
 const facebookService = {
   user: null,

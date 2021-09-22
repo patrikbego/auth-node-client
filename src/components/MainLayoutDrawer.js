@@ -10,8 +10,9 @@ import {
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import DeleteDialog from './DeleteDialog';
 import { useStateValue } from '../utils/reducers/StateProvider';
+import DeleteDialog from './DeleteDialog';
+import ClickAwayPopper from './ClickAwayPopper';
 
 export default function MainLayoutDrawer(props) {
   const router = useRouter();
@@ -49,7 +50,10 @@ export default function MainLayoutDrawer(props) {
   const [placement, setPlacement] = React.useState();
   const [{ user, token }, dispatch] = useStateValue();
 
-  const handleSearchClick = (newPlacement) => (event) => {
+  const clickAwayHandler = () => setOpen(false);
+  const clickHandler = () => setOpen(false);
+
+  const handleShareClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
@@ -62,23 +66,13 @@ export default function MainLayoutDrawer(props) {
 
   return (
     <>
-      {/* <Popper */}
-      {/*  className={classes.root} */}
-      {/*  open={open} */}
-      {/*  anchorEl={anchorEl} */}
-      {/*  placement={placement} */}
-      {/*  transition */}
-      {/* > */}
-      {/*  {({ TransitionProps }) => ( */}
-      {/*    <Fade {...TransitionProps} timeout={350}> */}
-      {/*      <Paper> */}
-      {/*        <Typography className={classes.typography}> */}
-      {/*          <ShareFooter postData="octoplasm.com" shareUrl="https://octoplasm.com" /> */}
-      {/*        </Typography> */}
-      {/*      </Paper> */}
-      {/*    </Fade> */}
-      {/*  )} */}
-      {/* </Popper> */}
+      <ClickAwayPopper
+        open={open}
+        clickAwayHandler={clickAwayHandler}
+        clickHandler={clickHandler}
+        anchorEl={anchorEl}
+        placement={placement}
+      />
       <Drawer
         variant="permanent"
         className={props.classes.drawerClose}
@@ -97,7 +91,7 @@ export default function MainLayoutDrawer(props) {
         <Divider />
         <List>
           {/*  Button bar */}
-          {props.mainPage ? (
+          {props.mainPage && token ? (
             <>
               <ListItem
                 button
@@ -120,43 +114,51 @@ export default function MainLayoutDrawer(props) {
                   </ListItemIcon>
                 </Tooltip>
               </ListItem>
+
               {/* ) : (<></>)} */}
-              {/* <ListItem */}
-              {/*  button */}
-              {/*  onClick={handleSearchClick('right')} */}
-              {/* > */}
-              {/*  <Tooltip title="Search posts" placement="right"> */}
-              {/*    <ListItemIcon> */}
-              {/*      <Search /> */}
-              {/*    </ListItemIcon> */}
-              {/*  </Tooltip> */}
-              {/* </ListItem> */}
-              {/*<ListItem*/}
-              {/*  button*/}
-              {/*  onClick={handleSearchClick('right')}*/}
-              {/*>*/}
-              {/*  <Tooltip title="Search posts" placement="right">*/}
-              {/*    <ListItemIcon>*/}
-              {/*      <Share />*/}
-              {/*    </ListItemIcon>*/}
-              {/*  </Tooltip>*/}
-              {/*</ListItem>*/}
+
             </>
           ) : (
             <>
-              <ListItem
-                button
-                onClick={editArticle}
-              >
-                <Tooltip title="Edit Article" placement="right">
-                  <ListItemIcon>
-                    <Create />
-                  </ListItemIcon>
-                </Tooltip>
-              </ListItem>
-              <DeleteDialog itemId={props.itemId} />
+              {token ? (
+                <>
+                  <ListItem
+                    button
+                    onClick={editArticle}
+                  >
+                    <Tooltip title="Edit Article" placement="right">
+                      <ListItemIcon>
+                        <Create />
+                      </ListItemIcon>
+                    </Tooltip>
+                  </ListItem>
+                  <DeleteDialog itemId={props.itemId} />
+                </>
+              ) : (
+                <> </>
+              )}
             </>
           )}
+          {/* <ListItem */}
+          {/*  button */}
+          {/*  onClick={handleSearchClick('right')} */}
+          {/* > */}
+          {/*  <Tooltip title="Search posts" placement="right"> */}
+          {/*    <ListItemIcon> */}
+          {/*      <Search /> */}
+          {/*    </ListItemIcon> */}
+          {/*  </Tooltip> */}
+          {/* </ListItem> */}
+          <ListItem
+            button
+            onClick={handleShareClick('right')}
+          >
+            <Tooltip title="Search posts" placement="right">
+              <ListItemIcon>
+                <Share />
+              </ListItemIcon>
+            </Tooltip>
+          </ListItem>
         </List>
       </Drawer>
     </>
