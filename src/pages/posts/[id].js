@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core/styles';
 import DateLabel from '../../components/DateLabel';
 import utilStyles from '../../styles/utils.module.css';
-import ShareFooter from '../../components/ShareFooter';
+import SharePanel from '../../components/SharePanel';
 import markdownStyle from './markdown.module.css';
 import controllers from '../../api/controller';
 import { useStateValue } from '../../utils/reducers/StateProvider';
@@ -71,7 +71,13 @@ export default function Post({ postData, shareUrl }) {
     <>
       <DynamicHead meta={parseMetaData(postData.body, shareUrl)} />
       <ThemeProvider theme={darkLightTheme}>
-        <MainLayout user={user} itemId={postData.id} token={token}>
+        <MainLayout
+          user={user}
+          itemId={postData.id}
+          token={token}
+          postData={parseMetaData(postData.body, shareUrl)}
+          shareUrl={hrefPath}
+        >
           <GlobalAlertBar />
           <Head>
             <title>{parseTitle(postData.title)}</title>
@@ -89,7 +95,7 @@ export default function Post({ postData, shareUrl }) {
           <br />
           {' '}
           <br />
-          <ShareFooter postData={parseMetaData(postData.body, shareUrl)} shareUrl={hrefPath} />
+          {/* <SharePanel postData={parseMetaData(postData.body, shareUrl)} shareUrl={hrefPath} /> */}
         </MainLayout>
       </ThemeProvider>
     </>

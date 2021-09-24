@@ -72,6 +72,8 @@ export default function MainLayoutDrawer(props) {
         clickHandler={clickHandler}
         anchorEl={anchorEl}
         placement={placement}
+        postData={props.postData}
+        shareUrl={props.shareUrl}
       />
       <Drawer
         variant="permanent"
@@ -171,4 +173,6 @@ MainLayoutDrawer.propTypes = {
   theme: PropTypes.object,
   mainPage: PropTypes.bool,
   itemId: PropTypes.number,
+  postData: PropTypes.object,
+  shareUrl: PropTypes.object,
 };

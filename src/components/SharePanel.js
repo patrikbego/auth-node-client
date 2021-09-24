@@ -43,9 +43,9 @@ import {
   WorkplaceIcon,
   WorkplaceShareButton,
 } from 'react-share';
-import styles from './ShareFooter.module.css';
+import styles from './SharePanel.module.css';
 
-export default function ShareFooter({ postData, shareUrl = 'https://octoplasm.com' }) {
+export default function SharePanel({ postData, shareUrl = 'https://octoplasm.com' }) {
   return (
     <div className={`${styles.shareMainContainer}`}>
       <div className={`${styles.shareContainer}`}>

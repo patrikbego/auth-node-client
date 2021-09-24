@@ -8,6 +8,7 @@ import Header from './Header';
 import MainLayoutDrawer from './MainLayoutDrawer';
 import { parseJwt, tokenSetter, validateJwt } from '../utils/tokenUtils';
 import Footer from './Footer';
+import * as PropTypes from 'prop-types';
 
 const drawerWidth = 240;
 
@@ -125,7 +126,7 @@ const useStyles = makeStyles((defTheme) => ({
 }));
 
 export default function MainLayout({
-  children, user, mainPage, itemId, token,
+  children, user, mainPage, itemId, token, postData, shareUrl
 }) {
   const [{}, dispatch] = useStateValue();
   const classes = useStyles();
@@ -187,6 +188,8 @@ export default function MainLayout({
             theme={defMaterialTheme}
             mainPage={mainPage}
             itemId={itemId}
+            postData={postData}
+            shareUrl={shareUrl}
           />
           <div className={classes.mainLayoutContainer}>{children}</div>
         </div>

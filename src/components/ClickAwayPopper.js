@@ -7,7 +7,7 @@ import {
   Popper,
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import ShareFooter from './ShareFooter';
+import SharePanel from './SharePanel';
 
 export default function ClickAwayPopper({
   open, clickAwayHandler, clickHandler, anchorEl, placement,
@@ -41,7 +41,7 @@ export default function ClickAwayPopper({
             <div>
               <Paper className={classes.typography}>
                 {/* <Typography className={classes.typography}> */}
-                <ShareFooter postData={postData} shareUrl={shareUrl} />
+                <SharePanel postData={postData} shareUrl={shareUrl} />
                 {/* </Typography> */}
               </Paper>
             </div>
