@@ -155,7 +155,7 @@ export default function MainLayoutDrawer(props) {
             button
             onClick={handleShareClick('right')}
           >
-            <Tooltip title="Search posts" placement="right">
+            <Tooltip title="Share" placement="right">
               <ListItemIcon>
                 <Share />
               </ListItemIcon>
