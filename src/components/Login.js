@@ -107,7 +107,7 @@ export default function Login({ URL }) {
         try {
           const res = await response.json();
           if (response.status !== 200) {
-            setFetchErrorMsg(res);
+            setFetchErrorMsg(res.message);
           } else {
             // if (typeof window !== 'undefined') {
             //   localStorage.setItem('token', res.token);

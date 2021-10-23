@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,9 +6,7 @@ import clsx from 'clsx';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 import MainLayoutDrawer from './MainLayoutDrawer';
-import { parseJwt, tokenSetter, validateJwt } from '../utils/tokenUtils';
-import Footer from './Footer';
-import * as PropTypes from 'prop-types';
+import { tokenSetter } from '../utils/tokenUtils';
 
 const drawerWidth = 240;
 
@@ -99,7 +97,7 @@ const useStyles = makeStyles((defTheme) => ({
   mainLayoutContainer: {
     maxWidth: '80%',
     padding: '0 1rem',
-    margin: '6rem auto 6rem',
+    margin: '2.5rem auto 2.5rem',
     textAlign: 'center',
   },
 
@@ -126,7 +124,7 @@ const useStyles = makeStyles((defTheme) => ({
 }));
 
 export default function MainLayout({
-  children, user, mainPage, itemId, token, postData, shareUrl
+  children, user, mainPage, itemId, token, postData, shareUrl,
 }) {
   const [{}, dispatch] = useStateValue();
   const classes = useStyles();
@@ -170,31 +168,33 @@ export default function MainLayout({
   //
   // const { loading } = useFetchUser();
   // if (token) {
-    return (
-      <>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: false,
-            })}
-          >
-            <Header loading={false} />
-          </AppBar>
-          <MainLayoutDrawer
-            classes={classes}
-            open={false}
-            theme={defMaterialTheme}
-            mainPage={mainPage}
-            itemId={itemId}
-            postData={postData}
-            shareUrl={shareUrl}
-          />
-          <div className={classes.mainLayoutContainer}>{children}</div>
+  return (
+    <>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: false,
+          })}
+        >
+          <Header loading={false} />
+        </AppBar>
+        <MainLayoutDrawer
+          classes={classes}
+          open={false}
+          theme={defMaterialTheme}
+          mainPage={mainPage}
+          itemId={itemId}
+          postData={postData}
+          shareUrl={shareUrl}
+        />
+        <div className={classes.mainLayoutContainer}>
+          {children}
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
   // }
   // return (
   //   <>

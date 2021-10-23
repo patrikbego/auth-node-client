@@ -55,7 +55,9 @@
 /* unvisited link */
 .a:link {
   /*color: #f26b5b;*/
+  /*color: tomato*/
   color: rgb(242,107,91);
+  font-size: 0.7rem;
 }
 
 /* visited link */
@@ -70,5 +72,6 @@
 
 /* selected link */
 .a:active {
+  /*color: tomato*/
   color: rgb(242,107,91);
 }

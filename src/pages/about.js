@@ -77,8 +77,8 @@ export default function About() {
               <br />
               <p className={classes.h1}>OctoPlasm</p>
               <p className={classes.h2}>
-                The easy way to share your ideas,
-                knowledge or views with the world.
+                Easy Way to Share Your Ideas,
+                Knowledge and Views With the World
               </p>
 
               <p className={classes.h3}>
