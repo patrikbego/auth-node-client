@@ -8,6 +8,8 @@ import muiSetter from '../../utils/theme';
 import { useStateValue } from '../../utils/reducers/StateProvider';
 import { extractTokenFromHeaders, tokenSetter } from '../../utils/tokenUtils';
 
+require('log-timestamp');
+
 export default function Home({ appUser, postsData, token }) {
   const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
   const [{ }, dispatch] = useStateValue();

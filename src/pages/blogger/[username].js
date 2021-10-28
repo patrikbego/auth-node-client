@@ -6,6 +6,8 @@ import MainPanel from '../../components/MainPanel';
 import muiSetter from '../../utils/theme';
 import { useStateValue } from '../../utils/reducers/StateProvider';
 
+require('log-timestamp');
+
 export default function Home({ appUser, postsData }) {
   const meta = {
     shareUrl: 'https://octoplasm.com', // TODO setup right url

@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core/styles';
 import DateLabel from '../../components/DateLabel';
 import utilStyles from '../../styles/utils.module.css';
-import SharePanel from '../../components/SharePanel';
 import markdownStyle from './markdown.module.css';
 import controllers from '../../api/controller';
 import { useStateValue } from '../../utils/reducers/StateProvider';
@@ -19,6 +18,8 @@ import mdToHtml from '../../utils/mdUtils';
 import DynamicHead from '../../components/DynamicHead';
 import { parseMetaData, parseTitle } from '../../utils/metaUtils';
 import ReactMd from '../../components/markdownEditor/ReactMd';
+
+require('log-timestamp');
 
 export default function Post({ postData, shareUrl }) {
   console.debug('shareUrl before => ', shareUrl);
