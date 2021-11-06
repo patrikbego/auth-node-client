@@ -95,8 +95,8 @@ const googleService = {
 
       console.debug('gapi.isSignedIn.get()', gapi.isSignedIn.get());
       console.debug('currentUser.get()', gapi.currentUser.get());
-      console.debug('currentUser.get()',
-        gapi.currentUser.get().getGrantedScopes());
+      console.debug('currentUser.get()', gapi.currentUser.get().getGrantedScopes());
+
       gapi.signIn({
         // client_id: googleAppId,
         scope: 'email profile openid',

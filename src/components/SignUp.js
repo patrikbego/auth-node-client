@@ -141,7 +141,7 @@ export default function SignUp({ appUser }) {
         try {
           const res = await response.json();
           if (response.status !== 200) {
-            setFetchErrorMsg(res);
+            setFetchErrorMsg(res.message);
           } else {
             await router.push('/confirmEmail');
           }
@@ -151,15 +151,12 @@ export default function SignUp({ appUser }) {
       },
     ).catch(
       (e) => {
-        console.error(e);
-        if (e) {
-          setFetchErrorMsg(e);
-        } else {
-          setFetchErrorMsg('User creation failed!');
-        }
+        console.error('User creation failed!', e);
+        setFetchErrorMsg('Something went wrong! Please try again later or contact support@mubigo.com');
       },
     );
   }
+
   return (
     <>
       <div className={classes.root}>
@@ -205,17 +202,17 @@ export default function SignUp({ appUser }) {
                   <FormControlLabel
                     control={(
                       <Checkbox
-                        color="primary"
-                        required
-                        id="tosAgreement"
-                        value={tosValue}
-                        name="tosAgreement"
-                        onChange={(e) => {
-                          setTosValue((tosValue) => !tosValue);
-                          console.info('changed to ',
-                            e.target.value);
-                        }}
-                      />
+                          color="primary"
+                          required
+                          id="tosAgreement"
+                          value={tosValue}
+                          name="tosAgreement"
+                          onChange={(e) => {
+                            setTosValue((tosValue) => !tosValue);
+                            console.info('changed to ',
+                              e.target.value);
+                          }}
+                        />
                         )}
                     label="I accept T&C"
                   />

@@ -1,6 +1,6 @@
 # Dockerfile
 # base image
-FROM node:alpine
+FROM node:15.14.0-alpine3.13
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

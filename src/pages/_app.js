@@ -9,6 +9,8 @@ import GlobalAlertBar from '../components/GlobalAlertBar';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
 
+  // TODO: create front per with hashtags and when clicked on hashtags show list of blogs related to that hashtag
+
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

@@ -19,8 +19,10 @@ import googleService from '../utils/googleService';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 import utilStyles from '../styles/utils.module.css';
+import { handleErrors } from '../api/utils';
 
 export default function Login({ URL }) {
+  const GENERAL_ERROR = 'Something went wrong! Please try again later or contact support@mubigo.com';
   const useStyles = makeStyles((defTheme) => ({
     root: {
       height: '100vh',
@@ -102,34 +104,17 @@ export default function Login({ URL }) {
         email: emailElement.value,
         password: passwordElement.value,
       },
-    ).then(
-      async (response) => {
-        try {
-          const res = await response.json();
-          if (response.status !== 200) {
-            setFetchErrorMsg(res.message);
-          } else {
-            // if (typeof window !== 'undefined') {
-            //   localStorage.setItem('token', res.token);
-            // }
-            setAuthState(res);
-            await router.push('/');
-          }
-        } catch (e) {
-          console.error(e);
-          setFetchErrorMsg('User login failed!');
-        }
-      },
-    ).catch(
-      (e) => {
-        console.error(e);
-        if (e) {
-          setFetchErrorMsg(e);
-        } else {
-          setFetchErrorMsg('User login failed!');
-        }
-      },
-    );
+    ).then(handleErrors).then(async (response) => {
+      console.log('Inside of 1then -> ', response);
+      const data = await response.json();
+      console.log('Inside of 2then -> ', data);
+      setAuthState(data);
+      await router.push('/');
+    }).catch((error) => {
+      console.error('User login failed! ---- >', error);
+      if (!error.message) error.message = GENERAL_ERROR;
+      setFetchErrorMsg('User login failed, due to technical issues.');
+    });
   }
 
   async function loginWithFacebook() {
@@ -148,7 +133,9 @@ export default function Login({ URL }) {
 
     FB.login(async (response) => {
       console.debug('login response', response);
-      const options = facebookService.processAuthResponse(response.authResponse);
+      const options = facebookService.processAuthResponse(
+        response.authResponse,
+      );
       console.debug('login options', options);
       if (options) {
         controllers.loginWithFbReq(options).then(async (res) => {
