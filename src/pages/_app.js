@@ -6,6 +6,8 @@ import { StateProvider } from '../utils/reducers/StateProvider';
 import reducer, { initialState } from '../utils/reducers/reducer';
 import GlobalAlertBar from '../components/GlobalAlertBar';
 
+import '../styles/global.css';
+
 export default function MyApp(props) {
   const { Component, pageProps } = props;
 

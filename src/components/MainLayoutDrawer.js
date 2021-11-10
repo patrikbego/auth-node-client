@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {
-  Add, Create, MenuBook, Share,
+  Add, Create, MenuBook, Print, Share,
 } from '@material-ui/icons';
 import React from 'react';
 import * as PropTypes from 'prop-types';
@@ -50,6 +50,9 @@ export default function MainLayoutDrawer(props) {
   const [placement, setPlacement] = React.useState();
   const [{ user, token }, dispatch] = useStateValue();
 
+  const postPage = typeof window !== 'undefined'
+    ? (!!window.location.pathname.includes('posts')) : false;
+
   const clickAwayHandler = () => setOpen(false);
   const clickHandler = () => setOpen(false);
 
@@ -57,6 +60,12 @@ export default function MainLayoutDrawer(props) {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
+  };
+
+  const handlePrint = () => {
+    if (typeof window !== 'undefined') {
+      window.print();
+    }
   };
 
   const handleDraftClick = (newPlacement) => async (event) => {
@@ -161,6 +170,22 @@ export default function MainLayoutDrawer(props) {
               </ListItemIcon>
             </Tooltip>
           </ListItem>
+          {postPage ? (
+              <>
+                <ListItem
+                    button
+                    onClick={handlePrint}
+                >
+                  <Tooltip title="Print" placement="right">
+                    <ListItemIcon>
+                      <Print />
+                    </ListItemIcon>
+                  </Tooltip>
+                </ListItem>
+              </>
+          ) : (
+              <> </>
+          )}
         </List>
       </Drawer>
     </>
