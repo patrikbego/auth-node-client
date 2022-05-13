@@ -60,7 +60,7 @@ export default function Post({ postData, shareUrl }) {
       textAlign: 'left',
       color:
           darkOrLiteTheme
-            ? 'tomato'
+            ? '#F26B5C'
             : 'black',
     },
 

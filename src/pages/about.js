@@ -25,18 +25,18 @@ export default function About() {
       height: '100vh',
     },
     h1: {
-      color: 'tomato',
+      color: '#F26B5C',
       textAlign: 'center',
       fontSize: '2em',
       paddingTop: '6vh',
     },
     h2: {
-      color: 'tomato',
+      color: '#F26B5C',
       textAlign: 'center',
       fontSize: '1.5em',
     },
     h3: {
-      color: 'tomato',
+      color: '#F26B5C',
       textAlign: 'left',
       fontSize: '1em',
       paddingLeft: '9vw',

@@ -10,11 +10,11 @@ import ReactMd from './markdownEditor/ReactMd';
 export default function MainList({ postsData }) {
   const useStyles = makeStyles((defTheme) => ({
     p: {
-      color: 'tomato',
+      color: '#f26b5c',
     },
 
     h1: {
-      color: 'tomato',
+      color: '#f26b5c',
       padding: '0VW 10VW 0VW 10VW',
     },
 

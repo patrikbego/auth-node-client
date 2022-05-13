@@ -20,7 +20,7 @@ const useStyles = makeStyles((defTheme) => ({
   mdContent: {
     color: defTheme.palette.type === 'light'
       ? 'black'
-      : 'tomato',
+      : '#F26B5C',
   },
   appBar: {
     zIndex: defTheme.zIndex.drawer + 1,
