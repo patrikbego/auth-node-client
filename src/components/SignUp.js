@@ -113,6 +113,7 @@ export default function SignUp({ appUser }) {
   const classes = useStyles();
 
   const router = useRouter();
+  const { message } = router.query;
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -141,7 +142,7 @@ export default function SignUp({ appUser }) {
         try {
           const res = await response.json();
           if (response.status !== 200) {
-            setFetchErrorMsg(res.message);
+            setFetchErrorMsg(res);
           } else {
             await router.push('/confirmEmail');
           }
@@ -152,7 +153,7 @@ export default function SignUp({ appUser }) {
     ).catch(
       (e) => {
         console.error('User creation failed!', e);
-        setFetchErrorMsg('Something went wrong! Please try again later or contact support@mubigo.com');
+        setFetchErrorMsg('Something went wrong! Please try again later or contact support@octoplasm.com');
       },
     );
   }
@@ -161,6 +162,7 @@ export default function SignUp({ appUser }) {
     <>
       <div className={classes.root}>
         <CssBaseline />
+        {fetchErrorMsg}
         <Container onSubmit={handleSubmit} component="main" maxWidth="xs">
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -202,17 +204,17 @@ export default function SignUp({ appUser }) {
                   <FormControlLabel
                     control={(
                       <Checkbox
-                          color="primary"
-                          required
-                          id="tosAgreement"
-                          value={tosValue}
-                          name="tosAgreement"
-                          onChange={(e) => {
-                            setTosValue((tosValue) => !tosValue);
-                            console.info('changed to ',
-                              e.target.value);
-                          }}
-                        />
+                        color="primary"
+                        required
+                        id="tosAgreement"
+                        value={tosValue}
+                        name="tosAgreement"
+                        onChange={(e) => {
+                          setTosValue((tosValue) => !tosValue);
+                          console.info('changed to ',
+                            e.target.value);
+                        }}
+                      />
                         )}
                     label="I accept T&C"
                   />
@@ -232,6 +234,8 @@ export default function SignUp({ appUser }) {
               </Button>
               {fetchErrorMsg
                 && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
+              {message
+                && <FormHelperText error>{message}</FormHelperText>}
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="/login" variant="body2">

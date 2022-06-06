@@ -22,7 +22,7 @@ import utilStyles from '../styles/utils.module.css';
 import { handleErrors } from '../api/utils';
 
 export default function Login({ URL }) {
-  const GENERAL_ERROR = 'Something went wrong! Please try again later or contact support@mubigo.com';
+  const GENERAL_ERROR = 'Something went wrong! Please try again later or contact support@octoplasm.com';
   const useStyles = makeStyles((defTheme) => ({
     root: {
       height: '100vh',
@@ -73,10 +73,10 @@ export default function Login({ URL }) {
   const [disable, setDisabled] = useState(true);
   const [fetchErrorMsg, setFetchErrorMsg] = useState();
   const router = useRouter();
+  const { message } = router.query;
   const disableCallback = (childData) => {
     setDisabled(childData);
   };
-
   function setAuthState(res) {
     dispatch({
       type: 'SET_USER',
@@ -113,7 +113,7 @@ export default function Login({ URL }) {
     }).catch((error) => {
       console.error('User login failed! ---- >', error);
       if (!error.message) error.message = GENERAL_ERROR;
-      setFetchErrorMsg('User login failed, due to technical issues.');
+      setFetchErrorMsg(error.message);
     });
   }
 
@@ -141,7 +141,7 @@ export default function Login({ URL }) {
         controllers.loginWithFbReq(options).then(async (res) => {
           const resBody = await res.json();
           if (!res.ok) {
-            setFetchErrorMsg(resBody.message);
+            setFetchErrorMsg(resBody);
             console.error('fb login failed');
           } else {
             console.log(resBody);
@@ -179,7 +179,7 @@ export default function Login({ URL }) {
         controllers.loginWithGooglReq(options).then(async (res) => {
           const resBody = await res.json();
           if (!res.ok) {
-            setFetchErrorMsg(resBody.message);
+            setFetchErrorMsg(resBody);
             console.error('google login failed');
           } else {
             console.log(resBody);
@@ -257,6 +257,8 @@ export default function Login({ URL }) {
             </Button>
             {fetchErrorMsg
               && <FormHelperText error>{fetchErrorMsg}</FormHelperText>}
+            {message
+                && <FormHelperText error>{message}</FormHelperText>}
             <Grid container>
               <Grid item xs>
                 <Link

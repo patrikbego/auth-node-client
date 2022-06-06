@@ -15,7 +15,7 @@ export async function handleErrors(res) {
   if (res.status === 401) {
     throw new Error('User login failed!');
   } else if (res.status === 429) {
-    throw new Error('Something went wrong, please contact support@mubigo.com');
+    throw new Error('Something went wrong, please contact support@octoplasm.com');
   } else if (!res.ok) {
     console.log('Something went wrong', res);
     try {
