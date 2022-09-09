@@ -1,6 +1,6 @@
 # Authorization Nextjs Client
 
-This is a Auth Nextjs Client
+This is an Auth Nextjs Client
 The project contains following source files:
 ```
 ├── README.md
