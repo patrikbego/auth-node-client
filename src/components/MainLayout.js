@@ -7,6 +7,7 @@ import { useStateValue } from '../utils/reducers/StateProvider';
 import Header from './Header';
 import MainLayoutDrawer from './MainLayoutDrawer';
 import { tokenSetter } from '../utils/tokenUtils';
+import PrivacyPopup from './PrivacyPopUp';
 
 const drawerWidth = 240;
 
@@ -124,7 +125,13 @@ const useStyles = makeStyles((defTheme) => ({
 }));
 
 export default function MainLayout({
-  children, user, mainPage, itemId, token, postData, shareUrl,
+  children,
+  user,
+  mainPage,
+  itemId,
+  token,
+  postData,
+  shareUrl,
 }) {
   const [{}, dispatch] = useStateValue();
   const classes = useStyles();
@@ -193,6 +200,7 @@ export default function MainLayout({
           {children}
         </div>
       </div>
+      <PrivacyPopup />
     </>
   );
   // }
