@@ -65,8 +65,12 @@ export default function MainList({ postsData }) {
         color: 'inherit',
       },
     },
-
-
+    tags: {
+      marginTop: defTheme.spacing(1),
+      '& a': {
+        marginRight: defTheme.spacing(1),
+      },
+    },
   }));
   const classes = useStyles();
   const defMaterialTheme = useTheme();
@@ -83,7 +87,7 @@ export default function MainList({ postsData }) {
           {/*<Divider className={classes.divider}/>*/}
         </div>
         <Grid container spacing={2} className={classes.gridContainer}>
-          {postsData.map(({ id, createdDate, title, status }) => (
+          {postsData.map(({ id, createdDate, title, status, tags }) => (
               <Grid item xs={12} sm={6} md={4} key={id}>
                 <Card className={classes.card}>
                   <Link href="/posts/[id]" as={`/posts/${id}`} passHref>
@@ -95,6 +99,18 @@ export default function MainList({ postsData }) {
                         <Typography variant="body2" color="textSecondary">
                           <DateLabel dateString={createdDate} />
                         </Typography>
+                        {tags && (
+                            <Typography variant="body2" className={classes.tags}>
+                              {tags.split(/\s+/).map((tag) => (
+                                  <Link
+                                      href={`/?tag=${encodeURIComponent(tag)}`}
+                                      key={tag}
+                                  >
+                                    <a className={utilStyles.tagLink}>{tag}</a>
+                                  </Link>
+                              ))}
+                            </Typography>
+                        )}
                         {status === ' DRAFT' ? (
                             <Typography variant="body2" className={classes.p}>
                               {status}

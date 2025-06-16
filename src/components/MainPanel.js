@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import DynamicHead from './DynamicHead';
 import MainLayout from './MainLayout';
@@ -7,7 +8,11 @@ import MainList from './MainList';
 
 export default function MainPanel({ appUser, postsData, defMeta }) {
   const [{ user, token }, dispatch] = useStateValue();
-  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState(router.query.tag || '');
+  useEffect(() => {
+    if (router.query.tag) setSearchTerm(router.query.tag);
+  }, [router.query.tag]);
   // if ((appUser && appUser.errors) || (postsData && postsData.errors)) {
   //   openAlertBar(dispatch, appUser.errors + postsData.errors, 'error');
   // }
@@ -22,8 +27,10 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
   };
 
   const filteredPosts = postsData && Array.isArray(postsData)
-    ? postsData.filter(({ title }) => title.toLowerCase().includes(searchTerm.toLowerCase()))
-    : postsData;
+      ? postsData.filter(({ title, tags }) =>
+          title.toLowerCase().includes(searchTerm.toLowerCase())
+          || (tags && tags.toLowerCase().includes(searchTerm.toLowerCase())))
+      : postsData;
 
   return (
     <>

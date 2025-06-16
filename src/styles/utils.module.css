@@ -75,3 +75,17 @@
   /*color: #F26B5C*/
   color: rgb(242,107,91);
 }
+
+.tags {
+  margin-top: 0.5rem;
+}
+
+.tagLink {
+  margin-right: 0.5rem;
+  color: rgb(242,107,91);
+  text-decoration: none;
+}
+
+.tagLink:hover {
+  text-decoration: underline;
+}
