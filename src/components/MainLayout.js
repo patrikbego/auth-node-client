@@ -132,6 +132,8 @@ export default function MainLayout({
   token,
   postData,
   shareUrl,
+  searchTerm = '',
+  setSearchTerm = () => {},
 }) {
   const [{}, dispatch] = useStateValue();
   const classes = useStyles();
@@ -185,7 +187,11 @@ export default function MainLayout({
             [classes.appBarShift]: false,
           })}
         >
-          <Header loading={false} />
+          <Header
+              loading={false}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+          />
         </AppBar>
         <MainLayoutDrawer
           classes={classes}

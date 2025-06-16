@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  BrightnessMedium, ExitToApp, Info, VpnKey,
+  BrightnessMedium, ExitToApp, Info, VpnKey, Search,
 } from '@material-ui/icons';
 import Image from 'next/image';
 import IconButton from '@material-ui/core/IconButton';
-import { Avatar, Tooltip } from '@material-ui/core';
+import { Avatar, Tooltip, TextField } from '@material-ui/core';
 import { useStateValue } from '../utils/reducers/StateProvider';
 import controller from '../api/controller';
 import Link from './Link';
@@ -53,11 +53,12 @@ const useStyles = makeStyles((defTheme) => ({
   },
 }));
 
-function Header({ loading }) {
+function Header({ loading, searchTerm, setSearchTerm }) {
   const router = useRouter();
   const classes = useStyles();
 
   const [{ darkOrLiteTheme, user, token }, dispatch] = useStateValue();
+  const [openSearch, setOpenSearch] = useState(false);
 
   const logout = async () => {
     try {
@@ -81,6 +82,14 @@ function Header({ loading }) {
       type: 'SET_THEME',
       darkOrLiteTheme: !darkOrLiteTheme,
     });
+  };
+
+  const toggleSearch = () => {
+    setOpenSearch(!openSearch);
+  };
+
+  const handleSearchChange = (e) => {
+    if (setSearchTerm) setSearchTerm(e.target.value);
   };
 
   const linkText = loading && user ? `Welcome ${user.firstName}` : '';
@@ -143,6 +152,22 @@ function Header({ loading }) {
                 </IconButton>
               </Tooltip>
             </nav>
+            <nav>
+              <Tooltip title="Search" aria-label="Search">
+                <IconButton aria-label="Search" onClick={toggleSearch}>
+                  <Search />
+                </IconButton>
+              </Tooltip>
+            </nav>
+            {openSearch && (
+                <TextField
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    variant="outlined"
+                    size="small"
+                    placeholder="Search"
+                />
+            )}
             <Tooltip title="Logout" aria-label="Logout">
               <IconButton
                 aria-label="Logout"
@@ -189,6 +214,22 @@ function Header({ loading }) {
                 </IconButton>
               </Tooltip>
             </nav>
+            <nav>
+              <Tooltip title="Search" aria-label="Search">
+                <IconButton aria-label="Search" onClick={toggleSearch}>
+                  <Search />
+                </IconButton>
+              </Tooltip>
+            </nav>
+            {openSearch && (
+                <TextField
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    variant="outlined"
+                    size="small"
+                    placeholder="Search"
+                />
+            )}
             <nav>
               <Tooltip title="Info" aria-label="Info">
                 <IconButton

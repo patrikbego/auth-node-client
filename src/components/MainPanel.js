@@ -1,5 +1,5 @@
-import React from 'react';
-import {useStateValue} from '../utils/reducers/StateProvider';
+import React, { useState } from 'react';
+import { useStateValue } from '../utils/reducers/StateProvider';
 import DynamicHead from './DynamicHead';
 import MainLayout from './MainLayout';
 import AlertBar from './AlertBar';
@@ -7,7 +7,7 @@ import MainList from './MainList';
 
 export default function MainPanel({ appUser, postsData, defMeta }) {
   const [{ user, token }, dispatch] = useStateValue();
-
+  const [searchTerm, setSearchTerm] = useState('');
   // if ((appUser && appUser.errors) || (postsData && postsData.errors)) {
   //   openAlertBar(dispatch, appUser.errors + postsData.errors, 'error');
   // }
@@ -21,11 +21,21 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
     title: 'OctoPlasm',
   };
 
+  const filteredPosts = postsData && Array.isArray(postsData)
+    ? postsData.filter(({ title }) => title.toLowerCase().includes(searchTerm.toLowerCase()))
+    : postsData;
+
   return (
     <>
       {/* <StrictMode> */}
       <DynamicHead meta={defMeta || meta} />
-      <MainLayout user={appUser} mainPage token={token}>
+      <MainLayout
+        user={appUser}
+        mainPage
+        token={token}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      >
         {appUser && appUser.errors ? (
           <AlertBar
             alertOpen
@@ -40,7 +50,9 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
             alertMessage={postsData.errors}
             alertType="error"
           />
-        ) : (<MainList postsData={postsData} />)}
+        ) : (
+          <MainList postsData={filteredPosts} />
+        )}
       </MainLayout>
       {/* </StrictMode> */}
     </>

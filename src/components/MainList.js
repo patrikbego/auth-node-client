@@ -2,7 +2,13 @@ import Link from 'next/link';
 import React from 'react';
 import DOMPurify from 'dompurify';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Divider } from '@material-ui/core';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 import utilStyles from '../styles/utils.module.css';
 import DateLabel from './DateLabel';
 import ReactMd from './markdownEditor/ReactMd';
@@ -47,6 +53,20 @@ export default function MainList({ postsData }) {
       float: 'right',
     },
 
+    card: {
+      height: '100%',
+    },
+    gridContainer: {
+      marginTop: defTheme.spacing(2),
+    },
+    cardContent: {
+      '& a': {
+        textDecoration: 'none',
+        color: 'inherit',
+      },
+    },
+
+
   }));
   const classes = useStyles();
   const defMaterialTheme = useTheme();
@@ -58,27 +78,35 @@ export default function MainList({ postsData }) {
     return (
       <>
         <div className={classes.top}>
-          <h1 className={classes.h1}>OctoPlasm</h1>
-          <h6 className={classes.h6}>Easy Way to Share Your Ideas</h6>
-          <Divider className={classes.divider}/>
+          {/*<h1 className={classes.h1}>OctoPlasm</h1>*/}
+          {/*<h6 className={classes.h6}>Easy Way to Share Your Ideas</h6>*/}
+          {/*<Divider className={classes.divider}/>*/}
         </div>
-        <ul className={utilStyles.list}>
-          {postsData.map(({
-            id, createdDate, title, status,
-          }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href="/posts/[id]" as={`/posts/${id}`}>
-                {/* <a dangerouslySetInnerHTML={{ __html: sanitizer(htmlTitle) }} /> */}
-                <a className={utilStyles.a}><ReactMd markdown={title} /></a>
-              </Link>
-              <small className={utilStyles.lightText}>
-                <DateLabel dateString={createdDate} />
-                {status === ' DRAFT' ? (
-                  <p className={classes.p}>{status}</p>) : (<></>)}
-              </small>
-            </li>
+        <Grid container spacing={2} className={classes.gridContainer}>
+          {postsData.map(({ id, createdDate, title, status }) => (
+              <Grid item xs={12} sm={6} md={4} key={id}>
+                <Card className={classes.card}>
+                  <Link href="/posts/[id]" as={`/posts/${id}`} passHref>
+                    <CardActionArea component="a">
+                      <CardContent className={classes.cardContent}>
+                        <Typography component="div">
+                          <ReactMd markdown={title} />
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          <DateLabel dateString={createdDate} />
+                        </Typography>
+                        {status === ' DRAFT' ? (
+                            <Typography variant="body2" className={classes.p}>
+                              {status}
+                            </Typography>
+                        ) : null}
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
+                </Card>
+              </Grid>
           ))}
-        </ul>
+        </Grid>
       </>
     );
   }
