@@ -35,17 +35,17 @@ export default function AlertSnackbar({ alertOpen, alertMessage, alertType }) {
   const [open, handleClose] = useHandleClose(alertOpen);
 
   return (
-      <div className={classes.root}>
-        <Snackbar
-            ref={snackbarRef}
-            open={open}
-            autoHideDuration={AUTO_HIDE_DURATION}
-            onClose={handleClose}
-        >
-          <FilledAlert onClose={handleClose} severity={alertType}>
-            {alertMessage}
-          </FilledAlert>
-        </Snackbar>
-      </div>
+    <div className={classes.root}>
+      <Snackbar
+        ref={snackbarRef}
+        open={open}
+        autoHideDuration={AUTO_HIDE_DURATION}
+        onClose={handleClose}
+      >
+        <FilledAlert onClose={handleClose} severity={alertType}>
+          {alertMessage}
+        </FilledAlert>
+      </Snackbar>
+    </div>
   );
 }

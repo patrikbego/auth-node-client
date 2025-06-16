@@ -27,10 +27,9 @@ export default function MainPanel({ appUser, postsData, defMeta }) {
   };
 
   const filteredPosts = postsData && Array.isArray(postsData)
-      ? postsData.filter(({ title, tags }) =>
-          title.toLowerCase().includes(searchTerm.toLowerCase())
+    ? postsData.filter(({ title, tags }) => title.toLowerCase().includes(searchTerm.toLowerCase())
           || (tags && tags.toLowerCase().includes(searchTerm.toLowerCase())))
-      : postsData;
+    : postsData;
 
   return (
     <>

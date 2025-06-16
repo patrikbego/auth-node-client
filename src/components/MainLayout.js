@@ -188,9 +188,9 @@ export default function MainLayout({
           })}
         >
           <Header
-              loading={false}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
+            loading={false}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
           />
         </AppBar>
         <MainLayoutDrawer

@@ -171,20 +171,20 @@ export default function MainLayoutDrawer(props) {
             </Tooltip>
           </ListItem>
           {postPage ? (
-              <>
-                <ListItem
-                    button
-                    onClick={handlePrint}
-                >
-                  <Tooltip title="Print" placement="right">
-                    <ListItemIcon>
-                      <Print />
-                    </ListItemIcon>
-                  </Tooltip>
-                </ListItem>
-              </>
+            <>
+              <ListItem
+                button
+                onClick={handlePrint}
+              >
+                <Tooltip title="Print" placement="right">
+                  <ListItemIcon>
+                    <Print />
+                  </ListItemIcon>
+                </Tooltip>
+              </ListItem>
+            </>
           ) : (
-              <> </>
+            <> </>
           )}
         </List>
       </Drawer>

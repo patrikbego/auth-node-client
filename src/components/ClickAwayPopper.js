@@ -38,13 +38,13 @@ export default function ClickAwayPopper({
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <ClickAwayListener onClickAway={clickAwayHandler}>
-            <div>
-              <Paper className={classes.typography}>
-                {/* <Typography className={classes.typography}> */}
-                <SharePanel postData={postData} shareUrl={shareUrl} />
-                {/* </Typography> */}
-              </Paper>
-            </div>
+              <div>
+                <Paper className={classes.typography}>
+                  {/* <Typography className={classes.typography}> */}
+                  <SharePanel postData={postData} shareUrl={shareUrl} />
+                  {/* </Typography> */}
+                </Paper>
+              </div>
             </ClickAwayListener>
           </Fade>
         )}

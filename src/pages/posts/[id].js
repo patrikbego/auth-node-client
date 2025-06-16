@@ -6,6 +6,7 @@ import {
   makeStyles,
   ThemeProvider,
 } from '@material-ui/core/styles';
+import Link from 'next/link';
 import DateLabel from '../../components/DateLabel';
 import markdownStyle from './markdown.module.css';
 import controllers from '../../api/controller';
@@ -18,7 +19,6 @@ import DynamicHead from '../../components/DynamicHead';
 import { parseMetaData, parseTitle } from '../../utils/metaUtils';
 import ReactMd from '../../components/markdownEditor/ReactMd';
 import utilStyles from '../../styles/utils.module.css';
-import Link from 'next/link';
 
 require('log-timestamp');
 
@@ -92,16 +92,16 @@ export default function Post({ postData, shareUrl }) {
             </div>
             <ReactMd cssClass={classes.mdContent} markdown={postData.body} />
             {postData.tags && (
-                <div className={utilStyles.tags}>
-                  {postData.tags.split(/\s+/).map((tag) => (
-                      <Link
-                          href={`/?tag=${encodeURIComponent(tag)}`}
-                          key={tag}
-                      >
-                        <a className={utilStyles.tagLink}>{tag}</a>
-                      </Link>
-                  ))}
-                </div>
+            <div className={utilStyles.tags}>
+              {postData.tags.split(/\s+/).map((tag) => (
+                <Link
+                  href={`/?tag=${encodeURIComponent(tag)}`}
+                  key={tag}
+                >
+                  <a className={utilStyles.tagLink}>{tag}</a>
+                </Link>
+              ))}
+            </div>
             )}
           </article>
           <br />

@@ -20,8 +20,8 @@ import utilStyles from '../styles/utils.module.css';
 import Footer from '../components/Footer';
 
 export default function About() {
-  const [{user, token, darkOrLiteTheme}, dispatch] = useStateValue();
-  const {darkLightTheme} = muiSetter(useStateValue, createMuiTheme);
+  const [{ user, token, darkOrLiteTheme }, dispatch] = useStateValue();
+  const { darkLightTheme } = muiSetter(useStateValue, createMuiTheme);
   const [open, setOpen] = React.useState(false);
   const useStyles = makeStyles(() => ({
     root: {
@@ -56,54 +56,60 @@ export default function About() {
     title: 'OctoPlasm',
   };
   return (
-      <>
-        <DynamicHead meta={meta}/>
-        <ThemeProvider theme={darkLightTheme}>
-          <CssBaseline/>
-          <div className={classes.root}>
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                  [classes.appBarShift]: open,
-                })}
+    <>
+      <DynamicHead meta={meta} />
+      <ThemeProvider theme={darkLightTheme}>
+        <CssBaseline />
+        <div className={classes.root}>
+          <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: open,
+            })}
+          >
+            <Header loading={false} />
+          </AppBar>
+          <Container maxWidth="sm" className={classes.mainContainer}>
+            <Typography
+              variant="h3"
+              className={classes.title}
             >
-              <Header loading={false}/>
-            </AppBar>
-            <Container maxWidth="sm" className={classes.mainContainer}>
-              <Typography variant="h3"
-                          className={classes.title}>OctoPlasm</Typography>
-              <Typography variant="h5" className={classes.subtitle}>
-                Share your knowledge and ideas with the world
-              </Typography>
-              <List>
-                <ListItem className={classes.listItem}>
-                  <Link href="/signup" variant="body2">
-                    <a className={utilStyles.a}>Create your profile</a>
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Link href="/login" variant="body2">
-                    <a className={utilStyles.a}>Sign in</a>
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Link href="/blog/0" variant="body2">
-                    <a className={utilStyles.a}>
-                      Post your first article or start a private draft
-                    </a>
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Link href="/" variant="body2">
-                    <a className={utilStyles.a}>Browse what others are
-                      writing</a>
-                  </Link>
-                </ListItem>
-              </List>
-            </Container>
-            <Footer/>
-          </div>
-        </ThemeProvider>
-      </>
+              OctoPlasm
+            </Typography>
+            <Typography variant="h5" className={classes.subtitle}>
+              Share your knowledge and ideas with the world
+            </Typography>
+            <List>
+              <ListItem className={classes.listItem}>
+                <Link href="/signup" variant="body2">
+                  <a className={utilStyles.a}>Create your profile</a>
+                </Link>
+              </ListItem>
+              <ListItem className={classes.listItem}>
+                <Link href="/login" variant="body2">
+                  <a className={utilStyles.a}>Sign in</a>
+                </Link>
+              </ListItem>
+              <ListItem className={classes.listItem}>
+                <Link href="/blog/0" variant="body2">
+                  <a className={utilStyles.a}>
+                    Post your first article or start a private draft
+                  </a>
+                </Link>
+              </ListItem>
+              <ListItem className={classes.listItem}>
+                <Link href="/" variant="body2">
+                  <a className={utilStyles.a}>
+                    Browse what others are
+                    writing
+                  </a>
+                </Link>
+              </ListItem>
+            </List>
+          </Container>
+          <Footer />
+        </div>
+      </ThemeProvider>
+    </>
   );
 }

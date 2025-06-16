@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function Phone({disableCallback, user}) {
+export default function Phone({ disableCallback, user }) {
   const firstRender = useRef(true);
 
   const [phoneValue, setPhoneValue] = useState('');
@@ -33,7 +33,7 @@ export default function Phone({disableCallback, user}) {
   }, [
     phoneValue]);
 
-  let labelText = user ? user.phone : 'Phone Number';
+  const labelText = user ? user.phone : 'Phone Number';
   return (
     <TextField
       variant="outlined"

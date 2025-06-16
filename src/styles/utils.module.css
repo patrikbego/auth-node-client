@@ -82,7 +82,8 @@
 
 .tagLink {
   margin-right: 0.5rem;
-  color: rgb(242,107,91);
+  color: #F26B5C;
+  font-size: 0.85rem;
   text-decoration: none;
 }
 

@@ -10,8 +10,8 @@ import Draggable from 'react-draggable';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { Delete, Save } from '@material-ui/icons';
-import {useStateValue} from '../utils/reducers/StateProvider';
-import {handleDelete} from '../api/posts';
+import { useStateValue } from '../utils/reducers/StateProvider';
+import { handleDelete } from '../api/posts';
 
 function PaperComponent(props) {
   return (

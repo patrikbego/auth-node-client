@@ -84,8 +84,14 @@ function Header({ loading, searchTerm, setSearchTerm }) {
     });
   };
 
+  const resetSearch = () => {
+    if (setSearchTerm) setSearchTerm('');
+    router.push('/');
+  };
+
   const toggleSearch = () => {
     setOpenSearch(!openSearch);
+    resetSearch();
   };
 
   const handleSearchChange = (e) => {
@@ -127,6 +133,7 @@ function Header({ loading, searchTerm, setSearchTerm }) {
                     href="/"
                     width={60}
                     height={60}
+                    onClick={resetSearch}
                   />
                 </div>
               </Link>
@@ -160,13 +167,13 @@ function Header({ loading, searchTerm, setSearchTerm }) {
               </Tooltip>
             </nav>
             {openSearch && (
-                <TextField
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    variant="outlined"
-                    size="small"
-                    placeholder="Search"
-                />
+            <TextField
+              value={searchTerm}
+              onChange={handleSearchChange}
+              variant="outlined"
+              size="small"
+              placeholder="Search"
+            />
             )}
             <Tooltip title="Logout" aria-label="Logout">
               <IconButton
@@ -199,6 +206,7 @@ function Header({ loading, searchTerm, setSearchTerm }) {
                     href="/"
                     width={60}
                     height={60}
+                    onClick={resetSearch}
                   />
                 </div>
               </Link>
@@ -222,13 +230,13 @@ function Header({ loading, searchTerm, setSearchTerm }) {
               </Tooltip>
             </nav>
             {openSearch && (
-                <TextField
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    variant="outlined"
-                    size="small"
-                    placeholder="Search"
-                />
+            <TextField
+              value={searchTerm}
+              onChange={handleSearchChange}
+              variant="outlined"
+              size="small"
+              placeholder="Search"
+            />
             )}
             <nav>
               <Tooltip title="Info" aria-label="Info">

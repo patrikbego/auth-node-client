@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function Email({disableCallback, user}) {
+export default function Email({ disableCallback, user }) {
   const firstRender = useRef(true);
 
   const [emailError, setEmailError] = useState(null);
@@ -34,7 +34,7 @@ export default function Email({disableCallback, user}) {
     disableCallback(emailValidation().disabled);
   }, [emailValue]);
 
-  let labelText = user ? user.email : 'Email Address';
+  const labelText = user ? user.email : 'Email Address';
   return (
     <TextField
       variant="outlined"

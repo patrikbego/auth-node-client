@@ -82,45 +82,47 @@ export default function MainList({ postsData }) {
     return (
       <>
         <div className={classes.top}>
-          {/*<h1 className={classes.h1}>OctoPlasm</h1>*/}
-          {/*<h6 className={classes.h6}>Easy Way to Share Your Ideas</h6>*/}
-          {/*<Divider className={classes.divider}/>*/}
+          {/* <h1 className={classes.h1}>OctoPlasm</h1> */}
+          {/* <h6 className={classes.h6}>Easy Way to Share Your Ideas</h6> */}
+          {/* <Divider className={classes.divider}/> */}
         </div>
         <Grid container spacing={2} className={classes.gridContainer}>
-          {postsData.map(({ id, createdDate, title, status, tags }) => (
-              <Grid item xs={12} sm={6} md={4} key={id}>
-                <Card className={classes.card}>
-                  <Link href="/posts/[id]" as={`/posts/${id}`} passHref>
-                    <CardActionArea component="a">
-                      <CardContent className={classes.cardContent}>
-                        <Typography component="div">
-                          <ReactMd markdown={title} />
+          {postsData.map(({
+            id, createdDate, title, status, tags,
+          }) => (
+            <Grid item xs={12} sm={6} md={4} key={id}>
+              <Card className={classes.card}>
+                <Link href="/posts/[id]" as={`/posts/${id}`} passHref>
+                  <CardActionArea component="a">
+                    <CardContent className={classes.cardContent}>
+                      <Typography component="div">
+                        <ReactMd markdown={title} />
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <DateLabel dateString={createdDate} />
+                      </Typography>
+                      {tags && (
+                      <Typography variant="body2" className={classes.tags}>
+                        {tags.split(/\s+/).map((tag) => (
+                          <Link
+                            href={`/?tag=${encodeURIComponent(tag)}`}
+                            key={tag}
+                          >
+                            <a className={utilStyles.tagLink}>{tag}</a>
+                          </Link>
+                        ))}
+                      </Typography>
+                      )}
+                      {status === ' DRAFT' ? (
+                        <Typography variant="body2" className={classes.p}>
+                          {status}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          <DateLabel dateString={createdDate} />
-                        </Typography>
-                        {tags && (
-                            <Typography variant="body2" className={classes.tags}>
-                              {tags.split(/\s+/).map((tag) => (
-                                  <Link
-                                      href={`/?tag=${encodeURIComponent(tag)}`}
-                                      key={tag}
-                                  >
-                                    <a className={utilStyles.tagLink}>{tag}</a>
-                                  </Link>
-                              ))}
-                            </Typography>
-                        )}
-                        {status === ' DRAFT' ? (
-                            <Typography variant="body2" className={classes.p}>
-                              {status}
-                            </Typography>
-                        ) : null}
-                      </CardContent>
-                    </CardActionArea>
-                  </Link>
-                </Card>
-              </Grid>
+                      ) : null}
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
+              </Card>
+            </Grid>
           ))}
         </Grid>
       </>

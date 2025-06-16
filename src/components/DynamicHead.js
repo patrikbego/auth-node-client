@@ -6,7 +6,7 @@ export default function DynamicHead({ children, meta }) {
     <Head>
       <link rel="icon" href="/images/octopus.svg" />
 
-      {/*// Primary Meta Tags*/}
+      {/* // Primary Meta Tags */}
       <meta name="title" content={meta.title} />
       <meta name="description" content={meta.description} />
       <meta name="keywords" content={meta.keywords} />

@@ -1,11 +1,11 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import DOMPurify from 'dompurify';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import {TextField} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import Header from '../Header';
 import mdToHtml from '../../utils/mdUtils';
 import EditorSideDrawer from './EditorSideDrawer';
@@ -195,12 +195,12 @@ export default function EditorPage({ content }) {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <ReactMd className={classes.mdContent} markdown={mdContent} />
-          {/*<Typography*/}
-          {/*  paragraph*/}
-          {/*  dangerouslySetInnerHTML={{ __html: parsedContent }}*/}
-          {/*>*/}
-          {/*  /!* <div  /> *!/*/}
-          {/*</Typography>*/}
+          {/* <Typography */}
+          {/*  paragraph */}
+          {/*  dangerouslySetInnerHTML={{ __html: parsedContent }} */}
+          {/* > */}
+          {/*  /!* <div  /> *!/ */}
+          {/* </Typography> */}
         </main>
       </div>
     </>

@@ -16,7 +16,7 @@ import { TextField } from '@material-ui/core';
 import { openAlertBar } from '../../utils/alertBarUtils';
 import { useStateValue } from '../../utils/reducers/StateProvider';
 import { handleAddUpdate } from '../../api/posts';
-import {parseTitle} from '../../utils/metaUtils';
+import { parseTitle } from '../../utils/metaUtils';
 
 const styles = (defTheme) => ({
   root: {
@@ -86,7 +86,9 @@ const DialogActions = withStyles((defTheme) => ({
   },
 }))(MuiDialogActions);
 
-export default function SaveDialog({ content, itemId, userId, originalTags }) {
+export default function SaveDialog({
+  content, itemId, userId, originalTags,
+}) {
   console.log('originalTags', originalTags);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);

@@ -15,13 +15,13 @@ export default function blog({ content, appUser }) {
 
   return (
     <>
-      {/*<StrictMode>*/}
-        <ThemeProvider theme={darkLightTheme}>
-          <CssBaseline />
-          <GlobalAlertBar />
-          <BlogAddEdit content={content} />
-        </ThemeProvider>
-      {/*</StrictMode>*/}
+      {/* <StrictMode> */}
+      <ThemeProvider theme={darkLightTheme}>
+        <CssBaseline />
+        <GlobalAlertBar />
+        <BlogAddEdit content={content} />
+      </ThemeProvider>
+      {/* </StrictMode> */}
     </>
   );
 }

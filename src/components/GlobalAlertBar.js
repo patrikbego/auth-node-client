@@ -14,7 +14,7 @@ const useStyles = makeStyles((defTheme) => ({
     '& > * + *': {
       marginTop: defTheme.spacing(2),
     },
-  }
+  },
 }));
 
 export default function GlobalAlertBar() {
