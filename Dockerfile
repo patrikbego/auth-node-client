@@ -24,7 +24,9 @@ COPY .env /usr/src/app/
 RUN npm install
 # start app
 # env variables need to be injected into prebuilt nextjs client files
-RUN NEXT_PUBLIC_REST_API=${NEXT_PUBLIC_REST_API} NEXT_PUBLIC_ENV_NAME=${NEXT_PUBLIC_ENV_NAME} /usr/src/app/node_modules/next/dist/bin/next build
+RUN NEXT_PUBLIC_REST_API=${NEXT_PUBLIC_REST_API}  \
+    NEXT_PUBLIC_ENV_NAME=${NEXT_PUBLIC_ENV_NAME}  \
+    /usr/src/app/node_modules/next/dist/bin/next build
 
 EXPOSE 3000
 
